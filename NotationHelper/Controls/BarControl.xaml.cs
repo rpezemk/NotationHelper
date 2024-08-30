@@ -26,9 +26,9 @@ namespace NotationHelper.Controls
             InitializeComponent();
         }
 
-        public void ShowNote(Note note)
+        public void ShowNote(NoteControl note)
         {
-
+            NoteGrid.Children.Add(note);
         }
     }
 }

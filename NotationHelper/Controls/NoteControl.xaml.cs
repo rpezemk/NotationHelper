@@ -23,7 +23,7 @@ namespace NotationHelper.Controls
         public NoteControl()
         {
             InitializeComponent();
-            Diameter = 30;
+            Diameter = 5;
         }
         public double Diameter
         {

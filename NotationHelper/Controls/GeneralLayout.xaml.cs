@@ -25,14 +25,27 @@ namespace NotationHelper.Controls
             InitializeComponent();
         }
 
+        public void AddControls(List<VerticalBarContainer> verticalBarContainters)
+        {
+            var nCols = MyStackGrid.ColumnDefinitions.Count();
+            for (int i = 0; i < verticalBarContainters.Count; i++)
+            {
+                var vertical = verticalBarContainters[i];
+                MyStackGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+                Grid.SetColumn(vertical, i);
+                MyStackGrid.Children.Add(vertical);
+            }
+        }
+
         public void AddControl(VerticalBarContainer verticalBarContainter)
         {
-            MyStackPanel.Children.Add(verticalBarContainter);
+            MyStackGrid.Children.Add(verticalBarContainter);
         }
 
         public void ClearBarControl()
         {
-            MyStackPanel.Children.Clear();
+            MyStackGrid.Children.Clear();
+            MyStackGrid.ColumnDefinitions.Clear();
         }
     }
 

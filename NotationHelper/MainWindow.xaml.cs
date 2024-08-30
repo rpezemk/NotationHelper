@@ -23,7 +23,17 @@ namespace NotationHelper
 
         private void MainWindowControl_Loaded(object sender, RoutedEventArgs e)
         {
-            Program.MainEntry(this);
+            Program.FillBasic(this);
+        }
+
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            Program.ClearMain(this);
+        }
+
+        private void FillButton_Click(object sender, RoutedEventArgs e)
+        {
+            Program.FillBasic(this);
         }
     }
 }

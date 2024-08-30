@@ -19,6 +19,7 @@
                 <ColumnDefinition Width="1"/>
             </Grid.ColumnDefinitions>
             <Rectangle Width="1" Fill="Black" Margin="0,2,0,2"/>
+            <Grid x:Name="NoteGrid" Grid.Column="1"/>
             <StackPanel Grid.Column="1">
                 <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
                 <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
