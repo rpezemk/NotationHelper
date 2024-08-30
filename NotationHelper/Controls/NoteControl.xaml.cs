@@ -33,5 +33,8 @@ namespace NotationHelper.Controls
 
         public static readonly DependencyProperty DiameterProperty =
             DependencyProperty.Register("Diameter", typeof(double), typeof(NoteControl), new PropertyMetadata(default));
+
+        public int X;
+        public int Y;
     }
 }

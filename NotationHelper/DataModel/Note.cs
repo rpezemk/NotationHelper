@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NotationHelper.DataModel.Elementary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,10 @@ namespace NotationHelper.DataModel
 {
     public class Note
     {
-        public int XOffset {  get; set; }
-        public int YOffset { get; set; }
+        public int X {  get; set; }
+        public int Y { get; set; }
+        public Pitch Pitch { get; set; } = new Pitch();
+        public int BarNo { get; set; }
+        public int PartNo { get; set; }
     }
 }

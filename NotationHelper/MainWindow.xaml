@@ -26,7 +26,7 @@
         <GridSplitter Grid.Column="1" Background="Black" HorizontalAlignment="Center" Width="4"/>
         <ctrls:GeneralLayout Grid.Column="3" x:Name="NoteLayout"/>
         <ctrls:GeneralLayout Grid.Column="5" x:Name="NoteLayoutAux"/>
-
+        
         <StackPanel Grid.Row="1" Grid.ColumnSpan="9" Orientation="Horizontal">
             <Button x:Name="ClearButton" Margin="3,0,3,0" Height="25" Width="60" Content="Clear" Click="ClearButton_Click"/>
             <Button x:Name="FillButton" Margin="3,0,3,0" Height="25" Width="60" Content="Fill" Click="FillButton_Click"/>
