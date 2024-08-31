@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!-- Define SolidColorBrush resources -->
+    
     <SolidColorBrush x:Key="PrimaryBackgroundBrush" Color="#FFFFFFFF"/>
     <SolidColorBrush x:Key="SecondaryBackgroundBrush" Color="#FFADD8E6"/>
     <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="#FFAAFFFF"/>

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NotationHelper"
         xmlns:ctrls="clr-namespace:NotationHelper.Controls"
+        xmlns:tools="clr-namespace:NotationHelper.Controls.Tools"
         mc:Ignorable="d"
         x:Name="MainWindowControl"
         SizeChanged="MainWindowControl_SizeChanged"
@@ -21,7 +22,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="60"/>
             <RowDefinition/>
             <RowDefinition Height="5" />
             <RowDefinition/>
@@ -31,7 +32,14 @@
             <Menu x:Name="MainMenu" Grid.ColumnSpan="5" MinWidth="50" FontSize="15" 
                   VerticalAlignment="Center" 
                   Background="Transparent" 
-                  Foreground="{StaticResource ForegroundTextBrush}"/>
+                  Foreground="{StaticResource ForegroundTextBrush}" MinHeight="20"/>
+            <StackPanel Orientation="Horizontal">
+                <tools:ToolBarItem/>
+                <tools:ToolBarItem/>
+                <tools:ToolBarItem/>
+                <tools:ToolBarItem/>
+                <tools:ToolBarItem/>
+            </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.ColumnSpan ="6" HorizontalAlignment="Right">
             <Button Click="MinimizeButton_Click" Background="Transparent" x:Name="MinimizeButton" Width="20" Content="__" HorizontalAlignment="Right"/>

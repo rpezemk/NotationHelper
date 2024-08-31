@@ -1,5 +1,7 @@
 ﻿using NotationHelper.DataModel.Elementary;
 using NotationHelper.FlowTypes;
+using NotationHelper.Helpers;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,6 +23,8 @@ namespace NotationHelper
         public MainWindow()
         {
             InitializeComponent();
+            var content = SmuflGlyphs.GetPackUri2();
+            File.WriteAllText("abc.otf", content);
         }
 
         private void MainWindowControl_Loaded(object sender, RoutedEventArgs e)

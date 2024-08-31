@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="NotationHelper.Controls.Tools.ToolBarItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NotationHelper.Controls.Tools"
+             mc:Ignorable="d" 
+             Width="60"
+             Loaded="UserControl_Loaded"
+             Height="60"
+             d:DesignHeight="60" d:DesignWidth="60">
+    <Button BorderThickness="1" BorderBrush="Gray" Background="{StaticResource PrimaryBackgroundBrush}">
+        <Grid Background="{StaticResource PrimaryBackgroundBrush}">
+            <!--<Ellipse Width="20" Height="20" Fill="{StaticResource ForegroundTextBrush}"/>-->
+            <TextBlock x:Name="MyTextBlock"/>
+        </Grid>
+    </Button>
+</UserControl>
