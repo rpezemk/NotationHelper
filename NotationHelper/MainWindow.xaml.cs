@@ -33,7 +33,7 @@ namespace NotationHelper
 
         private void FillButton_Click(object sender, RoutedEventArgs e)
         {
-            Program.FillBasic(this);
+            Program.FillBasic(this, new DataModel.Elementary.PieceMatrix(30, 4), 0, 4);
         }
     }
 }

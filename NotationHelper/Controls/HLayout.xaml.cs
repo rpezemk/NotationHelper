@@ -16,22 +16,13 @@ using System.Windows.Shapes;
 namespace NotationHelper.Controls
 {
     /// <summary>
-    /// Logika interakcji dla klasy VerticalBarContainer.xaml
+    /// Logika interakcji dla klasy HLayout.xaml
     /// </summary>
-    public partial class VerticalBarContainer : UserControl
+    public partial class HLayout : UserControl
     {
-        public VerticalBarContainer()
+        public HLayout()
         {
             InitializeComponent();
-        }
-
-        public void ClearView()
-        {
-            this.MyStackPanel.Children.Clear();
-        }
-        public void AddStaffControl(StaffControl StaffControl)
-        {
-            this.MyStackPanel.Children.Add(StaffControl);
         }
     }
 }

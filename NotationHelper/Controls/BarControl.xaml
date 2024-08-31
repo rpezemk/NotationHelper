@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="NotationHelper.Controls.BarControl"
+﻿<UserControl x:Class="NotationHelper.Controls.StaffControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,27 +7,12 @@
              mc:Ignorable="d" 
              d:DesignWidth="150">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="10"/>
-            <RowDefinition/>
-            <RowDefinition Height="10"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="1"/>
-            </Grid.ColumnDefinitions>
-            <Rectangle Width="1" Fill="Black" Margin="0,2,0,2"/>
-            <Grid x:Name="NoteGrid" Grid.Column="1"/>
-            <StackPanel Grid.Column="1">
-                <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
-                <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
-                <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
-                <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
-                <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
-            </StackPanel>
-            <Rectangle Grid.Column="2" Width="1" Fill="Black" Margin="0,2,0,2"/>
-        </Grid>
+        <StackPanel>
+            <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
+            <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
+            <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
+            <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
+            <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
+        </StackPanel>
     </Grid>
 </UserControl>

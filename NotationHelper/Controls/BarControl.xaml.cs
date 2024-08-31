@@ -17,18 +17,13 @@ using System.Windows.Shapes;
 namespace NotationHelper.Controls
 {
     /// <summary>
-    /// Logika interakcji dla klasy BarControl.xaml
+    /// Logika interakcji dla klasy StaffControl.xaml
     /// </summary>
-    public partial class BarControl : UserControl
+    public partial class StaffControl : UserControl
     {
-        public BarControl()
+        public StaffControl()
         {
             InitializeComponent();
-        }
-
-        public void ShowNote(NoteControl note)
-        {
-            NoteGrid.Children.Add(note);
         }
     }
 }
