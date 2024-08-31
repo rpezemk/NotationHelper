@@ -44,7 +44,7 @@ namespace NotationHelper
 
         private void MainWindowControl_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Program.FillBasic(this, pieceMatrix, 0, 4);
+            //Program.FillBasic(this, pieceMatrix, 0, 4);
         }
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
@@ -63,6 +63,16 @@ namespace NotationHelper
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void GridSplitter_TouchMove(object sender, TouchEventArgs e)
+        {
+            Program.FillBasic(this, pieceMatrix, 0, 4);
+        }
+
+        private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Program.FillBasic(this, pieceMatrix, 0, 4);
         }
     }
 }
