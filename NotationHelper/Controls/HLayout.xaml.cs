@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,6 +24,17 @@ namespace NotationHelper.Controls
         public HLayout()
         {
             InitializeComponent();
+        }
+
+        public void ShowNBars(int n)
+        {
+            for (int i = 0; i < n; i++) 
+            { 
+                BarWithLine barWithLine = new BarWithLine();
+                MyMulticolumnGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                Grid.SetColumn(barWithLine, i);
+                MyMulticolumnGrid.Children.Add(barWithLine);
+            }
         }
     }
 }

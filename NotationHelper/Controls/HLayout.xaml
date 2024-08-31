@@ -15,6 +15,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock Text="info" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <local:StaffControl Grid.Column="1" VerticalAlignment="Top" Margin="0,15,0,0"/>
+            <Grid x:Name="MyMulticolumnGrid" Grid.Column="1" VerticalAlignment="Top" Height="25" Margin="0,15,0,0"/>
             <Canvas Grid.Column="1" x:Name="MyNoteCanvas" Background="#2200FFFF">
             </Canvas>
         </Grid>

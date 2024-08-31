@@ -22,19 +22,41 @@ namespace NotationHelper
             var leftList = new List<VerticalBarContainer>();
             var rightList = new List<VerticalBarContainer>();
 
-            Random rand = new Random();
+            var gridHeight = mainWindow.MultiColumnGrid.ActualHeight;
+            var hLayoutHeight = new HLayout().Height;
 
-            matrix.HBarGroups.DivideSet(out var outLeft, out var outRight);
+            var nPartsPerSide = (int)Math.Floor(gridHeight / (hLayoutHeight));
 
-            foreach (var part in outLeft) 
+
+            matrix.HBarGroups.DivideSet(nPartsPerSide, out var partGroups, out var nResCount);
+
+            int groupId = 0;
+            foreach (var partGroup in partGroups) 
             {
-                mainWindow.NoteLayout.Children.Add(new HLayout());
-            }
+                mainWindow.MultiColumnGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                StackPanel stackPanel = new StackPanel();
+                Grid.SetColumn(stackPanel, groupId);
+                foreach(var part in partGroup)
+                {
+                    var hLayout = new HLayout();
+                    hLayout.ShowNBars(part.Bars.Count());
+                    stackPanel.Children.Add(hLayout);
+                }
+                mainWindow.MultiColumnGrid.Children.Add(stackPanel);
 
-            foreach (var part in outRight)
-            {
-                mainWindow.NoteLayoutAux.Children.Add(new HLayout());
+                groupId++;
             }
+            
+
+            //foreach (var part in outLeft) 
+            //{
+            //    mainWindow.NoteLayout.Children.Add(new HLayout());
+            //}
+
+            //foreach (var part in nResCount)
+            //{
+            //    mainWindow.NoteLayoutAux.Children.Add(new HLayout());
+            //}
 
 
             //foreach (var layout in notePanels)
@@ -46,8 +68,10 @@ namespace NotationHelper
 
         public static void ClearMain(MainWindow mainWindow)
         {
-            mainWindow.NoteLayout.Children.Clear();
-            mainWindow.NoteLayoutAux.Children.Clear();
+            mainWindow.MultiColumnGrid.ColumnDefinitions.Clear();
+            mainWindow.MultiColumnGrid.Children.Clear();
+            //mainWindow.NoteLayout.Children.Clear();
+            //mainWindow.NoteLayoutAux.Children.Clear();
         }
     }
 }

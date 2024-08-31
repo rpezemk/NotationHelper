@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using NotationHelper.DataModel.Elementary;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -33,7 +34,14 @@ namespace NotationHelper
 
         private void FillButton_Click(object sender, RoutedEventArgs e)
         {
-            Program.FillBasic(this, new DataModel.Elementary.PieceMatrix(30, 4), 0, 4);
+            Program.FillBasic(this, pieceMatrix, 0, 4);
+        }
+
+        PieceMatrix pieceMatrix = new DataModel.Elementary.PieceMatrix(30, 4);
+
+        private void MainWindowControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Program.FillBasic(this, pieceMatrix, 0, 4);
         }
     }
 }
