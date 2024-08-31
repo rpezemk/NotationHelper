@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:NotationHelper"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <!-- Merging the external ResourceDictionary -->
+        <ResourceDictionary> 
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="StyleResources/ColorDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
