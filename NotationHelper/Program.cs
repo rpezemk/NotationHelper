@@ -11,6 +11,7 @@ using System.Windows.Media.Media3D;
 using System.Windows.Media;
 using NotationHelper.DataModel;
 using NotationHelper.DataModel.Elementary;
+using NotationHelper.FlowTypes;
 
 namespace NotationHelper
 {
@@ -46,24 +47,6 @@ namespace NotationHelper
 
                 groupId++;
             }
-            
-
-            //foreach (var part in outLeft) 
-            //{
-            //    mainWindow.NoteLayout.Children.Add(new HLayout());
-            //}
-
-            //foreach (var part in nResCount)
-            //{
-            //    mainWindow.NoteLayoutAux.Children.Add(new HLayout());
-            //}
-
-
-            //foreach (var layout in notePanels)
-            //{
-            //    var notes = TestHelper.GetRandomNotes(matrix);
-            //    layout.ShowNotes(notes);
-            //}
         }
 
         public static void ClearMain(MainWindow mainWindow)
@@ -72,6 +55,24 @@ namespace NotationHelper
             mainWindow.MultiColumnGrid.Children.Clear();
             //mainWindow.NoteLayout.Children.Clear();
             //mainWindow.NoteLayoutAux.Children.Clear();
+        }
+
+        public static VirtualMenu GetMainMenu()
+        {
+            VirtualMenu menu = new VirtualMenu();
+            menu.CreateSubMenu(() => TestMethod(), "File", "Open");
+            menu.CreateSubMenu(() => TestMethod(), "File", "Save");
+            menu.CreateSubMenu(() => TestMethod(), "Edit", "Cut");
+            menu.CreateSubMenu(() => TestMethod(), "Edit", "Paste");
+            menu.CreateSubMenu(() => TestMethod(), "Edit", "Paste");
+            menu.CreateSubMenu(() => TestMethod(), "Options", "InnerSubmenu", "Some option 1");
+            menu.CreateSubMenu(() => TestMethod(), "Options", "InnerSubmenu", "Some option 2");
+            return menu;
+        }
+
+        private static void TestMethod()
+        {
+            MessageBox.Show("test");
         }
     }
 }

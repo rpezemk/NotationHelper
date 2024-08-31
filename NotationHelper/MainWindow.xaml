@@ -10,6 +10,7 @@
         SizeChanged="MainWindowControl_SizeChanged"
         Loaded="MainWindowControl_Loaded"
         MinHeight="400"
+        WindowStyle="None"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -17,22 +18,23 @@
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition/>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
             <RowDefinition/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <Label Content="LeftPane"/>
-        <GridSplitter Grid.Column="1" Background="Black" HorizontalAlignment="Center" Width="4"/>
-        <!--<ctrls:GeneralLayout Grid.Column="3" x:Name="NoteLayout"/>
-        <ctrls:GeneralLayout Grid.Column="5" x:Name="NoteLayoutAux"/>-->
-        <Grid x:Name="MultiColumnGrid" Grid.Column="3" Grid.ColumnSpan="4" MinHeight="400"/>
-        <!--<StackPanel Grid.Column="3" x:Name="NoteLayout"/>
-        <StackPanel Grid.Column="5" x:Name="NoteLayoutAux"/>-->
-        
-        <StackPanel Grid.Row="1" Grid.ColumnSpan="9" Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan ="6">
+            <Menu x:Name="MainMenu" Grid.ColumnSpan="5" MinWidth="50"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan ="6" HorizontalAlignment="Right">
+            <Button Click="MinimizeButton_Click" Background="Transparent" x:Name="MinimizeButton" Width="20" Content="__" HorizontalAlignment="Right"/>
+            <Button Click="MaximizeButton_Click" Background="Transparent" x:Name="MaximizeButton" Width="20" Content="[  ]" HorizontalAlignment="Right"/>
+            <Button Click="CloseButton_Click"    Background="Transparent" x:Name="CloseButton" Width="20" Content="X" HorizontalAlignment="Right"/>
+        </StackPanel>
+        <GridSplitter Grid.Column="1" Grid.Row="1" Background="Black" HorizontalAlignment="Center" Width="4"/>
+        <Grid x:Name="MultiColumnGrid" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4" MinHeight="400"/>
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="9" Orientation="Horizontal">
             <Button x:Name="ClearButton" Margin="3,0,3,0" Height="25" Width="60" Content="Clear" Click="ClearButton_Click"/>
             <Button x:Name="FillButton" Margin="3,0,3,0" Height="25" Width="60" Content="Fill" Click="FillButton_Click"/>
         </StackPanel>

@@ -1,4 +1,5 @@
 ﻿using NotationHelper.DataModel.Elementary;
+using NotationHelper.FlowTypes;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,7 +25,9 @@ namespace NotationHelper
 
         private void MainWindowControl_Loaded(object sender, RoutedEventArgs e)
         {
-            //Program.FillBasic(this);
+            Program.FillBasic(this, pieceMatrix, 0, 4);
+            var virtualMenu = Program.GetMainMenu();
+            MenuHelper.CreateMenuGUI(MainMenu, virtualMenu);
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
@@ -42,6 +45,24 @@ namespace NotationHelper
         private void MainWindowControl_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Program.FillBasic(this, pieceMatrix, 0, 4);
+        }
+
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void MaximizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+                this.WindowState = WindowState.Normal;
+            else if (this.WindowState == WindowState.Normal)
+                this.WindowState = WindowState.Maximized;
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
