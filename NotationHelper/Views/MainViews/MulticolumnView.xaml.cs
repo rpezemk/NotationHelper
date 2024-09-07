@@ -27,42 +27,29 @@ namespace NotationHelper.Views.MainViews
         public MulticolumnView()
         {
             InitializeComponent();
-            var dt = DataContext;
         }
 
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            FillBasic(new PieceMatrix(16, 30), 0, 4);
-            var dt = DataContext;
+            //FillBasic(new PieceMatrix(16, 30), 0, 4);
         }
 
 
         public void RecalculateLayout()
         {
+            MultiColumnGrid.Children.Clear();
             if (DataContext is not VisualMusicContent_VM visualMusicContent)
                 return;
             MultiColumnGrid.SubdivideLikeGrid(MainGrid.ActualWidth, MultiColumnGrid.ActualHeight, new HLayout().Height, visualMusicContent.PartContent_VMs.ToList(), new HLayout());
         }
 
-        public void FillBasic(PieceMatrix matrix, int startBarNo, int barCount)
-        {
-            ClearMain();
-            RecalculateLayout();
-        }
-
-        public void ClearMain()
-        {
-            MultiColumnGrid.Children.Clear();
-        }
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            FillBasic(new PieceMatrix(16, 30), 0, 4);
+
         }
 
         private void MultiColumnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            var dt = DataContext;
         }
     }
 }

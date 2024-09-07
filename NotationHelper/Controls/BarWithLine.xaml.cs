@@ -1,6 +1,7 @@
 ﻿using NotationHelper.Helpers;
 using NotationHelper.MVVM;
 using NotationHelper.MVVM.MusicVM;
+using NotationHelper.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,9 +30,14 @@ namespace NotationHelper.Controls
         }
         private void ReloadVMs()
         {
-            if (DataContext is not SingleBar_VM hContentVM)
+            if (DataContext is not SingleBar_VM singleBarVM)
                 return;
-            //MyStackPanel.SubdivideHorizontal(GridContainer.ActualWidth, hContentVM..ToList(), new BarWithLine());
+            MyStackPanel.SubdivideHorizontal(GridContainer.ActualWidth, singleBarVM.Cells.ToList(), new RhythmCellCtrl());
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            ReloadVMs();
         }
     }
 }

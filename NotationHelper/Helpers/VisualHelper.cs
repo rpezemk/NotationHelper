@@ -20,7 +20,6 @@ namespace NotationHelper.Helpers
             values.ToList().DivideSet(nPartsPerSide, out var vmGroups, out var nResCount);
             var columnWidth = externalWidth / nResCount;
 
-            int groupId = 0;
             foreach (var vmGroup in vmGroups)
             {
                 StackPanel subPanel = new StackPanel() { Width = columnWidth };
@@ -31,7 +30,6 @@ namespace NotationHelper.Helpers
                     subPanel.Children.Add(subControl);
                 }
                 panel.Children.Add(subPanel);
-                groupId++;
             }
         }
 

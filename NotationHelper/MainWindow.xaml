@@ -13,7 +13,9 @@
         SizeChanged="MainWindowControl_SizeChanged"
         Loaded="MainWindowControl_Loaded"
         MinHeight="400"
+        LocationChanged="MainWindowControl_LocationChanged"
         Background="{StaticResource ButtonForegroundBrush}"
+        StateChanged="MainWindowControl_StateChanged"
         WindowStyle="None"
         Title="MainWindow" Height="450" Width="800">
     <Window.DataContext>
@@ -43,14 +45,27 @@
             <Button Click="CloseButton_Click"    Background="Transparent" x:Name="CloseButton" Width="20" Content="X" HorizontalAlignment="Right"/>
         </StackPanel>
         <!--VERTICAL SPLITTER-->
-        <GridSplitter Grid.Column="1" Grid.Row="1" Background="Gray" HorizontalAlignment="Center" Width="4"/>
+        <GridSplitter Grid.Column="1" 
+                      Grid.Row="1" 
+                      Background="Gray" 
+                      HorizontalAlignment="Center" 
+                      PreviewMouseUp="GridSplitter_PreviewMouseUp"
+                      Width="4"/>
 
         <Grid Grid.Row="1" Grid.Column="3" DataContext="{Binding MusicContentVM}">
             <mainViews:MulticolumnView x:Name="MyMulticolumnView" />
         </Grid>
         
         <!--HORIZONTAL SPLITTER-->
-        <GridSplitter TouchMove="GridSplitter_TouchMove" Grid.Row="2" VerticalAlignment="Center" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" Background="Gray" Height="2"/>
+        <GridSplitter TouchMove="GridSplitter_TouchMove" 
+                      MouseLeftButtonDown="GridSplitter_MouseLeftButtonDown"
+                      MouseLeftButtonUp="GridSplitter_MouseLeftButtonUp"
+                      PreviewMouseUp="GridSplitter_PreviewMouseUp"
+                      Grid.Row="2" 
+                      VerticalAlignment="Center" 
+                      Grid.ColumnSpan="5" 
+                      HorizontalAlignment="Stretch" 
+                      Background="Gray" Height="2"/>
         <!--PREVIEW-->
         <Grid Grid.Row="3" Grid.ColumnSpan="4" Background="#220000FF" SizeChanged="Grid_SizeChanged">
             <Grid.ColumnDefinitions>

@@ -4,9 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NotationHelper.Views"
+             xmlns:ctrls="clr-namespace:NotationHelper.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="40">
-    <Border BorderBrush="#4400FF99" BorderThickness="2">
-            
+    <Border BorderBrush="#9900FF99" BorderThickness="2">
+        <StackPanel>
+            <Rectangle Width="20" Height="2" Fill="Black"/>
+            <ctrls:NoteControl Margin="0,2,0,0"/>
+            <ctrls:NoteControl Margin="0,2,0,0"/>
+            <ctrls:NoteControl Margin="0,2,0,0"/>
+        </StackPanel>
     </Border>
 </UserControl>

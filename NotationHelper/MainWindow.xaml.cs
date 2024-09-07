@@ -1,6 +1,7 @@
 ﻿using NotationHelper.DataModel.Elementary;
 using NotationHelper.FlowTypes;
 using NotationHelper.Helpers;
+using NotationHelper.MVVM.MainVM;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -25,9 +26,10 @@ namespace NotationHelper
             InitializeComponent();
         }
 
+        private bool lockLayout = true;
         private void MainWindowControl_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            lockLayout = false;
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
@@ -44,7 +46,7 @@ namespace NotationHelper
 
         private void MainWindowControl_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            //Program.FillBasic(this, pieceMatrix, 0, 4);
+            MyMulticolumnView.RecalculateLayout();
         }
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
@@ -71,6 +73,47 @@ namespace NotationHelper
         }
 
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+
+        }
+
+        private void GridSplitter_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            MyMulticolumnView.RecalculateLayout();
+        }
+
+        private void GridSplitter_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MyMulticolumnView.RecalculateLayout();
+
+        }
+
+        private void GridSplitter_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+
+        }
+
+        private void GridSplitter_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+
+            MyMulticolumnView.RecalculateLayout();
+        }
+
+        private void MainWindowControl_LocationChanged(object sender, EventArgs e)
+        {
+            if (lockLayout)
+                return;
+            MyMulticolumnView.RecalculateLayout();
+        }
+
+        private void MainWindowControl_StateChanged(object sender, EventArgs e)
+        {
+            if (lockLayout)
+                return;
+            MyMulticolumnView.RecalculateLayout();
+        }
+
+        private void MainWindowControl_SizeChanged_1(object sender, SizeChangedEventArgs e)
         {
 
         }
