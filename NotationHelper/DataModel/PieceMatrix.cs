@@ -9,12 +9,7 @@
                 var group = new Part() { PartNo = partNo };
                 for (int barNo = 0; barNo < barCount; barNo++) 
                 {
-                    var bar = new Bar() { BarNo = barNo, PartNo = partNo};
-                    bar.FirstVoice = new VoiceBar() { };
-                    bar.FirstVoice.PartNo = partNo;
-                    bar.FirstVoice.BarNo = barNo;
-                    bar.FirstVoice.TimeGroups = new List<TimeGroup>();
-
+                    var bar = new VoiceBar() { };
                     for (int i = 0; i < 4; i++)
                     {
                         var vNoteGroup = new VNoteGroup();
@@ -26,31 +21,24 @@
                             BarNo = barNo, PartNo = partNo ,
                         };
                         vNoteGroup.Notes.Add(note);
-                        bar.FirstVoice.TimeGroups.Add(vNoteGroup);
+                        bar.TimeGroups.Add(vNoteGroup);
                     }
 
                     group.Bars.Add(bar);
                 }
-                HBarGroups.Add(group);
+                Parts.Add(group);
             }
         }
 
-        public List<Part> HBarGroups { get; set; } = new List<Part>();
-        public Bar GetSingleBar(int partNo, int barNo)
-        {
-            var group = HBarGroups[partNo];
-            var bar = group.Bars[barNo];
-            return bar;
-        }
-
+        public List<Part> Parts { get; set; } = new List<Part>();
         public List<TimeGroup> GetRangeByBarNo(int startBar, int barCount)
         {
             var resNotes = new List<TimeGroup>();
 
-            foreach (var hgroup in HBarGroups)
+            foreach (var hgroup in Parts)
             {
                 var bars = hgroup.Bars.Skip(startBar).Take(barCount);
-                var timeGroups = bars.SelectMany(b => b.FirstVoice.TimeGroups);
+                var timeGroups = bars.SelectMany(b => b.TimeGroups);
                 resNotes.AddRange(timeGroups);
             }
             return resNotes;

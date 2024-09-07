@@ -5,7 +5,11 @@ VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotationHelper", "NotationHelper\NotationHelper.csproj", "{A08E3FFB-B154-4FE4-8787-14545450E2AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioTool", "AudioTool\AudioTool.csproj", "{F6C51BCF-026D-4A11-9D7C-D780A5108467}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioTool", "AudioTool\AudioTool.csproj", "{F6C51BCF-026D-4A11-9D7C-D780A5108467}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatrixTest", "MatrixTest\MatrixTest.csproj", "{1450D800-91BE-4DC6-ADB7-DEB3592BE83E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NAudioTest", "NAudioTest\NAudioTest.csproj", "{97D80CE2-B955-49DF-B809-F49965E9001D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{F6C51BCF-026D-4A11-9D7C-D780A5108467}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6C51BCF-026D-4A11-9D7C-D780A5108467}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6C51BCF-026D-4A11-9D7C-D780A5108467}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1450D800-91BE-4DC6-ADB7-DEB3592BE83E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1450D800-91BE-4DC6-ADB7-DEB3592BE83E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1450D800-91BE-4DC6-ADB7-DEB3592BE83E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1450D800-91BE-4DC6-ADB7-DEB3592BE83E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97D80CE2-B955-49DF-B809-F49965E9001D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97D80CE2-B955-49DF-B809-F49965E9001D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97D80CE2-B955-49DF-B809-F49965E9001D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97D80CE2-B955-49DF-B809-F49965E9001D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

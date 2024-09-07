@@ -20,16 +20,12 @@ namespace NotationHelper
         public static void FillBasic(MainWindow mainWindow, PieceMatrix matrix, int startBarNo, int barCount) 
         {
             ClearMain(mainWindow);
-            var leftList = new List<VerticalBarContainer>();
-            var rightList = new List<VerticalBarContainer>();
-
             var gridHeight = mainWindow.MultiColumnGrid.ActualHeight;
             var hLayoutHeight = new HLayout().Height;
 
             var nPartsPerSide = (int)Math.Floor(gridHeight / (hLayoutHeight));
 
-
-            matrix.HBarGroups.DivideSet(nPartsPerSide, out var partGroups, out var nResCount);
+            matrix.Parts.DivideSet(nPartsPerSide, out var partGroups, out var nResCount);
 
             int groupId = 0;
             foreach (var partGroup in partGroups) 
@@ -53,8 +49,6 @@ namespace NotationHelper
         {
             mainWindow.MultiColumnGrid.ColumnDefinitions.Clear();
             mainWindow.MultiColumnGrid.Children.Clear();
-            //mainWindow.NoteLayout.Children.Clear();
-            //mainWindow.NoteLayoutAux.Children.Clear();
         }
 
         public static VirtualMenu GetMainMenu()

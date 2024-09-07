@@ -54,6 +54,7 @@
 
     public class VoiceBar
     {
+        public Meter Meter { get; set; } = new Meter() { Numerator = 4, Denominator = DurationEnum.Querter };
         public int BarNo { get; set; }
         public int PartNo { get; set; }
         public List<TimeGroup> TimeGroups { get; set; } = new List<TimeGroup>() 
@@ -62,23 +63,15 @@
         };
     }
 
-    public class Bar
-    {
-        public int BarNo { get; set; }
-        public int PartNo { get; set; }
-        public VoiceBar FirstVoice { get; set; } = new VoiceBar() {  };
-        public VoiceBar SecondVoice {  get; set; }
-    }
-
 
     public class Part
     {
         public int PartNo { get; set; }
-        public List<Bar> Bars { get; set; } = new List<Bar>();
+        public List<VoiceBar> Bars { get; set; } = new List<VoiceBar>();
     }
 
     public class VBarGroup
     {
-        public List<Bar> Bars { get; set; }
+        public List<VoiceBar> Bars { get; set; }
     }
 }
