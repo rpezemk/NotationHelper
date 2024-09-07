@@ -42,18 +42,14 @@
             <Button Click="MaximizeButton_Click" Background="Transparent" x:Name="MaximizeButton" Width="20" Content="[  ]" HorizontalAlignment="Right"/>
             <Button Click="CloseButton_Click"    Background="Transparent" x:Name="CloseButton" Width="20" Content="X" HorizontalAlignment="Right"/>
         </StackPanel>
+        <!--VERTICAL SPLITTER-->
         <GridSplitter Grid.Column="1" Grid.Row="1" Background="Gray" HorizontalAlignment="Center" Width="4"/>
-        <Grid x:Name="MultiColumnGrid2" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4" MinHeight="400"/>
-        <Grid x:Name="MultiColumnGrid" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4" MinHeight="400">
-            <Grid.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Test1"/>
-                    <Separator/>
-                    <Border BorderThickness="2" BorderBrush="Black" Width="50" Height="50"/>
-                </ContextMenu>
-            </Grid.ContextMenu>
-        </Grid>
+
+        <mainViews:MulticolumnView x:Name="MyMulticolumnView" DataContext="{Binding MusicContentVM}" Grid.Row="1" Grid.Column="3"/>
+        
+        <!--HORIZONTAL SPLITTER-->
         <GridSplitter TouchMove="GridSplitter_TouchMove" Grid.Row="2" VerticalAlignment="Center" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" Background="Gray" Height="2"/>
+        <!--PREVIEW-->
         <Grid Grid.Row="3" Grid.ColumnSpan="4" Background="#220000FF" SizeChanged="Grid_SizeChanged">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>

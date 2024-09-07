@@ -20,7 +20,7 @@ namespace NotationHelper
         public static void FillBasic(MainWindow mainWindow, PieceMatrix matrix, int startBarNo, int barCount) 
         {
             ClearMain(mainWindow);
-            var gridHeight = mainWindow.MultiColumnGrid.ActualHeight;
+            var gridHeight = mainWindow.MyMulticolumnView.MultiColumnGrid.ActualHeight;
             var hLayoutHeight = new HLayout().Height;
 
             var nPartsPerSide = (int)Math.Floor(gridHeight / (hLayoutHeight));
@@ -30,7 +30,7 @@ namespace NotationHelper
             int groupId = 0;
             foreach (var partGroup in partGroups) 
             {
-                mainWindow.MultiColumnGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                mainWindow.MyMulticolumnView.MultiColumnGrid.ColumnDefinitions.Add(new ColumnDefinition());
                 StackPanel stackPanel = new StackPanel();
                 Grid.SetColumn(stackPanel, groupId);
                 foreach(var part in partGroup)
@@ -39,7 +39,7 @@ namespace NotationHelper
                     hLayout.ShowNBars(part.Bars.Count());
                     stackPanel.Children.Add(hLayout);
                 }
-                mainWindow.MultiColumnGrid.Children.Add(stackPanel);
+                mainWindow.MyMulticolumnView.MultiColumnGrid.Children.Add(stackPanel);
 
                 groupId++;
             }
@@ -47,8 +47,8 @@ namespace NotationHelper
 
         public static void ClearMain(MainWindow mainWindow)
         {
-            mainWindow.MultiColumnGrid.ColumnDefinitions.Clear();
-            mainWindow.MultiColumnGrid.Children.Clear();
+            mainWindow.MyMulticolumnView.MultiColumnGrid.ColumnDefinitions.Clear();
+            mainWindow.MyMulticolumnView.MultiColumnGrid.Children.Clear();
         }
 
         public static VirtualMenu GetMainMenu()
