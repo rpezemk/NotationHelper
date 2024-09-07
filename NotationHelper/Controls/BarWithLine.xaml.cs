@@ -1,4 +1,7 @@
-﻿using System;
+﻿using NotationHelper.Helpers;
+using NotationHelper.MVVM;
+using NotationHelper.MVVM.MusicVM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +26,12 @@ namespace NotationHelper.Controls
         public BarWithLine()
         {
             InitializeComponent();
+        }
+        private void ReloadVMs()
+        {
+            if (DataContext is not SingleBar_VM hContentVM)
+                return;
+            //MyStackPanel.SubdivideHorizontal(GridContainer.ActualWidth, hContentVM..ToList(), new BarWithLine());
         }
     }
 }

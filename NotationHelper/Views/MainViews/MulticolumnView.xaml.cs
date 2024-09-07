@@ -41,26 +41,7 @@ namespace NotationHelper.Views.MainViews
         {
             if (DataContext is not VisualMusicContent_VM visualMusicContent)
                 return;
-
-            var gridHeight = MultiColumnStackPanel.ActualHeight;
-            var hLayoutHeight = new HLayout().Height;
-            var fullWidth = MainGrid.ActualWidth;
-            var nPartsPerSide = (int)Math.Floor(gridHeight / (hLayoutHeight));
-            visualMusicContent.PartContent_VMs.ToList().DivideSet(nPartsPerSide, out var partGroups, out var nResCount);
-            var columnWidth = fullWidth / nResCount;
-
-            int groupId = 0;
-            foreach (var partGroup in partGroups)
-            {
-                MusicPage musicPage = new MusicPage() { Width = columnWidth };
-                foreach (var part in partGroup)
-                {
-                    musicPage.HorizontalParts.Add(part);
-                }
-                MultiColumnStackPanel.Children.Add(musicPage);
-                groupId++;
-            }
-
+            MultiColumnGrid.SubdivideLikeGrid(MainGrid.ActualWidth, MultiColumnGrid.ActualHeight, new HLayout().Height, visualMusicContent.PartContent_VMs.ToList(), new HLayout());
         }
 
         public void FillBasic(PieceMatrix matrix, int startBarNo, int barCount)
@@ -71,7 +52,7 @@ namespace NotationHelper.Views.MainViews
 
         public void ClearMain()
         {
-            MultiColumnStackPanel.Children.Clear();
+            MultiColumnGrid.Children.Clear();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

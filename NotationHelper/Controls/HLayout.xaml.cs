@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NotationHelper.Helpers;
+using NotationHelper.MVVM.MusicVM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,13 +41,19 @@ namespace NotationHelper.Controls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            var dt = DataContext;
+            ReloadVMs();
         }
 
         private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            ReloadVMs();
+        }
 
-            var dt = DataContext;
+        private void ReloadVMs()
+        {
+            if (DataContext is not HContent_VM hContentVM)
+                return;
+            MyStackPanel.SubdivideHorizontal(MyMulticolumnGrid.ActualWidth, hContentVM.SingleBar_VMs.ToList(), new BarWithLine());
         }
     }
 }
