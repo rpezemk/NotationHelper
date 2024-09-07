@@ -15,7 +15,7 @@ using NotationHelper.FlowTypes;
 
 namespace NotationHelper
 {
-    public static class Program
+    public static class ProgramSettings
     {
         public static VirtualMenu GetMainMenu()
         {

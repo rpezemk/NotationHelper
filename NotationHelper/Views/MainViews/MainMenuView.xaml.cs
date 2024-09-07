@@ -24,7 +24,7 @@ namespace NotationHelper.Views.MainViews
         public MainMenuView()
         {
             InitializeComponent();
-            var virtualMenu = Program.GetMainMenu();
+            var virtualMenu = ProgramSettings.GetMainMenu();
             MenuHelper.CreateMenuGUI(MainMenu, virtualMenu);
         }
     }

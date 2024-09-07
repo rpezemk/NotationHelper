@@ -36,5 +36,16 @@ namespace NotationHelper.Controls
                 MyMulticolumnGrid.Children.Add(barWithLine);
             }
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            var dt = DataContext;
+        }
+
+        private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
+            var dt = DataContext;
+        }
     }
 }

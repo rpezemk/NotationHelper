@@ -42,7 +42,7 @@ namespace NotationHelper.Views.MainViews
             if (DataContext is not VisualMusicContent_VM visualMusicContent)
                 return;
 
-            var gridHeight = MultiColumnGrid.ActualHeight;
+            var gridHeight = MultiColumnStackPanel.ActualHeight;
             var hLayoutHeight = new HLayout().Height;
             var fullWidth = MainGrid.ActualWidth;
             var nPartsPerSide = (int)Math.Floor(gridHeight / (hLayoutHeight));
@@ -52,15 +52,12 @@ namespace NotationHelper.Views.MainViews
             int groupId = 0;
             foreach (var partGroup in partGroups)
             {
-                StackPanel stackPanel = new StackPanel() { Width = columnWidth };
-                Grid.SetColumn(stackPanel, groupId);
+                MusicPage musicPage = new MusicPage() { Width = columnWidth };
                 foreach (var part in partGroup)
                 {
-                    var hLayout = new HLayout();
-                    hLayout.ShowNBars(4);
-                    stackPanel.Children.Add(hLayout);
+                    musicPage.HorizontalParts.Add(part);
                 }
-                MultiColumnGrid.Children.Add(stackPanel);
+                MultiColumnStackPanel.Children.Add(musicPage);
                 groupId++;
             }
 
@@ -74,7 +71,7 @@ namespace NotationHelper.Views.MainViews
 
         public void ClearMain()
         {
-            MultiColumnGrid.Children.Clear();
+            MultiColumnStackPanel.Children.Clear();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
