@@ -17,40 +17,6 @@ namespace NotationHelper
 {
     public static class Program
     {
-        public static void FillBasic(MainWindow mainWindow, PieceMatrix matrix, int startBarNo, int barCount) 
-        {
-            ClearMain(mainWindow);
-            var gridHeight = mainWindow.MyMulticolumnView.MultiColumnGrid.ActualHeight;
-            var hLayoutHeight = new HLayout().Height;
-
-            var nPartsPerSide = (int)Math.Floor(gridHeight / (hLayoutHeight));
-
-            matrix.Parts.DivideSet(nPartsPerSide, out var partGroups, out var nResCount);
-
-            int groupId = 0;
-            foreach (var partGroup in partGroups) 
-            {
-                mainWindow.MyMulticolumnView.MultiColumnGrid.ColumnDefinitions.Add(new ColumnDefinition());
-                StackPanel stackPanel = new StackPanel();
-                Grid.SetColumn(stackPanel, groupId);
-                foreach(var part in partGroup)
-                {
-                    var hLayout = new HLayout();
-                    hLayout.ShowNBars(part.Bars.Count());
-                    stackPanel.Children.Add(hLayout);
-                }
-                mainWindow.MyMulticolumnView.MultiColumnGrid.Children.Add(stackPanel);
-
-                groupId++;
-            }
-        }
-
-        public static void ClearMain(MainWindow mainWindow)
-        {
-            mainWindow.MyMulticolumnView.MultiColumnGrid.ColumnDefinitions.Clear();
-            mainWindow.MyMulticolumnView.MultiColumnGrid.Children.Clear();
-        }
-
         public static VirtualMenu GetMainMenu()
         {
             VirtualMenu menu = new VirtualMenu();

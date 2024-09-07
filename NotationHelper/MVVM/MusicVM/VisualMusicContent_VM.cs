@@ -17,4 +17,5 @@ namespace NotationHelper.MVVM.MusicVM
         private ObservableCollection<HContent_VM> partContent_VMs = new ObservableCollection<HContent_VM>();
         public ObservableCollection<HContent_VM> PartContent_VMs { get { return partContent_VMs; } set { partContent_VMs = value; OnPropertyChanged(); } }
     }
+
 }

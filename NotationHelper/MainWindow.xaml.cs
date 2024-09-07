@@ -27,17 +27,17 @@ namespace NotationHelper
 
         private void MainWindowControl_Loaded(object sender, RoutedEventArgs e)
         {
-            Program.FillBasic(this, pieceMatrix, 0, 4);
+            
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            Program.ClearMain(this);
+
         }
 
         private void FillButton_Click(object sender, RoutedEventArgs e)
         {
-            Program.FillBasic(this, pieceMatrix, 0, 4);
+
         }
 
         PieceMatrix pieceMatrix = new DataModel.Elementary.PieceMatrix(30, 4);
@@ -67,12 +67,12 @@ namespace NotationHelper
 
         private void GridSplitter_TouchMove(object sender, TouchEventArgs e)
         {
-            Program.FillBasic(this, pieceMatrix, 0, 4);
+
         }
 
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Program.FillBasic(this, pieceMatrix, 0, 4);
+
         }
     }
 }
