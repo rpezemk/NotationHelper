@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:NotationHelper"
         xmlns:ctrls="clr-namespace:NotationHelper.Controls"
         xmlns:tools="clr-namespace:NotationHelper.Controls.Tools"
+        xmlns:mainMVVM="clr-namespace:NotationHelper.MVVM.MainVM"
+        xmlns:mainViews="clr-namespace:NotationHelper.Views.MainViews"
         mc:Ignorable="d"
         x:Name="MainWindowControl"
         SizeChanged="MainWindowControl_SizeChanged"
@@ -14,6 +16,9 @@
         Background="{StaticResource ButtonForegroundBrush}"
         WindowStyle="None"
         Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <mainMVVM:Main_VM/>
+    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -28,18 +33,9 @@
             <RowDefinition/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.ColumnSpan ="6">
-            <Menu x:Name="MainMenu" Grid.ColumnSpan="5" MinWidth="50" FontSize="15" 
-                  VerticalAlignment="Center" 
-                  Background="Transparent" 
-                  Foreground="{StaticResource ForegroundTextBrush}" MinHeight="20"/>
-            <StackPanel Orientation="Horizontal">
-                <tools:ToolBarItem/>
-                <tools:ToolBarItem/>
-                <tools:ToolBarItem/>
-                <tools:ToolBarItem/>
-                <tools:ToolBarItem/>
-            </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="6">
+            <mainViews:MainMenuView DataContext="{Binding Path=Menu_VM}"/>
+            <mainViews:ToolbarView DataContext="{Binding Path=ToolBar_VM}" ToolbarItems="{Binding Path=ToolbarItems}"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.ColumnSpan ="6" HorizontalAlignment="Right">
             <Button Click="MinimizeButton_Click" Background="Transparent" x:Name="MinimizeButton" Width="20" Content="__" HorizontalAlignment="Right"/>

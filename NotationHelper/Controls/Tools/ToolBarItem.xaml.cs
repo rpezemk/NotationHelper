@@ -28,7 +28,16 @@ namespace NotationHelper.Controls.Tools
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            SmuflGlyphs.TestGlyph(MyTextBlock);
+            TestGlyph(MyTextBlock);
+        }
+
+        private static void TestGlyph(TextBlock textBlock)
+        {
+            textBlock.FontFamily = new FontFamily(new Uri("pack://application:,,,/"), "./FontResources/#Bravura"); ;
+            textBlock.Text = ConstGlyphs.G_Clef;// Notehead_Half;
+            textBlock.FontSize = 14;
+            var rescs = Application.Current.Resources;
+            var vals = rescs.Keys;
         }
     }
 }

@@ -23,15 +23,11 @@ namespace NotationHelper
         public MainWindow()
         {
             InitializeComponent();
-            var content = SmuflGlyphs.GetPackUri2();
-            File.WriteAllText("abc.otf", content);
         }
 
         private void MainWindowControl_Loaded(object sender, RoutedEventArgs e)
         {
             Program.FillBasic(this, pieceMatrix, 0, 4);
-            var virtualMenu = Program.GetMainMenu();
-            MenuHelper.CreateMenuGUI(MainMenu, virtualMenu);
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)

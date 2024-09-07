@@ -22,48 +22,10 @@ namespace NotationHelper.Helpers
             string packUri = "pack://application:,,,./" + folderPath + "/" + fontFamilyName;
             return packUri;
         }
+    }
 
-        public static string GetPackUri2()
-        {
-            // Get the executing assembly
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            StringBuilder sb = new StringBuilder();
-            // Retrieve all embedded resource names
-            string[] resourceNames = assembly.GetManifestResourceNames();
-
-            Console.WriteLine("Embedded Resources:");
-            foreach (string resourceName in resourceNames.Skip(1))
-            {
-                Console.WriteLine(resourceName);
-
-                // Optionally, access the resource stream
-                using (var resourceStream = assembly.GetManifestResourceStream(resourceName))
-                {
-                    if (resourceStream != null)
-                    {
-                        // Do something with the resource stream, for example:
-                        Console.WriteLine($"Content of {resourceName}:");
-                        using (var reader = new System.IO.StreamReader(resourceStream))
-                        {
-                            string content = reader.ReadToEnd();
-                            sb.Append("\n");
-                            sb.Append(content);
-                        }
-                    }
-                }
-            }
-            return sb.ToString();
-        }
-
-        public static void TestGlyph(TextBlock textBlock)
-        {
-            textBlock.FontFamily = new FontFamily(new Uri("pack://application:,,,/"), "./FontResources/#Bravura"); ;
-            textBlock.Text = G_Clef;// Notehead_Half;
-            textBlock.FontSize = 20;
-            var rescs = Application.Current.Resources;
-            var vals = rescs.Keys;
-        }
-
+    public static class ConstGlyphs
+    {
         // Clefs
         public const string G_Clef = "\uE050";
         public const string C_Clef = "\uE05C";
