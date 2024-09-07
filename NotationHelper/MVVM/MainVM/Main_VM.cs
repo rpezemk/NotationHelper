@@ -14,7 +14,7 @@ namespace NotationHelper.MVVM.MainVM
         public Main_VM() 
         {
             MatrixRange matrixRange = new MatrixRange(new DataModel.Elementary.PieceMatrix(15, 30), 0, 4);
-            musicContent = new VisualMusicContent_VM();
+            musicContent = new VisualMusicContent_VM(matrixRange);
         }
 
         private Menu_VM menu_VM = new Menu_VM();

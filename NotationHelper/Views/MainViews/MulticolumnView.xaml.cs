@@ -1,6 +1,7 @@
 ﻿using NotationHelper.Controls;
 using NotationHelper.DataModel.Elementary;
 using NotationHelper.Helpers;
+using NotationHelper.MVVM.MusicVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,50 +27,64 @@ namespace NotationHelper.Views.MainViews
         public MulticolumnView()
         {
             InitializeComponent();
-
+            var dt = DataContext;
         }
 
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             FillBasic(new PieceMatrix(16, 30), 0, 4);
+            var dt = DataContext;
         }
 
-        public void FillBasic(PieceMatrix matrix, int startBarNo, int barCount)
+
+        public void RecalculateLayout()
         {
-            ClearMain();
+            if (DataContext is not VisualMusicContent_VM visualMusicContent)
+                return;
+
             var gridHeight = MultiColumnGrid.ActualHeight;
             var hLayoutHeight = new HLayout().Height;
-
+            var fullWidth = MainGrid.ActualWidth;
             var nPartsPerSide = (int)Math.Floor(gridHeight / (hLayoutHeight));
-
-            matrix.Parts.DivideSet(nPartsPerSide, out var partGroups, out var nResCount);
+            visualMusicContent.PartContent_VMs.ToList().DivideSet(nPartsPerSide, out var partGroups, out var nResCount);
+            var columnWidth = fullWidth / nResCount;
 
             int groupId = 0;
             foreach (var partGroup in partGroups)
             {
-                MultiColumnGrid.ColumnDefinitions.Add(new ColumnDefinition());
-                StackPanel stackPanel = new StackPanel();
+                StackPanel stackPanel = new StackPanel() { Width = columnWidth };
                 Grid.SetColumn(stackPanel, groupId);
                 foreach (var part in partGroup)
                 {
                     var hLayout = new HLayout();
-                    hLayout.ShowNBars(barCount);
+                    hLayout.ShowNBars(4);
                     stackPanel.Children.Add(hLayout);
                 }
                 MultiColumnGrid.Children.Add(stackPanel);
                 groupId++;
             }
+
+        }
+
+        public void FillBasic(PieceMatrix matrix, int startBarNo, int barCount)
+        {
+            ClearMain();
+            RecalculateLayout();
         }
 
         public void ClearMain()
         {
-            MultiColumnGrid.ColumnDefinitions.Clear();
             MultiColumnGrid.Children.Clear();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             FillBasic(new PieceMatrix(16, 30), 0, 4);
+        }
+
+        private void MultiColumnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var dt = DataContext;
         }
     }
 }

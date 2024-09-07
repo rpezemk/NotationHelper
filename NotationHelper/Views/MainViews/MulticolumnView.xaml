@@ -6,9 +6,12 @@
              xmlns:local="clr-namespace:NotationHelper.Views.MainViews"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             SizeChanged="UserControl_SizeChanged" Loaded="UserControl_Loaded">
-    
-    <Grid x:Name="MultiColumnGrid" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4" MinHeight="400">
+             SizeChanged="UserControl_SizeChanged" Loaded="UserControl_Loaded"
+             DataContextChanged="MultiColumnDataContextChanged">
+
+    <Grid x:Name="MainGrid">
+        <StackPanel x:Name="MultiColumnGrid" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4" MinHeight="400" Orientation="Horizontal">
         
+        </StackPanel>
     </Grid>
 </UserControl>

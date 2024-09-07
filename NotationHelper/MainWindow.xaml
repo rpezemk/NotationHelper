@@ -45,7 +45,9 @@
         <!--VERTICAL SPLITTER-->
         <GridSplitter Grid.Column="1" Grid.Row="1" Background="Gray" HorizontalAlignment="Center" Width="4"/>
 
-        <mainViews:MulticolumnView x:Name="MyMulticolumnView" DataContext="{Binding MusicContentVM}" Grid.Row="1" Grid.Column="3"/>
+        <Grid Grid.Row="1" Grid.Column="3" DataContext="{Binding MusicContentVM}">
+            <mainViews:MulticolumnView x:Name="MyMulticolumnView" />
+        </Grid>
         
         <!--HORIZONTAL SPLITTER-->
         <GridSplitter TouchMove="GridSplitter_TouchMove" Grid.Row="2" VerticalAlignment="Center" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" Background="Gray" Height="2"/>
