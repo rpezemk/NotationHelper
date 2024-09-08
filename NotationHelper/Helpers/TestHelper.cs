@@ -1,6 +1,7 @@
 ﻿using NotationHelper.Controls;
-using NotationHelper.DataModel;
 using NotationHelper.DataModel.Elementary;
+using NotationHelper.DataModel.Piece;
+using NotationHelper.DataModel.Piece.Parts.Bars.TimeGroups.Notes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,7 +48,7 @@ namespace NotationHelper.Helpers
         public static List<Note> GetRandomNotes(PieceMatrix pieceMatrix)
         {
             var notes = pieceMatrix.GetRangeByBarNo(0, 4);
-            return notes.Where(tg => tg.GroupType == GroupTypeEnum.NoteGroup)
+            return notes.Where(tg => tg.GroupType == TimeGroupTypeEnum.NoteGroup)
                 .Select(tg => tg as VNoteGroup)
                 .SelectMany(vng => vng.Notes).ToList();
         }

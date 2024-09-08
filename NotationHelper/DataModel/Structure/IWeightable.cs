@@ -1,4 +1,4 @@
-﻿namespace NotationHelper.StrangeTypes
+﻿namespace NotationHelper.DataModel.Structure
 {
     public interface IWeightable
     {

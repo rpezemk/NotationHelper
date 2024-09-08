@@ -1,4 +1,5 @@
-﻿using NotationHelper.DataModel.Range;
+﻿using NotationHelper.DataModel.Piece;
+using NotationHelper.DataModel.Range;
 using NotationHelper.MVVM.Base;
 using NotationHelper.MVVM.MusicVM;
 using System;
@@ -13,7 +14,7 @@ namespace NotationHelper.MVVM.MainVM
     {
         public Main_VM() 
         {
-            MatrixRange matrixRange = new MatrixRange(new DataModel.Elementary.PieceMatrix(15, 30), 0, 4);
+            MatrixRange matrixRange = new MatrixRange(new PieceMatrix(15, 30), 0, 4);
             musicContent = new VisualMusicContent_VM(matrixRange);
         }
 

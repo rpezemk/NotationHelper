@@ -1,4 +1,6 @@
 ﻿using NotationHelper.DataModel.Elementary;
+using NotationHelper.DataModel.Piece.Parts.Bar;
+using NotationHelper.DataModel.Piece.Parts.Bar.Timegroups;
 using NotationHelper.MVVM.Base;
 using System;
 using System.Collections.Generic;
@@ -25,7 +27,7 @@ namespace NotationHelper.MVVM
 
         private void FillCells()
         {
-            foreach (var timeGroup in VoiceBar.TimeGroups)
+            foreach (var timeGroup in VoiceBar.Timegroups)
             {
                 Cells.Add(new RhythmCell_VM(timeGroup));
             }

@@ -1,4 +1,4 @@
-﻿using NotationHelper.DataModel.Elementary;
+﻿using NotationHelper.DataModel.Piece;
 using NotationHelper.FlowTypes;
 using NotationHelper.Helpers;
 using NotationHelper.MVVM.MainVM;
@@ -42,7 +42,7 @@ namespace NotationHelper
 
         }
 
-        PieceMatrix pieceMatrix = new DataModel.Elementary.PieceMatrix(30, 4);
+        PieceMatrix pieceMatrix = new PieceMatrix(30, 4);
 
         private void MainWindowControl_SizeChanged(object sender, SizeChangedEventArgs e)
         {

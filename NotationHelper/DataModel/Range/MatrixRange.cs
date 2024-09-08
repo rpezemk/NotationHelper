@@ -1,4 +1,6 @@
-﻿using NotationHelper.DataModel.Elementary;
+﻿using NotationHelper.DataModel.Piece;
+using NotationHelper.DataModel.Piece.Parts;
+using NotationHelper.DataModel.Piece.Parts;
 using System;
 using System.Collections.Generic;
 using System.Linq;

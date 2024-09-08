@@ -1,5 +1,7 @@
-﻿using NotationHelper.DataModel;
-using NotationHelper.DataModel.Elementary;
+﻿using NotationHelper.DataModel.Elementary;
+using NotationHelper.DataModel.Piece.Parts.Bar;
+using NotationHelper.DataModel.Piece.Parts.Bar.Timegroups;
+using NotationHelper.DataModel.Piece.Parts.Bars.TimeGroups.Notes;
 
 namespace NotationHelper.BlankEmits
 {
@@ -28,12 +30,12 @@ namespace NotationHelper.BlankEmits
         {
             var bar = new VoiceBar();
             bar.Meter = new Meter() { Numerator = 4, Denominator = DurationEnum.Querter };
-            bar.TimeGroups = new List<TimeGroup>();
+            bar.Timegroups = new List<TimeGroup>();
             for (var i = 0; i < bar.Meter.Numerator; i++)
             {
                 TimeGroup timeGroup = GetSampleVNoteGroup(0, i);
                 timeGroup.Duration = new Duration() { BaseDuration = DurationEnum.Querter };
-                bar.TimeGroups.Add(timeGroup);
+                bar.Timegroups.Add(timeGroup);
             }
                 return new VoiceBar();
         }

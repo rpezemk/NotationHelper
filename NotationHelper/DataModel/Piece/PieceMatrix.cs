@@ -1,13 +1,19 @@
-﻿namespace NotationHelper.DataModel.Elementary
+﻿using NotationHelper.DataModel.Elementary;
+using NotationHelper.DataModel.Piece.Parts.Bar;
+using NotationHelper.DataModel.Piece.Parts.Bar.Timegroups;
+using NotationHelper.DataModel.Piece.Parts;
+using NotationHelper.DataModel.Piece.Parts.Bars.TimeGroups.Notes;
+
+namespace NotationHelper.DataModel.Piece
 {
     public class PieceMatrix
     {
         public PieceMatrix(int partCount, int barCount)
         {
-            for (int partNo = 0; partNo < partCount; partNo++) 
+            for (int partNo = 0; partNo < partCount; partNo++)
             {
                 var group = new Part() { PartNo = partNo };
-                for (int barNo = 0; barNo < barCount; barNo++) 
+                for (int barNo = 0; barNo < barCount; barNo++)
                 {
                     var bar = new VoiceBar() { };
                     for (int i = 0; i < 4; i++)
@@ -16,12 +22,13 @@
                         vNoteGroup.PartNo = partNo;
                         vNoteGroup.BarNo = barNo;
                         vNoteGroup.Notes = new List<Note>();
-                        Note note = new Note() 
-                        { 
-                            BarNo = barNo, PartNo = partNo ,
+                        Note note = new Note()
+                        {
+                            BarNo = barNo,
+                            PartNo = partNo,
                         };
                         vNoteGroup.Notes.Add(note);
-                        bar.TimeGroups.Add(vNoteGroup);
+                        bar.Timegroups.Add(vNoteGroup);
                     }
 
                     group.Bars.Add(bar);
@@ -38,8 +45,8 @@
             foreach (var hgroup in Parts)
             {
                 var bars = hgroup.Bars.Skip(startBar).Take(barCount);
-                var timeGroups = bars.SelectMany(b => b.TimeGroups);
-                resNotes.AddRange(timeGroups);
+                var Timegroups = bars.SelectMany(b => b.Timegroups);
+                resNotes.AddRange(Timegroups);
             }
             return resNotes;
         }
