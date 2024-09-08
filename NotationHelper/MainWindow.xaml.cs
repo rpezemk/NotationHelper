@@ -42,8 +42,6 @@ namespace NotationHelper
 
         }
 
-        PieceMatrix pieceMatrix = new PieceMatrix(30, 4);
-
         private void MainWindowControl_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             MyMulticolumnView.RecalculateLayout();
