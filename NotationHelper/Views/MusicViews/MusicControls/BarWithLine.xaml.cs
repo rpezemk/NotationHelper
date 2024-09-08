@@ -1,4 +1,8 @@
-﻿using System;
+﻿using NotationHelper.Helpers;
+using NotationHelper.MVVM;
+using NotationHelper.MVVM.MusicVM;
+using NotationHelper.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,22 +20,23 @@ using System.Windows.Shapes;
 namespace NotationHelper.Controls
 {
     /// <summary>
-    /// Logika interakcji dla klasy VerticalBarContainer.xaml
+    /// Logika interakcji dla klasy BarWithLine.xaml
     /// </summary>
-    public partial class VerticalBarContainer : UserControl
+    public partial class BarWithLine : UserControl
     {
-        public VerticalBarContainer()
+        public BarWithLine()
         {
             InitializeComponent();
         }
-
-        public void ClearView()
+        private void ReloadVMs()
         {
-            this.MyStackPanel.Children.Clear();
+            if (DataContext is not SingleBar_VM singleBarVM)
+                return;
         }
-        public void AddStaffControl(StaffControl StaffControl)
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            this.MyStackPanel.Children.Add(StaffControl);
+            ReloadVMs();
         }
     }
 }

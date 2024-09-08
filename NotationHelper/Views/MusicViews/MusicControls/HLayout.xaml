@@ -16,7 +16,13 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="info" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <local:StaffControl Grid.Column="1" VerticalAlignment="Top" Margin="0,15,0,0"/>
+            <StackPanel Grid.Column="1" Margin="0,15,0,0">
+                <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
+                <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
+                <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
+                <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
+                <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
+            </StackPanel>
             <Grid x:Name="MyMulticolumnGrid" Grid.Column="1" VerticalAlignment="Top" Height="25" Margin="0,15,0,0">
                 <StackPanel x:Name="MyStackPanel" Orientation="Horizontal"/>
             </Grid>

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 
-namespace NotationHelper.Controls
+namespace NotationHelper.Views.MusicViews.MusicControls
 {
     public class DrawingVisualHost : FrameworkElement
     {
