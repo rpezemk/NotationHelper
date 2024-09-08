@@ -1,13 +1,11 @@
 ﻿using NotationHelper.DataModel.Elementary;
-using NotationHelper.DataModel.Piece.Parts.Bar;
-using NotationHelper.DataModel.Piece.Parts.Bar.Timegroups;
-using NotationHelper.DataModel.Piece.Parts;
-using NotationHelper.DataModel.Piece.Parts.Bars.TimeGroups.Notes;
+using NotationHelper.DataModel.Structure;
 
 namespace NotationHelper.DataModel.Piece
 {
-    public class PieceMatrix
+    public class PieceMatrix : AObjectWithChildren<PieceMatrix, Part>
     {
+        public override PieceMatrix ThisObj => this;
         public PieceMatrix(int partCount, int barCount)
         {
             for (int partNo = 0; partNo < partCount; partNo++)
@@ -38,6 +36,8 @@ namespace NotationHelper.DataModel.Piece
         }
 
         public List<Part> Parts { get; set; } = new List<Part>();
+
+
         public List<TimeGroup> GetRangeByBarNo(int startBar, int barCount)
         {
             var resNotes = new List<TimeGroup>();

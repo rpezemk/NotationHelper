@@ -9,5 +9,6 @@
         TimeGroup,
         Note,
         Rest,
+        VNoteGroup,
     }
 }

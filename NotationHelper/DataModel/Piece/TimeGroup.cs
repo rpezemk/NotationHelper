@@ -1,8 +1,9 @@
 ﻿using NotationHelper.DataModel.Elementary;
+using NotationHelper.DataModel.Structure;
 
-namespace NotationHelper.DataModel.Piece.Parts.Bar.Timegroups
+namespace NotationHelper.DataModel.Piece
 {
-    public abstract class TimeGroup
+    public abstract class TimeGroup : AObjectWithParent<VoiceBar, TimeGroup>
     {
         public Duration Duration { get; set; } = new Duration();
         public abstract TimeGroupTypeEnum GroupType { get; }

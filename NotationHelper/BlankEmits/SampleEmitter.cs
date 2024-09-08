@@ -1,7 +1,5 @@
 ﻿using NotationHelper.DataModel.Elementary;
-using NotationHelper.DataModel.Piece.Parts.Bar;
-using NotationHelper.DataModel.Piece.Parts.Bar.Timegroups;
-using NotationHelper.DataModel.Piece.Parts.Bars.TimeGroups.Notes;
+using NotationHelper.DataModel.Piece;
 
 namespace NotationHelper.BlankEmits
 {

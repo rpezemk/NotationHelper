@@ -1,4 +1,4 @@
-﻿using NotationHelper.DataModel.Piece.Parts.Bar;
+﻿using NotationHelper.DataModel.Piece;
 using NotationHelper.MVVM.Base;
 using System.Collections.ObjectModel;
 

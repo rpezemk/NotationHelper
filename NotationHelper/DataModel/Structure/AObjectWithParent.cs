@@ -28,26 +28,17 @@ namespace NotationHelper.DataModel.Structure
         public void AppendChild(TChild child);
     }
 
-    public interface ISomeInterface<T> { }
-
-    public class Abc<T1, T2> : ISomeInterface<T1>
-        where T1 : IChildOf<T2>
-    {
-        public object Clone()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     public abstract class AObjectWithChildren<TObject, TChild> : IParentOf<TChild>
-        where TChild : IChildOf<AObjectWithChildren<TObject, TChild>>
+        where TObject : IParentOf<TChild>
+        where TChild : IChildOf<TObject>
     {
         public List<TChild> Children = new List<TChild>();
         public void AppendChild(TChild child)
         {
             Children.Add(child);
-            child.SetParent(this);
+            child.SetParent(ThisObj);
         }
+        public abstract TObject ThisObj { get; }
     }
 
     public abstract class AObjectWithParent<TParent, TObject> : IChildOf<TParent>
@@ -76,16 +67,6 @@ namespace NotationHelper.DataModel.Structure
         {
             Children.Add(child);
             child.SetParent(ThisObject);
-        }
-    }
-
-
-
-    public static class TestCl
-    {
-        public static void Test90()
-        {
-
         }
     }
 }

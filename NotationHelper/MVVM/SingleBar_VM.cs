@@ -1,6 +1,5 @@
 ﻿using NotationHelper.DataModel.Elementary;
-using NotationHelper.DataModel.Piece.Parts.Bar;
-using NotationHelper.DataModel.Piece.Parts.Bar.Timegroups;
+using NotationHelper.DataModel.Piece;
 using NotationHelper.MVVM.Base;
 using System;
 using System.Collections.Generic;

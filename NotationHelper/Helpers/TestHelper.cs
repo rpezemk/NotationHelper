@@ -1,7 +1,6 @@
 ﻿using NotationHelper.Controls;
 using NotationHelper.DataModel.Elementary;
 using NotationHelper.DataModel.Piece;
-using NotationHelper.DataModel.Piece.Parts.Bars.TimeGroups.Notes;
 using System;
 using System.Collections.Generic;
 using System.Linq;

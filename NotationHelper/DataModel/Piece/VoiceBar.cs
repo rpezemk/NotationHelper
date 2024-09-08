@@ -1,9 +1,9 @@
 ﻿using NotationHelper.DataModel.Elementary;
-using NotationHelper.DataModel.Piece.Parts.Bar.Timegroups;
+using NotationHelper.DataModel.Structure;
 
-namespace NotationHelper.DataModel.Piece.Parts.Bar
+namespace NotationHelper.DataModel.Piece
 {
-    public class VoiceBar
+    public class VoiceBar : AObjectWithParentAndChildren<Part, VoiceBar, TimeGroup>
     {
         public Meter Meter { get; set; } = new Meter() { Numerator = 4, Denominator = DurationEnum.Querter };
         public int BarNo { get; set; }
@@ -12,5 +12,7 @@ namespace NotationHelper.DataModel.Piece.Parts.Bar
         {
             new VNoteGroup()
         };
+
+        public override ObjectTypeEnum ParentType => ObjectTypeEnum.Bar;
     }
 }

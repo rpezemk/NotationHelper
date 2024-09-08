@@ -2,12 +2,12 @@
 {
     public class NoneType : IChildOf
     {
-        public ObjectTypeEnum ParentType => throw new NotImplementedException();
+        public ObjectTypeEnum ParentType => ObjectTypeEnum.None;
     }
 
-    public class NoneType<T> : IChildOf<T>
+    public class NoneType<T> : NoneType, IChildOf<T>
     {
-        public ObjectTypeEnum ParentType => throw new NotImplementedException();
+        
         private T parent;
         public void SetParent(T obj)
         {
