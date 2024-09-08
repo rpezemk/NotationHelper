@@ -3,11 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NotationHelper.StrangeTypes;
 
 namespace NotationHelper.Helpers
 {
+
     public static class EnumHelper
     {
+        public static void CalculateResult(this IEnumerable<IWeightable> list, double arbitrary)
+        {
+            var weightSum = list.Select(list => list.Weight).Sum();
+            foreach(var weightable in list)
+            {
+                weightable.ResValue = arbitrary * (weightable.Weight / weightSum);
+            }
+        }
+
         public static void DivideSet<T>(this List<T> inputValues, out List<T> outLeft, out List<T> outRight)
         {
             outLeft = new List<T>();
