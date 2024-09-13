@@ -1,6 +1,6 @@
-﻿using NotationHelper.Controls;
+﻿using NotationHelper.MusicViews;
 using NotationHelper.MVVM.Base;
-using NotationHelper.Views.MainViews;
+using NotationHelper.MusicViews.MainViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;

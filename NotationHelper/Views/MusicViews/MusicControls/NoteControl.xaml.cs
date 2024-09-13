@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NotationHelper.Controls
+namespace NotationHelper.MusicViews
 {
     /// <summary>
     /// Logika interakcji dla klasy NoteControl.xaml

@@ -10,7 +10,7 @@ namespace NotationHelper.Helpers
 
     public static class EnumHelper
     {
-        public static void CalculateResult(this IEnumerable<IWeightable> list, double arbitrary)
+        public static void CalculateResult(this IEnumerable<IWidthable> list, double arbitrary)
         {
             var weightSum = list.Select(list => list.Weight).Sum();
             foreach(var weightable in list)

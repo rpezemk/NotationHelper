@@ -41,9 +41,10 @@ namespace NotationHelper.MVVM
 
     public class RhythmCell_VM : ViewModelBase
     {
+        public TimeGroup TimeGroup { get; set; }
         public RhythmCell_VM(TimeGroup timeGroup)
         {
-
+            TimeGroup = timeGroup;
         }
     }
 }

@@ -1,11 +1,23 @@
 ﻿using NotationHelper.DataModel.Elementary;
 using NotationHelper.DataModel.Piece;
+using NotationHelper.Views.MusicViews;
 
 namespace NotationHelper.BlankEmits
 {
     public static class SampleEmitter
     {
-
+        public static VisualNoteContainer GetVisualNoteContainer() 
+        {
+            List<VisualNote> visualNotes = new List<VisualNote>();
+            for(int i = 0; i < 10; i++)
+            {
+                Note note = new Note();
+                VisualNote visualNote = new VisualNote(note);
+                visualNotes.Add(visualNote);
+            }
+            VisualNoteContainer visualNoteContainer = new VisualNoteContainer(visualNotes);
+            return visualNoteContainer;
+        }
         public static Note GetSampleNote(int partNo, int barNo, int abc)
         {
             var note = new Note();

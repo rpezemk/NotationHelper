@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NotationHelper.Controls.Tools
+namespace NotationHelper.MusicViews.Tools
 {
     /// <summary>
     /// Logika interakcji dla klasy ToolBarItem.xaml
@@ -33,11 +33,9 @@ namespace NotationHelper.Controls.Tools
 
         private static void TestGlyph(TextBlock textBlock)
         {
-            textBlock.FontFamily = new FontFamily(new Uri("pack://application:,,,/"), "./FontResources/#Bravura"); ;
+            textBlock.FontFamily = FontHelper.BravuraFont;
             textBlock.Text = ConstGlyphs.G_Clef;// Notehead_Half;
             textBlock.FontSize = 14;
-            var rescs = Application.Current.Resources;
-            var vals = rescs.Keys;
         }
     }
 }

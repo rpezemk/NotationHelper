@@ -1,4 +1,4 @@
-﻿using NotationHelper.Controls;
+﻿using NotationHelper.MusicViews;
 using NotationHelper.DataModel.Elementary;
 using NotationHelper.Helpers;
 using NotationHelper.MVVM.MusicVM;
@@ -17,7 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NotationHelper.Views.MainViews
+namespace NotationHelper.MusicViews.MainViews
 {
     /// <summary>
     /// Logika interakcji dla klasy MulticolumnView.xaml

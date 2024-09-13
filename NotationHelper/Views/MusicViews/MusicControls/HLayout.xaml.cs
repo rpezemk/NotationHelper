@@ -1,4 +1,5 @@
 ﻿using NotationHelper.Helpers;
+using NotationHelper.MusicViews.MusicControls;
 using NotationHelper.MVVM.MusicVM;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NotationHelper.Controls
+namespace NotationHelper.MusicViews
 {
     /// <summary>
     /// Logika interakcji dla klasy HLayout.xaml

@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NotationHelper.Views.MainViews
+namespace NotationHelper.MusicViews.MainViews
 {
     /// <summary>
     /// Logika interakcji dla klasy ToolbarView.xaml

@@ -11,19 +11,6 @@ using System.Windows.Media;
 
 namespace NotationHelper.Helpers
 {
-    public static class SmuflGlyphs
-    {
-        public static string GetPackUri()
-        {
-            string folderPath = "FontResourcses";
-            string fontFamilyName = "Bravura.otf";
-
-            //string packUri = "pack://application:,,,/" + assemblyName + ";component/" + folderPath + "/#" + fontFamilyName;
-            string packUri = "pack://application:,,,./" + folderPath + "/" + fontFamilyName;
-            return packUri;
-        }
-    }
-
     public static class ConstGlyphs
     {
         // Clefs

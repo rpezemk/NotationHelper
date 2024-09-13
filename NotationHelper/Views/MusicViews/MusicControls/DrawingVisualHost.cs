@@ -1,12 +1,12 @@
-﻿using System.Windows;
+﻿using NotationHelper.Views.MusicViews;
+using System.Windows;
 using System.Windows.Media;
 
-namespace NotationHelper.Views.MusicViews.MusicControls
+namespace NotationHelper.MusicViews.MusicViews.MusicControls
 {
     public class DrawingVisualHost : FrameworkElement
     {
         private VisualCollection _visuals;
-
         public DrawingVisualHost()
         {
             _visuals = new VisualCollection(this);
@@ -32,6 +32,11 @@ namespace NotationHelper.Views.MusicViews.MusicControls
             }
 
             return _visuals[index];
+        }
+
+        public void Clear()
+        {
+            _visuals.Clear();
         }
     }
 }

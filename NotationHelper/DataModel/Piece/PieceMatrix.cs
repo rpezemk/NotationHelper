@@ -14,7 +14,7 @@ namespace NotationHelper.DataModel.Piece
                 for (int barNo = 0; barNo < barCount; barNo++)
                 {
                     var bar = new VoiceBar() { };
-                    for (int i = 0; i < 4; i++)
+                    for (int i = 0; i < 16; i++)
                     {
                         var vNoteGroup = new VNoteGroup();
                         vNoteGroup.PartNo = partNo;

@@ -1,4 +1,4 @@
-﻿using NotationHelper.Controls;
+﻿using NotationHelper.MusicViews;
 using NotationHelper.Helpers;
 using System;
 using System.Collections.Generic;
