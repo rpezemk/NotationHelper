@@ -35,29 +35,5 @@ namespace NotationHelper.BlankEmits
             vNoteGroup.Notes = new List<Note>() { GetSampleNote(partNo, barNo, 4) };
             return vNoteGroup;
         }
-
-        public static VoiceBar GetSampleVoiceBar()
-        {
-            var bar = new VoiceBar();
-            bar.Meter = new Meter() { Numerator = 4, Denominator = DurationEnum.Querter };
-            bar.Timegroups = new List<TimeGroup>();
-            for (var i = 0; i < bar.Meter.Numerator; i++)
-            {
-                TimeGroup timeGroup = GetSampleVNoteGroup(0, i);
-                timeGroup.Duration = new Duration() { BaseDuration = DurationEnum.Querter };
-                bar.Timegroups.Add(timeGroup);
-            }
-                return new VoiceBar();
-        }
-
-        public static List<VoiceBar> GetSampleVoiceBars(int nBars)
-        {
-            var bars = new List<VoiceBar>();
-            for(int i = 0; i < nBars;i++)
-            {
-                bars.Add(GetSampleVoiceBar());
-            }
-            return bars;
-        }
     }
 }

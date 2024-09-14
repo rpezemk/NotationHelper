@@ -6,7 +6,7 @@ namespace NotationHelper.Helpers
     {
         public static double DurationToLength(this Duration duration)
         {
-            var absLen = duration.GetInLength();
+            var absLen = duration.GetLen();
             return absLen;
         }
     }

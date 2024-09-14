@@ -14,6 +14,6 @@
                 <local:DrawingVisualHost x:Name="MyVisualHost"/>
             </Canvas>
         </Grid>
-        <Rectangle Grid.Row="1" Fill="Black" Width="1" HorizontalAlignment="Left" SizeChanged="Rectangle_SizeChanged"/>
+        <Rectangle Grid.Row="1" Fill="Black" Width="1" HorizontalAlignment="Left"/>
     </Grid>
 </UserControl>

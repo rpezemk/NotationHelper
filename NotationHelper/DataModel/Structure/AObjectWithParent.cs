@@ -42,8 +42,23 @@ namespace NotationHelper.DataModel.Structure
     }
 
     public abstract class AObjectWithParent<TParent, TObject> : IChildOf<TParent>
+        where TParent : new ()
     {
-        public TParent Parent { get; }
+        public TParent Parent 
+        {
+            get 
+            {
+                if(parent != null)
+                    return parent;
+                parent = new TParent();
+                return parent;
+            }
+            set 
+            {
+                parent = value;
+            } 
+        }
+
         public abstract ObjectTypeEnum ParentType { get; }
 
         public TObject ThisObject;
@@ -59,6 +74,7 @@ namespace NotationHelper.DataModel.Structure
 
     public abstract class AObjectWithParentAndChildren<TParent, TObject, TChild> : AObjectWithParent<TParent, TObject>, IChildOf<TParent> 
         where TChild : IChildOf<TObject>
+        where TParent : new()
     {
 
         public List<TChild> Children = new List<TChild>();

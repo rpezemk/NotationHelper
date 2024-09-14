@@ -40,9 +40,9 @@
             <mainViews:ToolbarView DataContext="{Binding Path=ToolBar_VM}" ToolbarItems="{Binding Path=ToolbarItems}"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.ColumnSpan ="6" HorizontalAlignment="Right">
-            <Button Click="MinimizeButton_Click" Background="Transparent" x:Name="MinimizeButton" Width="20" Content="__" HorizontalAlignment="Right"/>
-            <Button Click="MaximizeButton_Click" Background="Transparent" x:Name="MaximizeButton" Width="20" Content="[  ]" HorizontalAlignment="Right"/>
-            <Button Click="CloseButton_Click"    Background="Transparent" x:Name="CloseButton" Width="20" Content="X" HorizontalAlignment="Right"/>
+            <Button Click="MinimizeButton_Click" Background="Transparent" x:Name="MinimizeButton" Width="50" FontSize="30" Content="__" HorizontalAlignment="Right"/>
+            <Button Click="MaximizeButton_Click" Background="Transparent" x:Name="MaximizeButton" Width="50" FontSize="30" Content="[  ]" HorizontalAlignment="Right"/>
+            <Button Click="CloseButton_Click"    Background="Transparent" x:Name="CloseButton"    Width="50" FontSize="30" Content="X" HorizontalAlignment="Right"/>
         </StackPanel>
         <!--VERTICAL SPLITTER-->
         <GridSplitter Grid.Column="1" 

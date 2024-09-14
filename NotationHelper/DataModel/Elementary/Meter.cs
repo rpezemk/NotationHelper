@@ -10,5 +10,9 @@ namespace NotationHelper.DataModel.Elementary
     {
         public int Numerator;
         public DurationEnum Denominator;
+        public double GetLen()
+        {
+            return 4 * Numerator / (int)Denominator;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NotationHelper.DataModel.Piece;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,6 +14,43 @@ namespace NotationHelper.Helpers
 {
     public static class ConstGlyphs
     {
+
+        public static string ToGlyph(this Note note)
+        {
+            var sdf = note.Parent.Duration.BaseDuration switch
+            {
+                DataModel.Elementary.DurationEnum.Breve => BreveNote,
+                DataModel.Elementary.DurationEnum.Whole => WholeNote,
+                DataModel.Elementary.DurationEnum.Half => HalfNote,
+                DataModel.Elementary.DurationEnum.Querter => QuarterNote,
+                DataModel.Elementary.DurationEnum.Eight => EighthNote,
+                DataModel.Elementary.DurationEnum.Sixteen => SixteenthNote,
+                DataModel.Elementary.DurationEnum.ThirtyTwo => ThirtySecondNote,
+                DataModel.Elementary.DurationEnum.SixtyFour => SixtyFourthNote,
+                _ => Notehead_X
+            };
+
+            return sdf;
+        }
+
+        public static string ToGlyph(this Rest rest)
+        {
+            var sdf = rest.Duration.BaseDuration switch
+            {
+                DataModel.Elementary.DurationEnum.Breve => BreveNote,
+                DataModel.Elementary.DurationEnum.Whole => WholeNote,
+                DataModel.Elementary.DurationEnum.Half => HalfNote,
+                DataModel.Elementary.DurationEnum.Querter => QuarterNote,
+                DataModel.Elementary.DurationEnum.Eight => EighthNote,
+                DataModel.Elementary.DurationEnum.Sixteen => SixteenthNote,
+                DataModel.Elementary.DurationEnum.ThirtyTwo => ThirtySecondNote,
+                DataModel.Elementary.DurationEnum.SixtyFour => SixtyFourthNote,
+                _ => Notehead_X
+            };
+
+            return sdf;
+        }
+
         // Clefs
         public const string G_Clef = "\uE050";
         public const string C_Clef = "\uE05C";
@@ -186,12 +224,15 @@ namespace NotationHelper.Helpers
         public const string Pianissimo = "\uE52B";
 
         // Various Notes
+        public const string LongaNote = "\uE1D0";
         public const string BreveNote = "\uE1D1";
         public const string WholeNote = "\uE1D2";
         public const string HalfNote = "\uE1D3";
         public const string QuarterNote = "\uE1D5";
         public const string EighthNote = "\uE1D7";
         public const string SixteenthNote = "\uE1D9";
+        public const string ThirtySecondNote = "\uE1DB";  // Thirty-Second
+        public const string SixtyFourthNote = "\uE1DD";   // Sixty-Fourth
 
         // Additional symbols can be added as required...
     }

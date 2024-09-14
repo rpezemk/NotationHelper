@@ -29,17 +29,6 @@ namespace NotationHelper.MusicViews
             InitializeComponent();
         }
 
-        public void ShowNBars(int n)
-        {
-            for (int i = 0; i < n; i++) 
-            { 
-                BarWithLine barWithLine = new BarWithLine();
-                MyMulticolumnGrid.ColumnDefinitions.Add(new ColumnDefinition());
-                Grid.SetColumn(barWithLine, i);
-                MyMulticolumnGrid.Children.Add(barWithLine);
-            }
-        }
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             ReloadVMs();

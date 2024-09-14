@@ -4,7 +4,7 @@
     {
         public DurationEnum BaseDuration { get; set; } = DurationEnum.Querter;
         public DottingEnum Dotting { get; set; } = DottingEnum.NoDots;
-        public float GetInLength() => 4 / (float)(int)BaseDuration;
+        public float GetLen() => 4 / (float)(int)BaseDuration;
     }
 
     public enum DurationEnum
@@ -17,6 +17,7 @@
         Eight = 32,
         Sixteen = 64,
         ThirtyTwo = 128,
+        SixtyFour= 256,
     }
 
     public enum DottingEnum

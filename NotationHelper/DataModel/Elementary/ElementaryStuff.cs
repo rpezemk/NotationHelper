@@ -19,7 +19,7 @@ namespace NotationHelper.DataModel.Elementary
     public class Pitch
     {
         public int ResultPitch => OctaveNo * 12 + (int)BaseNoteName + Alter;
-        public ushort OctaveNo { get; set; } = 5;
+        public int OctaveNo { get; set; } = 5;
         public NoteName BaseNoteName { get; set; } = NoteName.C;
         public int Alter {  get; set; }
     }

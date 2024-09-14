@@ -9,7 +9,8 @@ using NotationHelper.Helpers;
 using NotationHelper.DataModel.Piece;
 using NotationHelper.Views.MusicViews;
 using NotationHelper.MVVM;
-
+using NotationHelper.DataModel.Elementary;
+using NotationHelper.Helpers;
 namespace NotationHelper.MusicViews.MusicControls
 {
     /// <summary>
@@ -22,7 +23,7 @@ namespace NotationHelper.MusicViews.MusicControls
             InitializeComponent();
         }
 
-        private List<RhythmCell_VM> _cells = new List<RhythmCell_VM>();
+        public double Scale = 2.4;
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -30,54 +31,69 @@ namespace NotationHelper.MusicViews.MusicControls
             Draw();
         }
 
-        private void MyVisualHost_Loaded(object sender, RoutedEventArgs e)
-        {
-            //Draw();
-        }
-
         private void Draw()
         {
             var sum = GridContainer.ActualWidth + ActualWidth + MyVisualHost.ActualHeight;
-            if (sum == 0)
+            if (sum == 0 || DataContext is not SingleBar_VM vm)
                 return;
-            var dt = DataContext;
-            if (dt is not SingleBar_VM vm)
-                return;
-            var cnt = vm.Cells.Count;
-            var step = GridContainer.ActualWidth / cnt;
-            var curr = 0.0D;
 
-            foreach (var item in vm.Cells)
+            vm.CalculateMOffsets().CalculateXOffset(GridContainer.ActualWidth);
+            foreach (var rtmCell in vm.VoiceBar.Children)
             {
-                if (item == null || item.TimeGroup == null)
-                    continue;
-                VisualNote vn = new VisualNote(new Note() { }) { Weight = 10 };
-
-
-                DrawingVisual textVisual = new DrawingVisual();
-                using (DrawingContext dc = textVisual.RenderOpen())
-                {
-
-                    FormattedText text = new FormattedText(
-                       ConstGlyphs.SixteenthNote,
-                       System.Globalization.CultureInfo.InvariantCulture,
-                       FlowDirection.LeftToRight,
-                       new Typeface(FontHelper.BravuraFont, FontHelper.BravuraStyle, new FontWeight() { }, new FontStretch() { }),
-                       17, // Font size
-                       Brushes.Black,
-                       VisualTreeHelper.GetDpi(this).PixelsPerDip // DPI setting for clarity
-                    );
-                    dc.DrawText(text, new Point(curr, -17));
-                }
-
-                // Add the visual to the visualHost
-                MyVisualHost.AddVisual(textVisual);
-                curr += step;
+                DrawTimeGroup(rtmCell);
             }
         }
-        private void Rectangle_SizeChanged(object sender, SizeChangedEventArgs e)
+
+        private void DrawTimeGroup(TimeGroup timeGroup)
         {
-            
+            if (timeGroup is VNoteGroup vNoteGroup)
+                DrawNoteGroup(vNoteGroup);
+            else if (timeGroup is Rest rest)
+                DrawRest(rest);
         }
+
+        private void DrawNoteGroup(VNoteGroup vNoteGroup) 
+        {
+            foreach(var note in vNoteGroup.Notes)
+            {
+                DrawNote(note);
+            }
+                   
+        }
+
+        private void DrawNote(Note note)
+        {
+            var glyph = note.ToGlyph();
+            var xOffset = note.Parent.XOffset;
+            var yOffset = note.Parent.YOffset - (note.NoteToVisualHeight() - 3) * Scale; 
+            DrawGlyph(glyph, xOffset, yOffset);
+        }
+
+        private void DrawRest(Rest rest)
+        {
+            DrawGlyph(rest.ToGlyph(), rest.XOffset, rest.YOffset);
+        }
+
+        private void DrawGlyph(string glyph, double xOffset, double yOffset)
+        {
+            DrawingVisual textVisual = new DrawingVisual();
+            using (DrawingContext dc = textVisual.RenderOpen())
+            {
+                FormattedText text = new FormattedText(
+                   glyph,
+                   System.Globalization.CultureInfo.InvariantCulture,
+                   FlowDirection.LeftToRight,
+                   new Typeface(FontHelper.BravuraFont, FontHelper.BravuraStyle, new FontWeight() { }, new FontStretch() { }),
+                   17, // Font size
+                   Brushes.Black,
+                   VisualTreeHelper.GetDpi(this).PixelsPerDip
+                );
+                dc.DrawText(text, new Point(xOffset, yOffset - 17));
+            }
+            MyVisualHost.AddVisual(textVisual);
+        }
+
+
+
     }
 }
