@@ -1,5 +1,5 @@
 ﻿using NAudio.Wave;
-using NAudioTest.Providers;
+using NAudioTest.Providers.UglyMess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +10,9 @@ namespace NAudioTest.Helpers
 {
     public static class AsyncAudio
     {
-        public static EternalSampleProvider Provider;
-        public static WaveOutEvent WaveOutEvent;
-        public static void Init()
+        public static EternalSampleProvider Provider { get; set; }
+        public static WaveOutEvent WaveOutEvent { get; set; }
+        public static void InitOnce()
         {
             WaveOutEvent = new WaveOutEvent();
 
