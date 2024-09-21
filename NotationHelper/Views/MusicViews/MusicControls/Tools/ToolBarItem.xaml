@@ -9,10 +9,10 @@
              Width="40"
              Height="40"
              d:DesignHeight="60" d:DesignWidth="60">
-    <Button BorderThickness="1" BorderBrush="Gray" Background="{StaticResource PrimaryBackgroundBrush}">
-        <Grid Background="{StaticResource PrimaryBackgroundBrush}">
+    <Button BorderThickness="1" BorderBrush="Gray" Background="{StaticResource WindowBackgroundBrush}">
+        <Grid Background="{StaticResource WindowBackgroundBrush}">
             <!--<Ellipse Width="20" Height="20" Fill="{StaticResource ForegroundTextBrush}"/>-->
-            <TextBlock x:Name="MyTextBlock"/>
+            <TextBlock x:Name="MyTextBlock"  Foreground="Red"/>
         </Grid>
     </Button>
 </UserControl>

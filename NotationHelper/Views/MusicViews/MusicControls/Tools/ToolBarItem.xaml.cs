@@ -35,6 +35,7 @@ namespace NotationHelper.MusicViews.Tools
         {
             textBlock.FontFamily = FontHelper.BravuraFont;
             textBlock.Text = ConstGlyphs.G_Clef;// Notehead_Half;
+            
             textBlock.FontSize = 14;
         }
     }

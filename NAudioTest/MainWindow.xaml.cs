@@ -47,7 +47,7 @@ namespace NAudioTest
            {
                Dispatcher.Invoke(() =>
                {
-                   LoggerTextBox.Text += $"timeEvent at {te.TickNo}" + "\n";
+                   LoggerTextBox.Text += $"timeEvent at {te.Time}" + "\n";
                });
            });
         }

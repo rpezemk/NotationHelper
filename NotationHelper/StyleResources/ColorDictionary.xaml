@@ -5,7 +5,7 @@
     <SolidColorBrush x:Key="PrimaryBackgroundBrush" Color="#FFFFFFFF"/>
     <SolidColorBrush x:Key="SecondaryBackgroundBrush" Color="#FFADD8E6"/>
     <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="#FFAAFFFF"/>
-    <SolidColorBrush x:Key="ButtonForegroundBrush" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="Black"/>
     <SolidColorBrush x:Key="ForegroundTextBrush" Color="#FF000000"/>
     
     <Style TargetType="MenuItem">

@@ -14,7 +14,7 @@
         Loaded="MainWindowControl_Loaded"
         MinHeight="400"
         LocationChanged="MainWindowControl_LocationChanged"
-        Background="{StaticResource ButtonForegroundBrush}"
+        Background="{StaticResource WindowBackgroundBrush}"
         StateChanged="MainWindowControl_StateChanged"
         WindowStyle="None"
         Title="MainWindow" Height="450" Width="800">
@@ -32,8 +32,8 @@
             <RowDefinition Height="60"/>
             <RowDefinition/>
             <RowDefinition Height="5" />
-            <RowDefinition/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="100" MaxHeight="150"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="6">
             <mainViews:MainMenuView DataContext="{Binding Path=Menu_VM}"/>
@@ -79,9 +79,23 @@
                 </TextBlock>
             </Grid>
         </Grid>
-        <StackPanel Grid.Row="4" Grid.ColumnSpan="9" Orientation="Horizontal">
-            <Button x:Name="ClearButton" Margin="3,0,3,0" Height="25" Width="60" Content="Clear" Click="ClearButton_Click"/>
-            <Button x:Name="FillButton" Margin="3,0,3,0" Height="25" Width="60" Content="Fill" Click="FillButton_Click"/>
-        </StackPanel>
+        <Grid Grid.Row="4" Grid.ColumnSpan="9">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="DarkGray" BorderThickness=".5" Grid.Column="0" Margin="3">
+                <TextBlock Text="markers area" Foreground="DarkSlateBlue"/>
+            </Border>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="  Play  " FontSize="17" Margin="3,0,3,0" Background="Black" Foreground="LightGray"/>
+                <Button Content="Play [...]" FontSize="17" Margin="3,0,3,0" Background="Black" Foreground="LightGray"/>
+                <Button Content=" STOP " FontSize="17" Margin="3,0,3,0" Background="Black" Foreground="LightGray"/>
+                <Button Content=" &lt;&lt; "  FontSize="20" Margin="3,0,3,0" Background="Black" Foreground="LightGray"/>
+                <Button Content="  &lt;  "  FontSize="20" Margin="3,0,3,0" Background="Black" Foreground="LightGray"/>
+                <Button Content="  &gt;  "  FontSize="20" Margin="3,0,3,0" Background="Black" Foreground="LightGray"/>
+                <Button Content=" &gt;&gt; "  FontSize="20" Margin="3,0,3,0" Background="Black" Foreground="LightGray"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

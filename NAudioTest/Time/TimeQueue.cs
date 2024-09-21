@@ -7,54 +7,66 @@ using System.Threading.Tasks;
 
 namespace NAudioTest.TimeThings
 {
+    public abstract class APlayer
+    {
+        public abstract bool CanPlay(TimeEvent timeEvent);
+    }
+
+    public abstract class APlayer<T> : APlayer
+    {
+
+    }
 
     public class TimeQueue
     {
-        public TimeQueue(Action<TimeEvent> action) 
+        public TimeQueue(Action<TimeEvent> action, double freq) 
         {
-            Action = action;
+            ReportAction = action;
+            this.freq = freq;
         }
+
+        public void Play()
+        {
+            Task.Run(() => play());
+        }
+        private double freq;
         public int CurrTick = 0;
-        public Action<TimeEvent> Action;
+        public Action<TimeEvent> ReportAction;
         /// <summary>
         /// OLDEST LAST
         /// </summary>
         public List<TimeEvent> TimeEvents { get; set; } = new List<TimeEvent>();
         public void AppendEvent(TimeEvent timeEvent) 
         {
-            if(TimeEvents.All(te => te.TickNo < timeEvent.TickNo))
+            if(TimeEvents.All(te => te.Time < timeEvent.Time))
                 TimeEvents.Add(timeEvent);
             else
             {
-                var before = TimeEvents.Where(te => te.TickNo < timeEvent.TickNo).OrderBy(te => te.TickNo).ToList();
-                var after = TimeEvents.Where(te => te.TickNo >= timeEvent.TickNo).OrderBy(te => te.TickNo).ToList();
+                var before = TimeEvents.Where(te => te.Time < timeEvent.Time).OrderBy(te => te.Time).ToList();
+                var after = TimeEvents.Where(te => te.Time >= timeEvent.Time).OrderBy(te => te.Time).ToList();
                 TimeEvents = before.Append(timeEvent).Union(after).ToList();
             }    
         }
 
-        public List<TimeEvent> GetEvents(int tickNo, double tickCount)
+        public List<TimeEvent> GetEvents(double time, double timeBefore)
         {
-            var preTick = tickNo - tickCount;
-            var res = TimeEvents.Where(te => te.TickNo <= tickNo && te.TickNo > preTick).ToList();
+            var preTime = time - timeBefore;
+            var res = TimeEvents.Where(te => te.Time <= time && te.Time > preTime).ToList();
             return res;
         }
 
-        public void Play(double freq)
+        private void play()
         {
-            Task.Run(() => play(freq));
-        }
-
-        private void play(double freq)
-        {
-            var maxT = (TimeEvents.Count == 0? 0: TimeEvents.Max(te => te.TickNo)) / 1000;
+            var maxTsecs = TimeEvents.Count == 0? 0: TimeEvents.Max(te => te.Time);
             var period = 1 / freq;
             TimeSpan timeout = TimeSpan.FromSeconds(period);
-            for (var i = 0; i < maxT; i++)
+            for (double i = 0; i < maxTsecs; i+=period)
             {
-                var events = GetEvents(i*1000, 1000*period);
+                var events = GetEvents(i, period);
                 foreach (var e in events)
                 {
-                    Action.Invoke(e);
+                    if(ReportAction != null)
+                        ReportAction.Invoke(e);
                 }
                 Thread.Sleep(timeout);
             }
@@ -63,11 +75,23 @@ namespace NAudioTest.TimeThings
 
     public class TimeEvent
     {
-        public TimeEvent(int tickNo)
+        public TimeEvent(double timeSeconds)
         {
-            TickNo = tickNo;
+            Time = timeSeconds;
         }
-        public int TickNo;
+
+        /// <summary>
+        /// Seconds
+        /// </summary>
+        public double Time { get; set; }
+        public override string ToString()
+        {
+            var s = (int)Time;
+            var ms = (int)((Time - s) * 1000);
+            var res = $"{s}.{ms}";
+            return res;
+        } 
+
     }
 
     public enum EventType

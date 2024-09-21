@@ -17,16 +17,16 @@
             </Grid.ColumnDefinitions>
             <TextBlock Text="info" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <StackPanel Grid.Column="1" Margin="0,15,0,0">
-                <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
-                <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
-                <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
-                <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
-                <Rectangle Fill="Black" Height="1" Margin="0, 2, 0, 2"/>
+                <Rectangle Fill="#77999999" Height="1" Margin="0, 2, 0, 2"/>
+                <Rectangle Fill="#77999999" Height="1" Margin="0, 2, 0, 2"/>
+                <Rectangle Fill="#77999999" Height="1" Margin="0, 2, 0, 2"/>
+                <Rectangle Fill="#77999999" Height="1" Margin="0, 2, 0, 2"/>
+                <Rectangle Fill="#77999999" Height="1" Margin="0, 2, 0, 2"/>
             </StackPanel>
             <Grid x:Name="MyMulticolumnGrid" Grid.Column="1" VerticalAlignment="Top" Height="25" Margin="0,15,0,0">
                 <StackPanel x:Name="MyStackPanel" Orientation="Horizontal"/>
             </Grid>
-            <Canvas Grid.Column="1" x:Name="MyNoteCanvas" Background="#2200FFFF">
+            <Canvas Grid.Column="1" x:Name="MyNoteCanvas">
             </Canvas>
         </Grid>
     </Border>

@@ -85,7 +85,7 @@ namespace NotationHelper.MusicViews.MusicControls
                    FlowDirection.LeftToRight,
                    new Typeface(FontHelper.BravuraFont, FontHelper.BravuraStyle, new FontWeight() { }, new FontStretch() { }),
                    17, // Font size
-                   Brushes.Black,
+                   Brushes.White,
                    VisualTreeHelper.GetDpi(this).PixelsPerDip
                 );
                 dc.DrawText(text, new Point(xOffset, yOffset - 17));

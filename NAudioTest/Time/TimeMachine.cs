@@ -10,9 +10,9 @@
             TimeQueue = new TimeQueue(action);
             for(int i = 0; i < 5000; i++)
             {
-                TimeQueue.AppendEvent(new TimeEvent(i));
+                TimeQueue.AppendEvent(new TimeEvent(i/1000));
             }
-            TimeQueue.Play(1);
+            TimeQueue.Play(10);
         }
     }
 }
