@@ -9,8 +9,9 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="5"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -18,12 +19,18 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" Content="ShowSequence" Click="ShowSequence"/>
-        <Button Grid.Column="1" Content="PlaySequence" Click="PlaySequence"/>
+        <Button Grid.Column="0" Content="PlaySequence" Click="PlaySequenceClick"/>
 
         <views:RhythmSequenceView x:Name="SequenceView" Grid.Row="1" Grid.ColumnSpan="3"/>
-        <ScrollViewer Grid.Row="2" Grid.ColumnSpan="3">
-            <TextBox x:Name="LoggerTextBox" Background="DarkBlue" Foreground="Yellow" IsReadOnly="True" FontFamily="Cascadia Mono"/>
+        <GridSplitter Grid.Row="2" Grid.ColumnSpan="3"
+                      VerticalAlignment="Center" 
+                      HorizontalAlignment="Stretch" 
+                      Background="Gray" Height="2"
+                      />
+
+        <ScrollViewer x:Name="LoggerScrollViewer" Grid.Row="3" Grid.ColumnSpan="3">
+            <TextBox x:Name="LoggerTextBox" Background="DarkBlue" Foreground="Yellow" IsReadOnly="True" FontFamily="Cascadia Mono"
+                     TextChanged="LoggerTextBox_TextChanged"/>
         </ScrollViewer>
     </Grid>
 </Window>

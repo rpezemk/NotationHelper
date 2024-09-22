@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using Serilog;
+using System.Configuration;
 using System.Data;
 using System.Windows;
 
@@ -9,6 +10,10 @@ namespace NAudioTest
     /// </summary>
     public partial class App : Application
     {
+        public App() 
+        {
+            
+        }
     }
 
 }

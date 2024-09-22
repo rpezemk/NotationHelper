@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MusicDataModel.MidiModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,18 @@ namespace NAudioTest.Views
         public RhythmHolderView()
         {
             InitializeComponent();
+        }
+
+        public RhythmHolder RhythmHolder { get; set; }
+
+        public void SetSelected()
+        {
+            this.Background = new SolidColorBrush(Colors.Black);
+        }
+
+        public void SetUnselected()
+        {
+            this.Background = new SolidColorBrush(Colors.White);
         }
     }
 }

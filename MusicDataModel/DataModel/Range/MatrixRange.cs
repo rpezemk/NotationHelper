@@ -16,12 +16,12 @@ namespace MusicDataModel.DataModel.Range
             foreach (var barGroup in pieceMatrix.Parts)
             {
                 var partBars = barGroup.Children.GetRange(startBar, count);
-                Part part = new Part() { Children = partBars };
+                MonoPart part = new MonoPart() { Children = partBars };
                 Parts.Add(part);
             }
         }
 
-        public List<Part> Parts = new List<Part>();
+        public List<MonoPart> Parts = new List<MonoPart>();
     }
 
 

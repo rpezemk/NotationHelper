@@ -3,16 +3,16 @@
     public static class TestTimeMachine
     {
         // OLDEST LAST
-        public static TimeQueue TimeQueue { get; set; } // oldest last
+        public static EventPlayer EvtPlayer { get; set; } // oldest last
 
-        public static void Test(Action<TimeEvent> action, double freq)
+        public static EventPlayer GetTestTimeQueue(double playFreq, int nEvents, float eventDuration, Action<TimeEvent> action)
         {
-            TimeQueue = new TimeQueue(action, freq);
-            for(int i = 0; i < 5000; i++)
+            EvtPlayer = new EventPlayer(action, playFreq);
+            for(int i = 0; i < nEvents; i++)
             {
-                TimeQueue.AppendEvent(new TimeEvent(i/1000));
+                EvtPlayer.AppendEvent(new TimeEvent(eventDuration * i, "test"));
             }
-            TimeQueue.Play();
+            return EvtPlayer;
         }
     }
 }

@@ -4,7 +4,7 @@ using MusicDataModel.Helpers;
 
 namespace MusicDataModel.DataModel.Piece
 {
-    public class PieceMatrix : AObjectWithChildren<PieceMatrix, Part>
+    public class PieceMatrix : AObjectWithChildren<PieceMatrix, MonoPart>
     {
         public override PieceMatrix ThisObj => this;
         public PieceMatrix() 
@@ -16,7 +16,7 @@ namespace MusicDataModel.DataModel.Piece
         {
             for (int partNo = 0; partNo < partCount; partNo++)
             {
-                var part = new Part() { PartNo = partNo };
+                var part = new MonoPart() { PartNo = partNo };
                 for (int barNo = 0; barNo < barCount; barNo++)
                 {
                     var bar = new VoiceBar() { };
@@ -35,7 +35,7 @@ namespace MusicDataModel.DataModel.Piece
         }
 
 
-        public List<Part> Parts { get; set; } = new List<Part>();
+        public List<MonoPart> Parts { get; set; } = new List<MonoPart>();
 
 
         public List<TimeHolder> GetRangeByBarNo(int startBar, int barCount)

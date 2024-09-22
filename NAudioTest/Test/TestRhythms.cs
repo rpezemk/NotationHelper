@@ -11,31 +11,25 @@ namespace NAudioTest.Test
 {
     public static class TestRhythms
     {
-        public static Part GetSamplePart()
+        public static MonoPart GetSamplePart()
         {
-            var barCount = 2;
+            var barCount = 4;
             var partNo = 0;
-            var part = new Part() { PartNo = partNo };
+            var part = new MonoPart() { PartNo = partNo };
             for (int barNo = 0; barNo < barCount; barNo++)
             {
                 var bar = new VoiceBar() { };
-                bar.AppendChild(Note.C().Sharp().Eight().AsTimeGroup());
-                bar.AppendChild(Note.D().Flat().Sixteen().AsTimeGroup());
-                bar.AppendChild(Note.E().Sharp().Sixteen().AsTimeGroup());
+                bar.AppendChild(Note.C().Sharp().Eight());
+                bar.AppendChild(Note.D().Flat().Sixteen());
+                bar.AppendChild(Note.E().Sharp().Sixteen());
                 bar.AppendChild(Note.F().Flat().Eight().AsTimeGroup());
-                bar.AppendChild(Note.G().Flat().Sixteen().AsTimeGroup());
-                bar.AppendChild(Note.A().Flat().Sixteen().AsTimeGroup());
-                bar.AppendChild(Note.B().Flat().Quarter().AsTimeGroup());
-                bar.AppendChild(Note.C().UpOct().Flat().Quarter().AsTimeGroup());
+                bar.AppendChild(Note.G().Flat().Sixteen());
+                bar.AppendChild(Note.A().Flat().Sixteen());
+                bar.AppendChild(Note.B().Flat().Quarter());
+                bar.AppendChild(Note.C().UpOct().Flat().Quarter());
                 part.Children.Add(bar);
             }
             return part;
-        }
-
-        public static RhythmSequence GetSampleSequence()
-        {
-            var seq = GetSamplePart().ToSequence();
-            return seq;
         }
     }
 }

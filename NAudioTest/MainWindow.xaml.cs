@@ -1,22 +1,10 @@
-﻿using Microsoft.Win32;
-using NAudio.Wave;
-using NAudioTest.AudioInfo;
+﻿using MusicDataModel.MidiModel;
 using NAudioTest.Helpers;
 using NAudioTest.Providers;
 using NAudioTest.Test;
 using NAudioTest.TimeThings;
-using System.IO;
-using System.Text;
+using Serilog;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using static System.Windows.Forms.DataFormats;
 
 namespace NAudioTest
 {
@@ -28,58 +16,50 @@ namespace NAudioTest
         public MainWindow()
         {
             InitializeComponent();
-            GlobalData.Logger.ActionStr = (str) => LoggerTextBox.Text += str + "\n";
+            Log.Logger = new LoggerConfiguration()
+            .WriteTo.Sink(new TextBoxSink(LoggerTextBox))
+            .CreateLogger();
         }
 
-        private void UpdateTextBox(object? obj)
+        RhythmSequence rtmSeq;
+        EventPlayer eventPlayer = null;
+        private void PlaySequenceClick(object sender, RoutedEventArgs e)
         {
-            TestTimeMachine.Test(
-           (te) =>
-           {
-               Dispatcher.Invoke(() =>
-               {
-                   LoggerTextBox.Text += $"timeEvent at {te.Time}" + "\n";
-               });
-           },
-           40);
-        }
 
-        private void Button_Click2(object sender, RoutedEventArgs e)
-        {
-            if (AsyncAudio.Provider == null)
-                Task.Run(() => AsyncAudio.InitOnce());
-            if (AsyncAudio.Provider != null)
+            var samplePart = TestRhythms.GetSamplePart();
+            if(rtmSeq == null) 
+                rtmSeq = samplePart.ToRhythmSequence();
+            SequenceView.ShowSequence(rtmSeq);
+            var timeEvents = rtmSeq.ToTimeEvents();
+            if(eventPlayer != null && eventPlayer.IsPlaying)
             {
-                for (var a = 1; a < 10; a++)
-                {
-                    var N = 10;
-                    var root = Math.Pow(2, 1 / (double)N);
-                    var startFreq = 440;
-                    var currCoeff = 1.0D;
-                    for (var i = 0; i < N; i++)
-                    {
-                        currCoeff *= root;
-                        new SinSource(startFreq * currCoeff, 0.00002F, 200.0).AttachTo(AsyncAudio.Provider);
-                    }
-                }
+                Log.Information("already playing");
+                return;
             }
+            eventPlayer = 
+                new EventPlayer(
+                    te =>
+                    {
+                        Dispatch(te, t =>
+                        {
+                            SequenceView.UnSelectAll();
+                            if (te is RhythmEvent sdf)
+                                SequenceView.SelectOne(sdf.ParentHolder);
+                        }
+                        );
+                    }, 10, timeEvents);
+            eventPlayer.PlayAsync();
         }
 
-
-        private void ShowSequence(object sender, RoutedEventArgs e)
+        private void Dispatch<T>(T arg, Action<T> action)
         {
-            var seq = TestRhythms.GetSampleSequence();
-            SequenceView.ShowSequence(seq);
+            Dispatcher.Invoke(action, arg);
         }
 
-        private void PlaySequence(object sender, RoutedEventArgs e)
+        private void LoggerTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            Thread backgroundThread = new Thread(o => UpdateTextBox(o));
-            backgroundThread.Start();
+            LoggerTextBox.ScrollToEnd();
+            LoggerScrollViewer.ScrollToBottom();
         }
-
-
-
     }
-
 }

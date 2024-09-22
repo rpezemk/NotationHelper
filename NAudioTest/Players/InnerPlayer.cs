@@ -11,7 +11,7 @@ namespace NAudioTest.Players
     public class Orchestra
     {
         public List<APlayer> Players { get; set; } = new List<APlayer> { };
-        public TimeQueue TimeQueue { get; set; } = new TimeQueue(null, 100);
+        public EventPlayer TimeQueue { get; set; } = new EventPlayer(null, 100);
 
     }
 }

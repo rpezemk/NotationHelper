@@ -4,7 +4,7 @@
     {
         public DurationEnum BaseDuration { get; set; } = DurationEnum.Querter;
         public DottingEnum Dotting { get; set; } = DottingEnum.NoDots;
-        public float GetLen() => 4 / (float)(int)BaseDuration;
+        public float GetLen() => (4 / (float)(int)BaseDuration) * ((int)Dotting)/4;
     }
 
     public enum DurationEnum
