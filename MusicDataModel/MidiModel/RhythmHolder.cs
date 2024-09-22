@@ -9,5 +9,12 @@ namespace MusicDataModel.MidiModel
     public class RhythmHolder
     {
         public double Duration;
+        public int Pitch;
+        public Guid Guid;
+    }
+
+    public class PitchHolder : RhythmHolder
+    {
+        public int Pitch;
     }
 }

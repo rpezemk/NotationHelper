@@ -14,7 +14,14 @@ namespace NAudioTest.Test
             var scaleUp = (60 / part.BPM) * (((int)part.BeatBase) / 4);
             foreach (var th in timeHolders)
             {
-                sequence.RhythmHolders.Add(new RhythmHolder() { Duration = th.Duration.GetLen() * scaleUp });
+                if(th is Note note)
+                {
+                    sequence.RhythmHolders.Add(new PitchHolder() { Duration = th.Duration.GetLen() * scaleUp, Guid = Guid.NewGuid(), Pitch = note.Pitch.ResultPitch});
+                }
+                else
+                {
+                    sequence.RhythmHolders.Add(new RhythmHolder() { Duration = th.Duration.GetLen() * scaleUp, Guid = Guid.NewGuid()});
+                }
             }
 
             return sequence;
@@ -26,9 +33,10 @@ namespace NAudioTest.Test
             var currTime = 0.0D;
             foreach(var holder in rhythmSequence.RhythmHolders)
             {
-                timeEvents.Add(new RhythmEvent(currTime, "rObj ON ", holder));
+                if(holder is PitchHolder noteHolder) 
+                    timeEvents.Add(new NoteOnEvent(currTime, holder, holder.Guid) { Pitch = noteHolder.Pitch });
                 currTime += holder.Duration;
-                timeEvents.Add(new RhythmEvent(currTime, "rObj OFF", holder));
+                timeEvents.Add(new NoteOffEvent(currTime, holder, holder.Guid));
             }
 
             return timeEvents;

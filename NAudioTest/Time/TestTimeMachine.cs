@@ -10,7 +10,7 @@
             EvtPlayer = new EventPlayer(action, playFreq);
             for(int i = 0; i < nEvents; i++)
             {
-                EvtPlayer.AppendEvent(new TimeEvent(eventDuration * i, "test"));
+                EvtPlayer.AppendEvent(new TimeEvent(eventDuration * i, "test", Guid.NewGuid()));
             }
             return EvtPlayer;
         }

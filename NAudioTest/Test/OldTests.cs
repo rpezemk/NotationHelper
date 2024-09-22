@@ -1,5 +1,7 @@
 ﻿using NAudioTest.Helpers;
 using NAudioTest.Providers;
+using NAudioTest.TimeThings;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,10 +27,29 @@ namespace NAudioTest.Test
         //    }
         //}
 
-        private static void SinSourceTest()
+        public static double SemitoneCoeff = Math.Pow(2, 1 / (double)12);
+
+        public static void PlayEvent(TimeEvent rhythmEvent)
         {
-            if (AsyncAudio.Provider == null)
-                Task.Run(() => AsyncAudio.InitOnce());
+            if(rhythmEvent is NoteOnEvent noteOnEvent)
+            {
+                var signal = new SinSource(10*Math.Pow(SemitoneCoeff, noteOnEvent.Pitch), 0.02F, 0.02, rhythmEvent.Guid);
+                signal.AttachTo(AsyncAudio.Provider);
+            }
+            else if(rhythmEvent is NoteOffEvent)
+            {
+                var find = AsyncAudio.Provider.SignalsSources.FirstOrDefault(s => s.Guid == rhythmEvent.Guid);
+                if(find != null)
+                {
+                    find.DetachFrom(AsyncAudio.Provider);
+                }
+            }
+        }
+
+
+        public static void SinSourceTest()
+        {
+           
             if (AsyncAudio.Provider != null)
             {
                 for (var a = 1; a < 10; a++)
@@ -40,7 +61,7 @@ namespace NAudioTest.Test
                     for (var i = 0; i < N; i++)
                     {
                         currCoeff *= root;
-                        new SinSource(startFreq * currCoeff, 0.00002F, 200.0).AttachTo(AsyncAudio.Provider);
+                        new SinSource(startFreq * currCoeff, 0.00002F, 200.0, Guid.NewGuid()).AttachTo(AsyncAudio.Provider);
                     }
                 }
             }

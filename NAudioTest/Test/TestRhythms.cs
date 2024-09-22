@@ -19,14 +19,14 @@ namespace NAudioTest.Test
             for (int barNo = 0; barNo < barCount; barNo++)
             {
                 var bar = new VoiceBar() { };
-                bar.AppendChild(Note.C().Sharp().Eight());
-                bar.AppendChild(Note.D().Flat().Sixteen());
-                bar.AppendChild(Note.E().Sharp().Sixteen());
-                bar.AppendChild(Note.F().Flat().Eight().AsTimeGroup());
-                bar.AppendChild(Note.G().Flat().Sixteen());
-                bar.AppendChild(Note.A().Flat().Sixteen());
-                bar.AppendChild(Note.B().Flat().Quarter());
-                bar.AppendChild(Note.C().UpOct().Flat().Quarter());
+                bar.AppendChild(Note.D().Eight());
+                bar.AppendChild(Note.E().Eight());
+                bar.AppendChild(Note.F().Eight());
+                bar.AppendChild(Note.G().Eight());
+                bar.AppendChild(Note.D().Eight());
+                bar.AppendChild(Note.E().Eight());
+                bar.AppendChild(Note.F().Eight());
+                bar.AppendChild(Note.G().Eight());
                 part.Children.Add(bar);
             }
             return part;

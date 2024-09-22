@@ -20,18 +20,25 @@ namespace NAudioTest
             var message = logEvent.RenderMessage(_formatProvider);
 
             // Ensure the TextBox is updated on the UI thread
-            _textBox.Dispatcher.Invoke(() =>
+            try
             {
-                var ts = logEvent.Timestamp;
-                var timestamp = ts.ToString("HH:mm:ss") + ">" + ts.ToString("fff");
-                var message = logEvent.RenderMessage();
-                var logEntry = $"[{timestamp}] {message}";
                 _textBox.Dispatcher.Invoke(() =>
                 {
-                    _textBox.AppendText(logEntry + Environment.NewLine);
-                    _textBox.ScrollToEnd();  // Optional: Auto-scroll to the latest log
+                    var ts = logEvent.Timestamp;
+                    var timestamp = ts.ToString("HH:mm:ss") + ">" + ts.ToString("fff");
+                    var message = logEvent.RenderMessage();
+                    var logEntry = $"[{timestamp}] {message}";
+                    _textBox.Dispatcher.Invoke(() =>
+                    {
+                        _textBox.AppendText(logEntry + Environment.NewLine);
+                        _textBox.ScrollToEnd();  // Optional: Auto-scroll to the latest log
+                    });
                 });
-            });
+            }
+            catch (Exception ex)
+            {
+                _textBox.Dispatcher.Invoke(() => { _textBox.AppendText("job cancelled")});
+            }
         }
     }
 }

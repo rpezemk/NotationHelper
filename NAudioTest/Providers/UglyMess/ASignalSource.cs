@@ -2,6 +2,7 @@
 {
     public abstract class ASignalSource
     {
+        public Guid Guid;
         public abstract bool TryGetSignal(int count, int rate, int nchannels, out float[] res);
         private EternalSampleProvider eternalSampleProvider;
         public void AttachTo(EternalSampleProvider eternal)
@@ -12,7 +13,8 @@
 
         public void DetachFrom(EternalSampleProvider eternal)
         {
-            eternalSampleProvider.SignalsSources.Remove(this);
+            if(eternalSampleProvider.SignalsSources.Contains(this))
+                eternalSampleProvider.SignalsSources.Remove(this);
             eternalSampleProvider = null;
         }
 

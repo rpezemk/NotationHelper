@@ -117,10 +117,12 @@ namespace NAudioTest.TimeThings
 
     public class TimeEvent
     {
-        public TimeEvent(double timeSeconds, string name)
+        public Guid Guid;
+        public TimeEvent(double timeSeconds, string name, Guid guid)
         {
             Time = timeSeconds;
             Name = name;
+            Guid = guid;
         }
 
         public bool IsLastPlayed {  get; set; }
@@ -140,17 +142,31 @@ namespace NAudioTest.TimeThings
 
     }
 
-    public class RhythmEvent : TimeEvent
+    public class NoteOnEvent : TimeEvent
     {
+        public int Pitch;
         public RhythmHolder ParentHolder { get; set; }
-        public RhythmEvent(double timeSeconds, string name) : base(timeSeconds, name)
+        public NoteOnEvent(double timeSeconds, Guid guid) : base(timeSeconds, "NoteOn", guid)
         {
         }
-        public RhythmEvent(double timeSeconds, string name, RhythmHolder rhythmHolder) : base(timeSeconds, name)
+        public NoteOnEvent(double timeSeconds, RhythmHolder rhythmHolder, Guid guid) : base(timeSeconds, "NoteOn", guid)
         {
             ParentHolder = rhythmHolder;
         }
     }
+
+    public class NoteOffEvent : TimeEvent
+    {
+        public RhythmHolder ParentHolder { get; set; }
+        public NoteOffEvent(double timeSeconds, Guid guid) : base(timeSeconds, "NoteOff", guid)
+        {
+        }
+        public NoteOffEvent(double timeSeconds, RhythmHolder rhythmHolder, Guid guid) : base(timeSeconds, "NoteOff", guid)
+        {
+            ParentHolder = rhythmHolder;
+        }
+    }
+
 
     public enum EventType
     {

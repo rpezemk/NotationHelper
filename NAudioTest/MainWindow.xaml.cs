@@ -25,7 +25,6 @@ namespace NAudioTest
         EventPlayer eventPlayer = null;
         private void PlaySequenceClick(object sender, RoutedEventArgs e)
         {
-
             var samplePart = TestRhythms.GetSamplePart();
             if(rtmSeq == null) 
                 rtmSeq = samplePart.ToRhythmSequence();
@@ -43,11 +42,12 @@ namespace NAudioTest
                         Dispatch(te, t =>
                         {
                             SequenceView.UnSelectAll();
-                            if (te is RhythmEvent sdf)
-                                SequenceView.SelectOne(sdf.ParentHolder);
+                            OldTests.PlayEvent(t);
                         }
                         );
-                    }, 10, timeEvents);
+                    },
+                    40, 
+                    timeEvents);
             eventPlayer.PlayAsync();
         }
 
@@ -60,6 +60,12 @@ namespace NAudioTest
         {
             LoggerTextBox.ScrollToEnd();
             LoggerScrollViewer.ScrollToBottom();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (AsyncAudio.Provider == null)
+                Task.Run(() => AsyncAudio.InitOnce());
         }
     }
 }

@@ -10,26 +10,44 @@ namespace NAudioTest.Providers
         private SourceStateEnum state = SourceStateEnum.New;
         private double position;
         public double duration;
-
-        public SinSource(double fr, float amp, double _duration)
+        public SinSource(double fr, float amp, double _duration, Guid guid)
         {
             freq = fr;
             amplitude = amp;
-            this.duration = _duration;
+            duration = _duration;
+            Guid = guid;
         }
         public override SourceStateEnum SourceState => state;
         public override ASignalSource Clone()
         {
-            return new SinSource(freq, amplitude, duration);
+            return new SinSource(freq, amplitude, duration, Guid);
         }
 
         public override bool TryGetSignal(int count, int rate, int nchannels, out float[] res)
         {
             state = SourceStateEnum.Reading;
-            res = Enumerable.Range(currIdx, count).Select(i => amplitude * (float)Math.Sin((2 * Math.PI * freq * i) / (float)rate)).ToArray();
-            currIdx += count;
             position += count / (double)rate;
-            return position <= duration;
+            var thisRead = count / (double)rate;
+            if(position <= duration)
+            {
+                res = Enumerable.Range(currIdx, count).Select(i => amplitude * (float)Math.Sin((2 * Math.PI * freq * i) / (float)rate)).ToArray();
+                currIdx += count;
+                return true;
+            }
+
+            else if (position <= duration + thisRead)
+            {
+                var last = (int)(duration * rate - currIdx);
+                res = Enumerable.Range(currIdx, count).Select((sNo, i)=> i < last? amplitude * (float)Math.Sin((2 * Math.PI * freq * sNo) / (float)rate) : 0).ToArray();
+                return true;
+            }
+
+            else 
+            { 
+                res = new float[count];
+                return false; 
+            }
+
         }
     }
 
