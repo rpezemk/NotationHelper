@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NAudioTest"
+        xmlns:views="clr-namespace:NAudioTest.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -17,11 +18,10 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" Content="read1" Click="Read1stFile"/>
-        <Button Grid.Column="1" Content="read2" Click="Read2ndFile"/>
-        <Button Grid.Column="2" Content="play" Click="Button_Click"/>
-        
-        <Button x:Name="GetDevicesInfo" Grid.Column="0" Grid.Row="1" Content="Get devices info" Click="GetDevicesInfo_Click"/>
+        <Button Grid.Column="0" Content="ShowSequence" Click="ShowSequence"/>
+        <Button Grid.Column="1" Content="PlaySequence" Click="PlaySequence"/>
+
+        <views:RhythmSequenceView x:Name="SequenceView" Grid.Row="1" Grid.ColumnSpan="3"/>
         <ScrollViewer Grid.Row="2" Grid.ColumnSpan="3">
             <TextBox x:Name="LoggerTextBox" Background="DarkBlue" Foreground="Yellow" IsReadOnly="True" FontFamily="Cascadia Mono"/>
         </ScrollViewer>

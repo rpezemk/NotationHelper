@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace NotationHelper.Helpers
+namespace MusicDataModel.Helpers
 {
     public static class FontHelper
     {

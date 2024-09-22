@@ -3,6 +3,7 @@ using NAudio.Wave;
 using NAudioTest.AudioInfo;
 using NAudioTest.Helpers;
 using NAudioTest.Providers;
+using NAudioTest.Test;
 using NAudioTest.TimeThings;
 using System.IO;
 using System.Text;
@@ -30,26 +31,17 @@ namespace NAudioTest
             GlobalData.Logger.ActionStr = (str) => LoggerTextBox.Text += str + "\n";
         }
 
-        private string path1;
-        private string path2;
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Thread backgroundThread = new Thread(UpdateTextBox);
-            backgroundThread.Start();
-           
-        }
-
         private void UpdateTextBox(object? obj)
         {
-            TimeMachine.Test(
+            TestTimeMachine.Test(
            (te) =>
            {
                Dispatcher.Invoke(() =>
                {
                    LoggerTextBox.Text += $"timeEvent at {te.Time}" + "\n";
                });
-           });
+           },
+           40);
         }
 
         private void Button_Click2(object sender, RoutedEventArgs e)
@@ -74,52 +66,20 @@ namespace NAudioTest
         }
 
 
-        private void Read1stFile(object sender, RoutedEventArgs e)
+        private void ShowSequence(object sender, RoutedEventArgs e)
         {
-            string path;
-            if (!FileHelper.TryOpenFile(out path))
-                return;
-            path1 = path;
+            var seq = TestRhythms.GetSampleSequence();
+            SequenceView.ShowSequence(seq);
+        }
+
+        private void PlaySequence(object sender, RoutedEventArgs e)
+        {
+            Thread backgroundThread = new Thread(o => UpdateTextBox(o));
+            backgroundThread.Start();
         }
 
 
-        
 
-        private void Read2ndFile(object sender, RoutedEventArgs e)
-        {
-            string path;
-            if (!FileHelper.TryOpenFile(out path))
-                return;
-            path2 = path;
-        }
-
-        private void GetDevicesInfo_Click(object sender, RoutedEventArgs e)
-        {
-            for (int deviceNumber = 0; deviceNumber < WaveOut.DeviceCount; deviceNumber++)
-            {
-                // Get the capabilities of each output device
-                var capabilities = WaveOut.GetCapabilities(deviceNumber);
-                GlobalData.Logger.Log($"Device {deviceNumber}: {capabilities.ProductName}");
-                var values = Enum.GetValues(typeof(SupportedWaveFormat)).Cast<SupportedWaveFormat>();
-                foreach(var format in values)
-                {
-                    GlobalData.Logger.Log($"    {AudioInfoHelper.TranslateToReadable(format)}");
-                }
-            }
-        }
     }
-
-
-
-    public class MyWaveProvider : IWaveProvider
-    {
-        public WaveFormat WaveFormat => throw new NotImplementedException();
-
-        public int Read(byte[] buffer, int offset, int count)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
 
 }

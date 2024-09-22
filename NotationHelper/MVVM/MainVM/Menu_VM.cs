@@ -1,7 +1,7 @@
-﻿using NotationHelper.MVVM.Base;
+﻿using MusicDataModel.MVVM.Base;
 using System.Collections.ObjectModel;
 
-namespace NotationHelper.MVVM.MainVM
+namespace MusicDataModel.MVVM.MainVM
 {
     public class Menu_VM : ViewModelBase
     {

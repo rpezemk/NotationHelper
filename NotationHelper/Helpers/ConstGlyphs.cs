@@ -1,4 +1,4 @@
-﻿using NotationHelper.DataModel.Piece;
+﻿using MusicDataModel.DataModel.Piece;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,14 +10,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace NotationHelper.Helpers
+namespace MusicDataModel.Helpers
 {
     public static class ConstGlyphs
     {
 
         public static string ToGlyph(this Note note)
         {
-            var sdf = note.Parent.Duration.BaseDuration switch
+            var sdf = note.Duration.BaseDuration switch
             {
                 DataModel.Elementary.DurationEnum.Breve => BreveNote,
                 DataModel.Elementary.DurationEnum.Whole => WholeNote,

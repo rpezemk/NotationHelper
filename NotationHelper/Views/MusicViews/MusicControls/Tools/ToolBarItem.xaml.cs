@@ -1,4 +1,4 @@
-﻿using NotationHelper.Helpers;
+﻿using MusicDataModel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NotationHelper.MusicViews.Tools
+namespace MusicDataModel.MusicViews.Tools
 {
     /// <summary>
     /// Logika interakcji dla klasy ToolBarItem.xaml

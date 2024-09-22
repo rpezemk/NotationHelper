@@ -1,8 +1,8 @@
-﻿using NotationHelper.DataModel.Range;
-using NotationHelper.MVVM.Base;
+﻿using MusicDataModel.DataModel.Range;
+using MusicDataModel.MVVM.Base;
 using System.Collections.ObjectModel;
 
-namespace NotationHelper.MVVM.MusicVM
+namespace MusicDataModel.MVVM.MusicVM
 {
     public class VisualMusicContent_VM : ViewModelBase
     {
@@ -11,7 +11,7 @@ namespace NotationHelper.MVVM.MusicVM
         {
             foreach (var item in matrixRange.Parts)
             {
-                partContent_VMs.Add(new HContent_VM(item.Bars));
+                partContent_VMs.Add(new HContent_VM(item.Children));
             }
         }
         private ObservableCollection<HContent_VM> partContent_VMs = new ObservableCollection<HContent_VM>();

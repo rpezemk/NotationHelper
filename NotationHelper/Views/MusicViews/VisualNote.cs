@@ -1,13 +1,13 @@
-﻿using NotationHelper.DataModel.Piece;
-using NotationHelper.DataModel.Structure;
-using NotationHelper.Helpers;
+﻿using MusicDataModel.DataModel.Piece;
+using MusicDataModel.DataModel.Structure;
+using MusicDataModel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NotationHelper.Views.MusicViews
+namespace MusicDataModel.Views.MusicViews
 {
     public class VisualNoteContainer
     {

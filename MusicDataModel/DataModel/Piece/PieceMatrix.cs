@@ -1,8 +1,8 @@
-﻿using NotationHelper.DataModel.Elementary;
-using NotationHelper.DataModel.Structure;
-using NotationHelper.Helpers;
+﻿using MusicDataModel.DataModel.Elementary;
+using MusicDataModel.DataModel.Structure;
+using MusicDataModel.Helpers;
 
-namespace NotationHelper.DataModel.Piece
+namespace MusicDataModel.DataModel.Piece
 {
     public class PieceMatrix : AObjectWithChildren<PieceMatrix, Part>
     {
@@ -28,7 +28,7 @@ namespace NotationHelper.DataModel.Piece
                     bar.AppendChild(Note.A().Flat().Sixteen().AsTimeGroup());
                     bar.AppendChild(Note.B().Flat().Quarter().AsTimeGroup());
                     bar.AppendChild(Note.C().UpOct().Flat().Quarter().AsTimeGroup());
-                    part.Bars.Add(bar);
+                    part.Children.Add(bar);
                 }
                 Parts.Add(part);
             }
@@ -38,13 +38,13 @@ namespace NotationHelper.DataModel.Piece
         public List<Part> Parts { get; set; } = new List<Part>();
 
 
-        public List<TimeGroup> GetRangeByBarNo(int startBar, int barCount)
+        public List<TimeHolder> GetRangeByBarNo(int startBar, int barCount)
         {
-            var resNotes = new List<TimeGroup>();
+            var resNotes = new List<TimeHolder>();
 
             foreach (var hgroup in Parts)
             {
-                var bars = hgroup.Bars.Skip(startBar).Take(barCount);
+                var bars = hgroup.Children.Skip(startBar).Take(barCount);
                 var Timegroups = bars.SelectMany(b => b.Children);
                 resNotes.AddRange(Timegroups);
             }

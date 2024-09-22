@@ -1,17 +1,17 @@
-﻿using NotationHelper.MusicViews.MusicViews.MusicControls;
+﻿using MusicDataModel.MusicViews.MusicViews.MusicControls;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using NotationHelper.Helpers;
-using NotationHelper.DataModel.Piece;
-using NotationHelper.Views.MusicViews;
-using NotationHelper.MVVM;
-using NotationHelper.DataModel.Elementary;
-using NotationHelper.Helpers;
-namespace NotationHelper.MusicViews.MusicControls
+using MusicDataModel.Helpers;
+using MusicDataModel.DataModel.Piece;
+using MusicDataModel.Views.MusicViews;
+using MusicDataModel.MVVM;
+using MusicDataModel.DataModel.Elementary;
+using MusicDataModel.Helpers;
+namespace MusicDataModel.MusicViews.MusicControls
 {
     /// <summary>
     /// Logika interakcji dla klasy BarWithLine.xaml
@@ -44,28 +44,19 @@ namespace NotationHelper.MusicViews.MusicControls
             }
         }
 
-        private void DrawTimeGroup(TimeGroup timeGroup)
+        private void DrawTimeGroup(TimeHolder timeGroup)
         {
-            if (timeGroup is VNoteGroup vNoteGroup)
-                DrawNoteGroup(vNoteGroup);
+            if (timeGroup is Note note)
+                DrawNote(note);
             else if (timeGroup is Rest rest)
                 DrawRest(rest);
-        }
-
-        private void DrawNoteGroup(VNoteGroup vNoteGroup) 
-        {
-            foreach(var note in vNoteGroup.Notes)
-            {
-                DrawNote(note);
-            }
-                   
         }
 
         private void DrawNote(Note note)
         {
             var glyph = note.ToGlyph();
-            var xOffset = note.Parent.XOffset;
-            var yOffset = note.Parent.YOffset - (note.NoteToVisualHeight() - 3) * Scale; 
+            var xOffset = note.XOffset;
+            var yOffset = note.YOffset - (note.NoteToVisualHeight() - 3) * Scale; 
             DrawGlyph(glyph, xOffset, yOffset);
         }
 

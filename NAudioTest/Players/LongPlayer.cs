@@ -9,4 +9,10 @@ namespace NAudioTest.Players
             return true;
         }
     }
+
+
+    public class MonoInstrument
+    {
+
+    }
 }

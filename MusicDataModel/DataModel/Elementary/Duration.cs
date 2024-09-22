@@ -1,4 +1,4 @@
-﻿namespace NotationHelper.DataModel.Elementary
+﻿namespace MusicDataModel.DataModel.Elementary
 {
     public class Duration
     {

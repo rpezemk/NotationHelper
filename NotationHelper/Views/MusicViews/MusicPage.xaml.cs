@@ -1,4 +1,4 @@
-﻿using NotationHelper.MVVM.MusicVM;
+﻿using MusicDataModel.MVVM.MusicVM;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NotationHelper.MusicViews.MainViews
+namespace MusicDataModel.MusicViews.MainViews
 {
     /// <summary>
     /// Logika interakcji dla klasy MusicPage.xaml

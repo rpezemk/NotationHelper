@@ -1,12 +1,12 @@
-﻿using NotationHelper.DataModel.Elementary;
-using NotationHelper.DataModel.Piece;
+﻿using MusicDataModel.DataModel.Elementary;
+using MusicDataModel.DataModel.Piece;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NotationHelper.Helpers
+namespace MusicDataModel.Helpers
 {
     public static class NoteHelper
     {
@@ -20,12 +20,12 @@ namespace NotationHelper.Helpers
 
         
         
-        public static TimeGroup Whole(this TimeGroup timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.Whole);
-        public static TimeGroup Half(this TimeGroup timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.Half);
-        public static TimeGroup Quarter(this TimeGroup timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.Querter);
-        public static TimeGroup Eight(this TimeGroup timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.Eight);
-        public static TimeGroup Sixteen(this TimeGroup timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.Sixteen);
-        public static TimeGroup ThirtyTwo(this TimeGroup timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.ThirtyTwo);
+        public static TimeHolder Whole(this TimeHolder timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.Whole);
+        public static TimeHolder Half(this TimeHolder timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.Half);
+        public static TimeHolder Quarter(this TimeHolder timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.Querter);
+        public static TimeHolder Eight(this TimeHolder timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.Eight);
+        public static TimeHolder Sixteen(this TimeHolder timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.Sixteen);
+        public static TimeHolder ThirtyTwo(this TimeHolder timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.ThirtyTwo);
 
         public static Note Whole(this Note timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.Whole);
         public static Note Half(this Note timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.Half);
@@ -38,8 +38,8 @@ namespace NotationHelper.Helpers
         public static Note DownOct(this Note note) => note.AlterOctave(-1);
 
 
-        public static TimeGroup Dot(this TimeGroup timeGroup) => timeGroup.SetDotting(DataModel.Elementary.DottingEnum.SingleDot);
-        public static TimeGroup DoubleDot(this TimeGroup timeGroup) => timeGroup.SetDotting(DataModel.Elementary.DottingEnum.DoubleDot);
+        public static TimeHolder Dot(this TimeHolder timeGroup) => timeGroup.SetDotting(DataModel.Elementary.DottingEnum.SingleDot);
+        public static TimeHolder DoubleDot(this TimeHolder timeGroup) => timeGroup.SetDotting(DataModel.Elementary.DottingEnum.DoubleDot);
 
 
 

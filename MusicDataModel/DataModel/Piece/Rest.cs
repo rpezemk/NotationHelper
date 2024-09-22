@@ -1,9 +1,9 @@
-﻿using NotationHelper.DataModel.Elementary;
-using NotationHelper.DataModel.Structure;
+﻿using MusicDataModel.DataModel.Elementary;
+using MusicDataModel.DataModel.Structure;
 
-namespace NotationHelper.DataModel.Piece
+namespace MusicDataModel.DataModel.Piece
 {
-    public class Rest : TimeGroup
+    public class Rest : TimeHolder
     {
         public override TimeGroupTypeEnum GroupType => TimeGroupTypeEnum.Rest;
 

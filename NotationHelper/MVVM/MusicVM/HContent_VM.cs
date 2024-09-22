@@ -1,8 +1,8 @@
-﻿using NotationHelper.DataModel.Piece;
-using NotationHelper.MVVM.Base;
+﻿using MusicDataModel.DataModel.Piece;
+using MusicDataModel.MVVM.Base;
 using System.Collections.ObjectModel;
 
-namespace NotationHelper.MVVM.MusicVM
+namespace MusicDataModel.MVVM.MusicVM
 {
     public class HContent_VM : ViewModelBase
     {

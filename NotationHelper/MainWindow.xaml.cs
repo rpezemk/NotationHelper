@@ -1,7 +1,7 @@
-﻿using NotationHelper.DataModel.Piece;
-using NotationHelper.FlowTypes;
-using NotationHelper.Helpers;
-using NotationHelper.MVVM.MainVM;
+﻿using MusicDataModel.DataModel.Piece;
+using MusicDataModel.FlowTypes;
+using MusicDataModel.Helpers;
+using MusicDataModel.MVVM.MainVM;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NotationHelper
+namespace MusicDataModel
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

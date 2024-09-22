@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NotationHelper.StyleResources {
+namespace MusicDataModel.StyleResources {
     using System;
     
     

@@ -1,6 +1,6 @@
-﻿using NotationHelper.DataModel.Elementary;
+﻿using MusicDataModel.DataModel.Elementary;
 
-namespace NotationHelper.Helpers
+namespace MusicDataModel.Helpers
 {
     public static class MeterHelper
     {

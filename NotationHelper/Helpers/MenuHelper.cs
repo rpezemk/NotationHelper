@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace NotationHelper.FlowTypes
+namespace MusicDataModel.FlowTypes
 {
     public static class MenuHelper 
     {

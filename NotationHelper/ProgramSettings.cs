@@ -1,5 +1,5 @@
-﻿using NotationHelper.MusicViews;
-using NotationHelper.Helpers;
+﻿using MusicDataModel.MusicViews;
+using MusicDataModel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +9,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Media3D;
 using System.Windows.Media;
-using NotationHelper.DataModel;
-using NotationHelper.DataModel.Elementary;
-using NotationHelper.FlowTypes;
+using MusicDataModel.DataModel;
+using MusicDataModel.DataModel.Elementary;
+using MusicDataModel.FlowTypes;
 
-namespace NotationHelper
+namespace MusicDataModel
 {
     public static class ProgramSettings
     {

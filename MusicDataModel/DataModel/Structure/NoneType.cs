@@ -1,4 +1,4 @@
-﻿namespace NotationHelper.DataModel.Structure
+﻿namespace MusicDataModel.DataModel.Structure
 {
     public class NoneType : IChildOf
     {

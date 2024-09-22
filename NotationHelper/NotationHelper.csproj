@@ -41,4 +41,8 @@
     <Folder Include="Nowy folder\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MusicDataModel\MusicDataModel.csproj" />
+  </ItemGroup>
+
 </Project>

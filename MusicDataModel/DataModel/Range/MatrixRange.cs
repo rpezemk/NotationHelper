@@ -1,11 +1,11 @@
-﻿using NotationHelper.DataModel.Piece;
+﻿using MusicDataModel.DataModel.Piece;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NotationHelper.DataModel.Range
+namespace MusicDataModel.DataModel.Range
 {
     public class MatrixRange
     {
@@ -15,8 +15,8 @@ namespace NotationHelper.DataModel.Range
         {
             foreach (var barGroup in pieceMatrix.Parts)
             {
-                var partBars = barGroup.Bars.GetRange(startBar, count);
-                Part part = new Part() { Bars = partBars };
+                var partBars = barGroup.Children.GetRange(startBar, count);
+                Part part = new Part() { Children = partBars };
                 Parts.Add(part);
             }
         }

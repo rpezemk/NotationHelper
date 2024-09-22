@@ -1,11 +1,11 @@
-﻿using NotationHelper.DataModel.Elementary;
+﻿using MusicDataModel.DataModel.Elementary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NotationHelper.DataModel.Structure
+namespace MusicDataModel.DataModel.Structure
 {
     public interface IChildOf
     {

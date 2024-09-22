@@ -1,14 +1,14 @@
-﻿using NotationHelper.DataModel.Piece;
-using NotationHelper.DataModel.Range;
-using NotationHelper.MVVM.Base;
-using NotationHelper.MVVM.MusicVM;
+﻿using MusicDataModel.DataModel.Piece;
+using MusicDataModel.DataModel.Range;
+using MusicDataModel.MVVM.Base;
+using MusicDataModel.MVVM.MusicVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NotationHelper.MVVM.MainVM
+namespace MusicDataModel.MVVM.MainVM
 {
     public class Main_VM : ViewModelBase
     {

@@ -1,18 +1,18 @@
-﻿using NotationHelper.MusicViews;
-using NotationHelper.MVVM.Base;
-using NotationHelper.MusicViews.MainViews;
+﻿using MusicDataModel.MusicViews;
+using MusicDataModel.MVVM.Base;
+using MusicDataModel.MusicViews.MainViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using NotationHelper.MVVM;
+using MusicDataModel.MVVM;
 using System.Runtime.CompilerServices;
-using NotationHelper.DataModel.Elementary;
-using NotationHelper.DataModel.Piece;
+using MusicDataModel.DataModel.Elementary;
+using MusicDataModel.DataModel.Piece;
 
-namespace NotationHelper.Helpers
+namespace MusicDataModel.Helpers
 {
     public static class VisualHelper
     {

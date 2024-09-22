@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace NotationHelper.MVVM.Base
+namespace MusicDataModel.MVVM.Base
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

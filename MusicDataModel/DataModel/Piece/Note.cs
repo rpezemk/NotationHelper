@@ -1,14 +1,14 @@
-﻿using NotationHelper.DataModel.Elementary;
-using NotationHelper.DataModel.Structure;
+﻿using MusicDataModel.DataModel.Elementary;
+using MusicDataModel.DataModel.Structure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NotationHelper.DataModel.Piece
+namespace MusicDataModel.DataModel.Piece
 {
-    public class Note : AObjectWithParent<VNoteGroup, Note>
+    public class Note : TimeHolder
     {
         public int X { get; set; }
         public int Y { get; set; }
@@ -19,6 +19,8 @@ namespace NotationHelper.DataModel.Piece
         public ObjectTypeEnum ObjectType => ObjectTypeEnum.Note;
         public override ObjectTypeEnum ParentType => ObjectTypeEnum.TimeGroup;
         public ObjectTypeEnum ChildType => ObjectTypeEnum.None;
+
+        public override TimeGroupTypeEnum GroupType => TimeGroupTypeEnum.Note;
 
         public Note SetName(NoteName noteName) 
         {
@@ -40,21 +42,17 @@ namespace NotationHelper.DataModel.Piece
 
         public Note SetBaseDuration(DurationEnum baseDuration)
         {
-            Parent.Duration.BaseDuration = baseDuration;
+            Duration.BaseDuration = baseDuration;
             return this;
         }
 
         public Note SetDotting(DottingEnum dotting)
         {
-            Parent.Duration.Dotting = dotting;
+            Duration.Dotting = dotting;
             return this;
         }
 
-        public TimeGroup AsTimeGroup()
-        {
-            Parent.Notes.Add(this);
-            return Parent;
-        }
+        public TimeHolder AsTimeGroup() => this;
 
         public static Note C() => Emit().SetName(DataModel.Elementary.NoteName.C);
         public static Note D() => Emit().SetName(DataModel.Elementary.NoteName.D);

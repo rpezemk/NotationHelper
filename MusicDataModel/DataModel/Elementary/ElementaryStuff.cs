@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NotationHelper.DataModel.Elementary
+namespace MusicDataModel.DataModel.Elementary
 {
     public enum NoteName
     {

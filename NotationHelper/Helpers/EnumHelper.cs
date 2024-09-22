@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NotationHelper.DataModel.Structure;
+using MusicDataModel.DataModel.Structure;
 
-namespace NotationHelper.Helpers
+namespace MusicDataModel.Helpers
 {
 
     public static class EnumHelper

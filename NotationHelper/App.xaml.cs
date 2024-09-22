@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace NotationHelper
+namespace MusicDataModel
 {
     /// <summary>
     /// Interaction logic for App.xaml

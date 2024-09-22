@@ -1,6 +1,6 @@
-﻿using NotationHelper.MVVM.Base;
+﻿using MusicDataModel.MVVM.Base;
 
-namespace NotationHelper.MVVM.MainVM
+namespace MusicDataModel.MVVM.MainVM
 {
     public class ToolbarItem_VM: ViewModelBase
     {

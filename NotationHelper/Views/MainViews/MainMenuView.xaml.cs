@@ -1,4 +1,4 @@
-﻿using NotationHelper.FlowTypes;
+﻿using MusicDataModel.FlowTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NotationHelper.MusicViews.MainViews
+namespace MusicDataModel.MusicViews.MainViews
 {
     /// <summary>
     /// Logika interakcji dla klasy MainMenuView.xaml

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace NotationHelper.FlowTypes
+namespace MusicDataModel.FlowTypes
 {
     public abstract class AMenuNode
     {

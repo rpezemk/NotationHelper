@@ -1,6 +1,6 @@
-﻿using NotationHelper.DataModel.Elementary;
-using NotationHelper.DataModel.Piece;
-using NotationHelper.MVVM.Base;
+﻿using MusicDataModel.DataModel.Elementary;
+using MusicDataModel.DataModel.Piece;
+using MusicDataModel.MVVM.Base;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NotationHelper.MVVM
+namespace MusicDataModel.MVVM
 {
     public class SingleBar_VM : ViewModelBase
     {
