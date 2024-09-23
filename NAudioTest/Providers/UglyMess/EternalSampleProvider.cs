@@ -6,6 +6,7 @@ namespace NAudioTest.Providers.UglyMess
     {
         public List<ASignalSource> SignalsSources { get; set; } = new List<ASignalSource>();
         public WaveFormat WaveFormat { get; }
+        public int SamplePrecision { get; set; } = 200;//SAMPLES
         public EternalSampleProvider()
         {
             WaveFormat = WaveFormat.CreateIeeeFloatWaveFormat(44100, 2);

@@ -37,7 +37,7 @@ namespace NAudioTest
             }
             catch (Exception ex)
             {
-                _textBox.Dispatcher.Invoke(() => { _textBox.AppendText("job cancelled")});
+                _textBox.Dispatcher.Invoke(() => { _textBox.AppendText("job cancelled"); });
             }
         }
     }
