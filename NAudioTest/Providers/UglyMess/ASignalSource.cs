@@ -4,18 +4,15 @@
     {
         public Guid Guid;
         public abstract bool TryGetSignal(int count, int rate, int nchannels, out float[] res);
-        private EternalSampleProvider eternalSampleProvider;
         public void AttachTo(EternalSampleProvider eternal)
         {
             eternal.SignalsSources.Add(this);
-            eternalSampleProvider = eternal;
         }
 
         public void DetachFrom(EternalSampleProvider eternal)
         {
-            if(eternalSampleProvider.SignalsSources.Contains(this))
-                eternalSampleProvider.SignalsSources.Remove(this);
-            eternalSampleProvider = null;
+            if(eternal.SignalsSources.Contains(this))
+                eternal.SignalsSources.Remove(this);
         }
 
         public abstract SourceStateEnum SourceState { get; }

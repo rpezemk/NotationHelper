@@ -32,23 +32,33 @@ namespace NAudioTest
             var timeEvents = rtmSeq.ToTimeEvents();
             if(eventPlayer != null && eventPlayer.IsPlaying)
             {
-                Log.Information("already playing");
+                //Log.Information("already playing");
                 return;
             }
+            DateTime dt1 = DateTime.Now;
+            var evtCnt = 0;
             eventPlayer = 
                 new EventPlayer(
                     te =>
                     {
                         Dispatch(te, t =>
                         {
-                            SequenceView.UnSelectAll();
-                            OldTests.PlayEvent(t);
+                            
+                            if(te is NoteOnEvent)
+                            {
+                                var now = DateTime.Now;
+                                //Log.Information($"event {(int)(now - dt1).TotalMilliseconds}, evtNo: {evtCnt}");
+                                OldTests.PlayEvent(t);
+                                dt1 = now;
+                                evtCnt++;
+                            }
+
                         }
                         );
                     },
-                    40, 
+                    16, 
                     timeEvents);
-            eventPlayer.PlayAsync();
+            eventPlayer.PlayAsync(); 
         }
 
         private void Dispatch<T>(T arg, Action<T> action)

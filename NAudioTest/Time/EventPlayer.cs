@@ -20,15 +20,8 @@ namespace NAudioTest.TimeThings
         public int CurrTick = 0;
         public Action<TimeEvent> ReportAction;
         private System.Timers.Timer timer;
-        private double currentTime;
+        private int currentTick;
         private double maxTsecs;
-        private double period;
-
-        public EventPlayer(Action<TimeEvent> action, double freq) 
-        {
-            ReportAction = action;
-            this.freq = freq;
-        }
 
         public EventPlayer(Action<TimeEvent> action, double freq, List<TimeEvent> timeEvents)
         {
@@ -44,51 +37,58 @@ namespace NAudioTest.TimeThings
         {
             if (isPlaying)
             {
-                Log.Information("already playing");
+                //Log.Information("already playing");
                 return;
             }
             isPlaying = true;
-            Log.Information("starting");
+            //Log.Information("starting");
             Task.Run(() => play());
         }
+
+        private List<double> doubles1 = new List<double>();
 
         private void play()
         {
             isPlaying = true;
             maxTsecs = TimeEvents.Count == 0 ? 0 : TimeEvents.Max(te => te.Time);
-            period = 1 / freq;
             timer = new System.Timers.Timer();
-            timer.Interval = period * 1000;  // Set the timer interval
-            currentTime = 0;
+            timer.Interval = 1000 / freq;  // Set the timer interval (milliseconds)
+            currentTick = 0;
+            var prevTick = -1;
             var tickCounter = 0;
             var eventeCounter = 0;
+            DateTime prevDt = DateTime.Now;
             timer.Elapsed += (sender, e) =>
             {
-                var thisTickEvents = GetEvents(currentTime, period);
-                TimeEvent prev = null;
+                var thisTickEvents = GetEvents(currentTick / freq, prevTick / freq, currentTick);
+                doubles1.Add((DateTime.Now - prevDt).TotalMilliseconds);
                 foreach (var evt in thisTickEvents)
                 {
-                    if(prev != null)
-                        prev.IsLastPlayed = false;
                     evt.IsLastPlayed = true;
                     ReportAction?.Invoke(evt);
-                    Log.Information(evt.ToString());
-                    prev = evt;
+                    ////Log.Information(evt.ToString() + " -- tick: " + tickCounter);
                     eventeCounter++;
                 }
 
-                if (currentTime > maxTsecs)
+                if (currentTick / freq > maxTsecs)
                 {
-                    Log.Information("stopping");
+                    //Log.Information("stopping");
                     timer.Stop();
-                    Log.Information("stopped");
+                    //Log.Information("stopped");
                     isPlaying = false;
+                    Test(doubles1);
                     return;
                 }
-                currentTime += period;
+                prevTick = currentTick;
+                currentTick += 1;
                 tickCounter++;
             };
             timer.Start();
+        }
+        
+        private void Test(List<double> doubles)
+        {
+            var sdf = doubles.Skip(1).Select((d, i) => doubles[i] - d).ToList();
         }
 
         /// <summary>
@@ -107,10 +107,9 @@ namespace NAudioTest.TimeThings
             }    
         }
 
-        public List<TimeEvent> GetEvents(double time, double timeBefore)
+        public List<TimeEvent> GetEvents(double timeTo, double timeFrom, int tickNo)
         {
-            var preTime = time - timeBefore;
-            var res = TimeEvents.Where(te => te.Time <= time && te.Time > preTime).ToList();
+            var res = TimeEvents.Where(te => te.Time <= timeTo && te.Time > timeFrom).ToList();
             return res;
         }
     }

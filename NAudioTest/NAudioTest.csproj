@@ -17,4 +17,8 @@
     <ProjectReference Include="..\MusicDataModel\MusicDataModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Players\" />
+  </ItemGroup>
+
 </Project>

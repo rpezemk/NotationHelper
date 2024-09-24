@@ -1,4 +1,5 @@
 ﻿using NAudio.Wave;
+using Serilog;
 
 namespace NAudioTest.Providers.UglyMess
 {
@@ -6,7 +7,7 @@ namespace NAudioTest.Providers.UglyMess
     {
         public List<ASignalSource> SignalsSources { get; set; } = new List<ASignalSource>();
         public WaveFormat WaveFormat { get; }
-        public int SamplePrecision { get; set; } = 200;//SAMPLES
+        public int LittleSamples { get; set; } = 10;//SAMPLES
         public EternalSampleProvider()
         {
             WaveFormat = WaveFormat.CreateIeeeFloatWaveFormat(44100, 2);
@@ -17,19 +18,42 @@ namespace NAudioTest.Providers.UglyMess
             int samplesToCopy = count / 2;
             List<ASignalSource> toDetach = new List<ASignalSource>();
 
-            var cnt = SignalsSources.Count();
 
-            for (int srcNo = 0; srcNo < cnt; srcNo++)
+            var nLoops = samplesToCopy / LittleSamples;
+            var lasting = samplesToCopy % LittleSamples;
+            bool playing = false;
+            bool playingPrev = false;
+
+            for (int j = 0; j < nLoops; j++)
             {
-                var src = SignalsSources[srcNo];
-                if (!src.TryGetSignal(samplesToCopy, 44100, 1, out var srcBuff))
+                var subSrc = SignalsSources.ToList();
+                foreach (var src in subSrc)
                 {
-                    toDetach.Add(src);
-                    continue;
+                    if (src.TryGetSignal(LittleSamples, 44100, 1, out var srcBuff))
+                    {
+
+                        playing = true;
+                        ////Log.Information($"got signal {DateTime.Now.Millisecond}");
+                        srcBuff.Select((v, i) => buff[i + j * LittleSamples] + srcBuff[i]).ToArray().CopyTo(buff, j * LittleSamples);
+                        if (playing && !playingPrev)
+                            //Log.Information("started");
+                        playingPrev = playing;
+                        playing = false;
+                    }
                 }
-                for (int i = 0; i < samplesToCopy; i++)
+            }
+            
+
+            var nDone = LittleSamples * nLoops;
+            var subSrc2 = SignalsSources.ToList();
+            foreach (var src in subSrc2)
+            {
+                if (src.TryGetSignal(samplesToCopy, 44100, 1, out var srcBuff))
                 {
-                    buff[i] += srcBuff[i];
+                    for (int i = 0; i < lasting; i++)
+                    {
+                        buff[i + nDone] += srcBuff[i];
+                    }
                 }
             }
 
@@ -37,6 +61,7 @@ namespace NAudioTest.Providers.UglyMess
             {
                 src.DetachFrom(this);
             }
+
 
 
             for (int i = 0; i < samplesToCopy; i++)

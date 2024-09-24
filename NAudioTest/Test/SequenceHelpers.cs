@@ -2,6 +2,7 @@
 using MusicDataModel.DataModel.Piece;
 using MusicDataModel.MidiModel;
 using NAudioTest.TimeThings;
+using Serilog;
 
 namespace NAudioTest.Test
 {

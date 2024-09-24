@@ -33,8 +33,11 @@ namespace NAudioTest.Test
         {
             if(rhythmEvent is NoteOnEvent noteOnEvent)
             {
-                var signal = new SinSource(10*Math.Pow(SemitoneCoeff, noteOnEvent.Pitch), 0.02F, 0.02, rhythmEvent.Guid);
+                //Log.Information("event on");
+                var signal = new SinSource(10*Math.Pow(SemitoneCoeff, noteOnEvent.Pitch), 0.02F, 0.002, rhythmEvent.Guid);
+                //Log.Information("event created");
                 signal.AttachTo(AsyncAudio.Provider);
+                //Log.Information("event attached");
             }
             else if(rhythmEvent is NoteOffEvent)
             {
@@ -45,27 +48,5 @@ namespace NAudioTest.Test
                 }
             }
         }
-
-
-        public static void SinSourceTest()
-        {
-           
-            if (AsyncAudio.Provider != null)
-            {
-                for (var a = 1; a < 10; a++)
-                {
-                    var N = 10;
-                    var root = Math.Pow(2, 1 / (double)N);
-                    var startFreq = 440;
-                    var currCoeff = 1.0D;
-                    for (var i = 0; i < N; i++)
-                    {
-                        currCoeff *= root;
-                        new SinSource(startFreq * currCoeff, 0.00002F, 200.0, Guid.NewGuid()).AttachTo(AsyncAudio.Provider);
-                    }
-                }
-            }
-        }
-
     }
 }

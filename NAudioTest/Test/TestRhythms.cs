@@ -13,20 +13,29 @@ namespace NAudioTest.Test
     {
         public static MonoPart GetSamplePart()
         {
-            var barCount = 4;
+            var barCount = 1;
             var partNo = 0;
             var part = new MonoPart() { PartNo = partNo };
             for (int barNo = 0; barNo < barCount; barNo++)
             {
                 var bar = new VoiceBar() { };
-                bar.AppendChild(Note.D().Eight());
-                bar.AppendChild(Note.E().Eight());
-                bar.AppendChild(Note.F().Eight());
-                bar.AppendChild(Note.G().Eight());
-                bar.AppendChild(Note.D().Eight());
-                bar.AppendChild(Note.E().Eight());
-                bar.AppendChild(Note.F().Eight());
-                bar.AppendChild(Note.G().Eight());
+                bar.AppendChild(Note.D().Sixteen());
+                bar.AppendChild(Note.D().Sixteen());
+                bar.AppendChild(Note.D().Sixteen());
+                bar.AppendChild(Note.D().Sixteen());
+                bar.AppendChild(Note.D().Sixteen());
+                bar.AppendChild(Note.D().Sixteen());
+                bar.AppendChild(Note.D().Sixteen());
+                bar.AppendChild(Note.D().Sixteen());
+                bar.AppendChild(Note.D().Sixteen());
+                bar.AppendChild(Note.D().Sixteen());
+                bar.AppendChild(Note.D().Sixteen());
+                bar.AppendChild(Note.D().Sixteen());
+                bar.AppendChild(Note.D().Sixteen());
+                bar.AppendChild(Note.D().Sixteen());
+                bar.AppendChild(Note.D().Sixteen());
+                bar.AppendChild(Note.D().Sixteen());
+
                 part.Children.Add(bar);
             }
             return part;
