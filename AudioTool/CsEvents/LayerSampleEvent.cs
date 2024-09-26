@@ -15,6 +15,14 @@
         public double StartSampleFrom { get; set; }
         public double StartDynamics { get; set; }
         public double EndDynamics { get; set; }
+        public LayerSampleEvent AsModulator()
+        {
+            LayerSampleEvent cloned = new LayerSampleEvent(Start, Length, StartSampleFrom, StartDynamics, EndDynamics);
+            cloned.InstrumentNo = InstrumentNo + 10;
+            return cloned;
+        }
     }
+
+
 
 }

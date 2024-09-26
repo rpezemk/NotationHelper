@@ -52,7 +52,7 @@ namespace AudioTool.CSoundWrapper
         {
             var part = $@"
 		        sr = 44100
-		        ksmps = 10
+		        ksmps = 100; Hz
 		        nchnls = 2
 		        0dbfs  = 1";
             return part;

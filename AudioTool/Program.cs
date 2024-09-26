@@ -25,6 +25,22 @@ class Program
             }
         });
 
+        Task.Run(() =>
+        {
+            while (true)
+            {
+                foreach (var p in pitches)
+                {
+                    //csEngine.Play(flatViola.EmitFromInstr(new FlatSampleEvent(0, 4, p * 4)));
+                    csEngine.Play(layeredViola.EmitFromInstr(new LayerSampleEvent(0, 1, 1, 0, 0)).AsModulator());
+                    Thread.Sleep(1000);
+                    csEngine.Play(layeredViola.EmitFromInstr(new LayerSampleEvent(0, 1, 0, 0, 0)).AsModulator());
+                    Thread.Sleep(1000);
+                }
+            }
+        });
+
+
         Thread.Sleep(3600 * 1000);
     }
 }
