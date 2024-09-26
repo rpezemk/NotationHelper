@@ -1,5 +1,6 @@
-﻿using AudioTool.CSoundWrapper;
-using AudioTool.Instruments;
+﻿using AudioTool.CsEvents;
+using AudioTool.CSoundWrapper;
+using AudioTool.Instruments.InstrumentBase;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 
@@ -8,15 +9,29 @@ public class CsEngine
     public bool isCancelled;
     public bool IsCancelled => isCancelled;
     IntPtr csound = 0;
-    ConcurrentQueue<ICsEvent> eventList = new ConcurrentQueue<ICsEvent>();
-    List<IScriptInstrument> scriptInstruments = new List<IScriptInstrument>();
-    public CsEngine(List<IScriptInstrument> instruments)
+    ConcurrentQueue<ACsEvent> eventList = new ConcurrentQueue<ACsEvent>();
+    public List<AScriptedInstrument> ScriptInstruments = new List<AScriptedInstrument>();
+    public CsEngine(List<AScriptedInstrument> instruments)
     {
-        scriptInstruments = instruments;
+        ScriptInstruments = instruments;
     }
 
+    internal void Play(ACsEvent csEvent)
+    {
+        eventList.Enqueue(csEvent);
+    }
 
-    public void Enqueue(ICsEvent param)
+    public void Play(string instrumentName, ACsEvent csEvent)
+    {
+        var instr = ScriptInstruments.FirstOrDefault(si => si.Name == instrumentName);
+        if (instr == null)
+            return;
+        var pars = csEvent.GetParams();
+        csEvent.SetInstrNo(instr.InstrNo);
+        eventList.Enqueue(instr.EmitFromInstr(csEvent));
+    }
+
+    public void Enqueue(ACsEvent param)
     {
         eventList.Enqueue(param);
     }
@@ -37,11 +52,9 @@ public class CsEngine
         Task.Run(() =>
         {
             csound = Wrapped.csoundCreate(IntPtr.Zero);
-            Wrapped.csoundSetOption(csound, "-odac"); // Output to audio device
-
-            var script = CsdGenerator.GetSimpleScript();
+            Wrapped.csoundSetOption(csound, "-odac");
+            var script = CsdGenerator.GetScriptedInstruments(ScriptInstruments);
             Console.WriteLine(script);
-            // Compile the CSD string
             if (Wrapped.csoundCompileCsdText(csound, script) == 0)
             {
                 Wrapped.csoundStart(csound);
@@ -52,6 +65,7 @@ public class CsEngine
                     List<double[]> toRemove = new List<double[]>();
                     while (eventList.TryDequeue(out var e))
                     {
+                        var pars = e.GetParams();
                         Wrapped.csoundScoreEvent(csound, 'i', e.GetParams(), e.GetParams().Length);
                     }
                     if (isCancelled)
@@ -60,9 +74,10 @@ public class CsEngine
                 Wrapped.csoundStop(csound);
             }
             Wrapped.csoundDestroy(csound);
-            Console.WriteLine("Csound performance complete.");
         });
 
         Thread.Sleep(100000000);
     }
+
+
 }
