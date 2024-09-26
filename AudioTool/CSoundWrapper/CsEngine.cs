@@ -1,4 +1,5 @@
 ﻿using AudioTool.CSoundWrapper;
+using AudioTool.Instruments;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 
@@ -8,6 +9,12 @@ public class CsEngine
     public bool IsCancelled => isCancelled;
     IntPtr csound = 0;
     ConcurrentQueue<ICsEvent> eventList = new ConcurrentQueue<ICsEvent>();
+    List<IScriptInstrument> scriptInstruments = new List<IScriptInstrument>();
+    public CsEngine(List<IScriptInstrument> instruments)
+    {
+        scriptInstruments = instruments;
+    }
+
 
     public void Enqueue(ICsEvent param)
     {
@@ -32,7 +39,7 @@ public class CsEngine
             csound = Wrapped.csoundCreate(IntPtr.Zero);
             Wrapped.csoundSetOption(csound, "-odac"); // Output to audio device
 
-            var script = CsdGenerator.GetSimpleProgram();
+            var script = CsdGenerator.GetSimpleScript();
             Console.WriteLine(script);
             // Compile the CSD string
             if (Wrapped.csoundCompileCsdText(csound, script) == 0)

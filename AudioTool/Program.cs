@@ -1,11 +1,12 @@
 ﻿using AudioTool.CSoundWrapper;
+using AudioTool.Instruments;
 using System.Runtime.Intrinsics.Arm;
 
 class Program
 {
     static void Main(string[] args)
     {
-        CsEngine csEngine = new CsEngine();
+        CsEngine csEngine = new CsEngine([new BowedInstrument("viola")]);
         csEngine.RunAsync();
 
         Thread.Sleep(1000);
