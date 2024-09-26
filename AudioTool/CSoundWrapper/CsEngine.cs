@@ -33,7 +33,7 @@ public class CsEngine
             Wrapped.csoundSetOption(csound, "-odac"); // Output to audio device
 
             var script = CsdGenerator.GetSimpleProgram();
-
+            Console.WriteLine(script);
             // Compile the CSD string
             if (Wrapped.csoundCompileCsdText(csound, script) == 0)
             {
