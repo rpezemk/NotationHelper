@@ -11,7 +11,7 @@ namespace MusicDataModel.MusicViews.MusicControls
     /// </summary>
     public partial class BarWithLine : UserControl
     {
-        public List<TimeHolderDrawing> SelectedDrawingList { get; set; } = new List<TimeHolderDrawing>();
+        
         public BarWithLine()
         {
             InitializeComponent();
@@ -19,6 +19,13 @@ namespace MusicDataModel.MusicViews.MusicControls
 
         public double Scale = 3;
 
+        public List<TimeHolderDrawing> GetAllTimeHolders()
+        {
+            var res = GetTimeHolders().ToList();
+            return res;
+        }
+
+        public void OnSelect
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             MyVisualHost.Clear();
@@ -74,14 +81,7 @@ namespace MusicDataModel.MusicViews.MusicControls
 
         private void MyVisualHost_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var enu = MyVisualHost.Visuals.GetEnumerator();
-            List<TimeHolderDrawing> visuals = new List<TimeHolderDrawing>();
-            while (enu.MoveNext())
-            {
-                var abc = enu.Current;
-                if(abc is TimeHolderDrawing thd)
-                    visuals.Add(thd);
-            }
+            List<TimeHolderDrawing> visuals = GetTimeHolders();
             var cnt = visuals.Count();
 
             var testCnt = 0;
@@ -98,9 +98,9 @@ namespace MusicDataModel.MusicViews.MusicControls
 
             nowClicked.ForEach(v => v.IsSelected = true);
 
-            foreach(var vis in visuals)
+            foreach (var vis in visuals)
             {
-                if(vis.IsSelected)
+                if (vis.IsSelected)
                 {
                     RedrawSelected(vis);
                 }
@@ -109,6 +109,20 @@ namespace MusicDataModel.MusicViews.MusicControls
                     RedrawUnselected(vis);
                 }
             }
+        }
+
+        private List<TimeHolderDrawing> GetTimeHolders()
+        {
+            var enu = MyVisualHost.Visuals.GetEnumerator();
+            List<TimeHolderDrawing> visuals = new List<TimeHolderDrawing>();
+            while (enu.MoveNext())
+            {
+                var abc = enu.Current;
+                if (abc is TimeHolderDrawing thd)
+                    visuals.Add(thd);
+            }
+
+            return visuals;
         }
 
         private void RedrawSelected(TimeHolderDrawing nd)
