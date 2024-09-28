@@ -19,19 +19,13 @@ namespace MusicDataModel.MusicViews.MusicControls
 
         public double Scale = 3;
 
-        public List<TimeHolderDrawing> GetAllTimeHolders()
-        {
-            var res = GetTimeHolders().ToList();
-            return res;
-        }
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             MyVisualHost.Clear();
-            Draw();
+            DrawAll();
         }
 
-        private void Draw()
+        private void DrawAll()
         {
             var sum = GridContainer.ActualWidth + ActualWidth + MyVisualHost.ActualHeight;
             if (sum == 0 || DataContext is not SingleBar_VM vm)
@@ -110,7 +104,7 @@ namespace MusicDataModel.MusicViews.MusicControls
             }
         }
 
-        private List<TimeHolderDrawing> GetTimeHolders()
+        public List<TimeHolderDrawing> GetTimeHolders()
         {
             var enu = MyVisualHost.Visuals.GetEnumerator();
             List<TimeHolderDrawing> visuals = new List<TimeHolderDrawing>();
