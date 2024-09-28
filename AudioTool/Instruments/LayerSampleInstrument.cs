@@ -3,112 +3,13 @@ using AudioTool.Instruments.InstrumentBase;
 
 namespace AudioTool.Instruments
 {
-    public class Layer
-    {
-        public Layer(int no, string dyn, string instrName, string basePath, string extension, double sampleLen) 
-        {
-            No = no;
-            Dyn = dyn;
-            InstrName = instrName;
-            BasePath = basePath;
-            Extension = extension;
-            SampleLen = sampleLen;
-        }
-
-        public int No;
-        public string Dyn;
-        public string InstrName;
-        public string BasePath;
-        public string Extension;
-        public double SampleLen;
-
-        public string FilePath => $"{BasePath}{Dyn}-{InstrName}.{Extension}";
-        public string ToWholeSample()
-        {
-            var str = @$"
-                aLeft_{Dyn}_wav1, aRight_{Dyn}_wav1 diskin2 ""{FilePath}"", 1, p4
-                aLeft_{Dyn} = aLeft_{Dyn}_wav1
-                aRight_{Dyn} = aRight_{Dyn}_wav1
-                ";
-            return str;
-        }
-
-        public string ToFadeInOutSample()
-        {
-            var str = @$"
-                aLeft_{Dyn}_wav1, aRight_{Dyn}_wav1 diskin2 ""{FilePath}"", 1, p4
-                kEnv_{Dyn} linseg 0, {SampleLen}/2, 1, {SampleLen}/2, 0
-                aLeft_{Dyn} = aLeft_{Dyn}_wav1 * kEnv_{Dyn}
-                aRight_{Dyn} = aRight_{Dyn}_wav1 * kEnv_{Dyn}
-                ";
-            return str;
-        }
-
-        public string FadeZeroToOne()
-        {
-            var str = @$"
-                aLeft_{Dyn}_wav1, aRight_{Dyn}_wav1 diskin2 ""{FilePath}"", 1, p4
-                kEnv_{Dyn} linseg 0, {SampleLen}, 1
-                aLeft_{Dyn} = aLeft_{Dyn}_wav1 * kEnv_{Dyn}
-                aRight_{Dyn} = aRight_{Dyn}_wav1 * kEnv_{Dyn}
-                ";
-            return str;
-        }
-
-        public string FadeOneToZero()
-        {
-            var str = @$"
-                aLeft_{Dyn}_wav1, aRight_{Dyn}_wav1 diskin2 ""{FilePath}"", 1, p4
-                kEnv_{Dyn} linseg 1, {SampleLen}, 0
-                aLeft_{Dyn} = aLeft_{Dyn}_wav1 * kEnv_{Dyn}
-                aRight_{Dyn} = aRight_{Dyn}_wav1 * kEnv_{Dyn}
-                ";
-            return str;
-        }
-
-
-
-        /// <summary>
-        /// kDiff_{layer.No}
-        /// </summary>
-        /// <param name="layer"></param>
-        /// <param name="instrNo"></param>
-        /// <param name="nLayers"></param>
-        /// <returns></returns>
-        public string ToCalculatedDynamics(int nLayers)
-        {
-            var res = @$"            
-            kDiff_{No} = kMod * {nLayers - 1} - {No}
-            kRes_{No} init 0
-            if kDiff_{No} > 1 || kDiff_{No} < -1 then 
-                kRes_{No} = 0
-            elseif kDiff_{No} >= 0 then
-                kRes_{No} =   (1 - kDiff_{No})
-            elseif kDiff_{No} < 0 then
-                kRes_{No} = - (1 - kDiff_{No})
-            endif
-            ";
-            return res;
-        }
-    }
-    public static class InstrumentFileHelper
-    {
-        public static List<Layer> ViolaLayers = 
-            [
-                new (0, "P", "Viole", @"C:/Users/slonj/Desktop/Samples/Bowed_", "wav", 4),
-                 new (1, "MP", "Viole", @"C:/Users/slonj/Desktop/Samples/Bowed_", "wav", 4),
-                 new (2, "MF", "Viole", @"C:/Users/slonj/Desktop/Samples/Bowed_", "wav", 4),
-                 new (3, "F", "Viole", @"C:/Users/slonj/Desktop/Samples/Bowed_", "wav", 4),
-                 new (4, "FF", "Viole", @"C:/Users/slonj/Desktop/Samples/Bowed_", "wav", 4),
-            ];
-    }
 
 
     public class LayerSampleInstrument : AScriptedInstrument<LayerSampleEvent>
     {
         public double SampleLen;
         public List<Layer> Layers { get; set; } = new List<Layer>();
-        public LayerSampleInstrument(string name, List<Layer> layers) : base(name) 
+        public LayerSampleInstrument(string name, List<Layer> layers) : base(name)
         {
             Layers = layers;
             SampleLen = Layers[0].SampleLen;
@@ -134,7 +35,7 @@ namespace AudioTool.Instruments
             outs aOutL, aOutR
         endin
 
-        instr {instrNo+30}; SAMPLE FADE IN FADE OUT
+        instr {instrNo + 30}; SAMPLE FADE IN FADE OUT
             
             {Layers.Select(l => l.ToFadeInOutSample()).JoinToBlock(18)}
 
@@ -211,7 +112,7 @@ namespace AudioTool.Instruments
         {
             //0.2*aLeft_P * (1-kMod) + 0.2*aLeft_F * kMod
 
-            var res = string.Join(" + ", Layers.Select(l => $"a{side}_{l.Dyn} * kRes_{l.No}"));
+            var res = string.Join(" + ", Layers.Select(l => $"a{side}_{l.Dyn} * kRes_{l.Dyn}"));
             return res;
         }
 
@@ -249,18 +150,18 @@ namespace AudioTool.Instruments
         {
             if (duration < SampleLen)
                 duration = SampleLen;
-            var nFills = 2*(int)Math.Floor((duration / SampleLen)) - 1;
+            var nFills = 2 * (int)Math.Floor((duration / SampleLen)) - 1;
 
             List<ScheduletEvent> events = new List<ScheduletEvent>();
             events.Add(new ScheduletEvent() { Action = () => PlayBeginning(pitch, SampleLen), Duration = SampleLen / 2 });
             for (int i = 0; i < nFills; i++)
                 events.Add(new ScheduletEvent() { Action = () => PlayFill(pitch, SampleLen), Duration = SampleLen / 2 });
-         
+
             events.Add(new ScheduletEvent() { Action = () => PlayEnd(pitch, SampleLen), Duration = SampleLen / 2 });
-            
+
             Task.Run(() =>
             {
-                foreach(var e in events)
+                foreach (var e in events)
                     e.RunWaitin();
             });
         }
@@ -270,17 +171,6 @@ namespace AudioTool.Instruments
             LayerDynamicsEvent dynamicsEvent = new LayerDynamicsEvent(period, period, dynamics);
             dynamicsEvent.InstrumentNo = this.InstrNo + 10;//MODULATOR
             Engine.Play(dynamicsEvent);
-        }
-    }
-    public class ScheduletEvent
-    {
-        public Action Action;
-        public double Duration;
-        public void RunWaitin()
-        {
-            if (Action != null)
-                Action();
-            Thread.Sleep(1000 * (int)Duration);
         }
     }
 }
