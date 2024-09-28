@@ -25,7 +25,6 @@ namespace MusicDataModel.MusicViews.MusicControls
             return res;
         }
 
-        public void OnSelect
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             MyVisualHost.Clear();
