@@ -18,8 +18,7 @@ class Program
             {
                 foreach(var p in pitches)
                 {
-                    //csEngine.Play(flatViola.EmitFromInstr(new FlatSampleEvent(0, 4, p * 4)));
-                    csEngine.Play(layeredViola.EmitFromInstr(new LayerSampleEvent(0, duration, p * 4, 1, 0)));
+                    csEngine.Play(layeredViola.EmitFromInstr(new LayerSampleEvent(0, duration, p * 4, 1, 0, 4)));
                     Thread.Sleep(duration * 1000);
                 }
             }
