@@ -91,10 +91,9 @@ namespace AudioTool.Instruments
                     printks ""P4 kEnv Value: %f\n"", 0, p4
                     kTrig = 0
                 endif
-                
-                kPhasor phasor 0.5
-                kEnv = abs(1 - 2 * kPhasor)
-                printks ""MODULATOR kEnv Value: %f\n"", 0, kEnv
+                iCurr chnget ""{instrNo.ToModulatorStr()}""
+                kEnv linseg iCurr, p3, p4
+                chnset kEnv, ""{instrNo.ToModulatorStr()}""
                 chnset kEnv, ""{instrNo.ToModulatorStr()}""
         endin
 ";
@@ -105,7 +104,7 @@ namespace AudioTool.Instruments
 
         public override List<string> GetEventsScript(int instrNo, string instrName)
         {
-            return [$"i{instrNo.ToEnvelopeInstrument()} 0 1000 10 "];//$"i{instrNo.ToEnvelopeNo()} 0 10 1 ; i99 start at 0, 10 hours long, amp .0001"
+            return [];//$"i{instrNo.ToEnvelopeNo()} 0 10 1 ; i99 start at 0, 10 hours long, amp .0001"
         }
 
         public string LayersToOutput(string side)
@@ -168,7 +167,7 @@ namespace AudioTool.Instruments
 
         public void ApplyDynamics(double period, double dynamics)
         {
-            LayerDynamicsEvent dynamicsEvent = new LayerDynamicsEvent(period, period, dynamics);
+            LayerDynamicsEvent dynamicsEvent = new LayerDynamicsEvent(0.1, period, dynamics);
             dynamicsEvent.InstrumentNo = this.InstrNo + 10;//MODULATOR
             Engine.Play(dynamicsEvent);
         }

@@ -80,9 +80,9 @@
             if kDiff_{Dyn} > 1 || kDiff_{Dyn} < -1 then 
                 kRes_{Dyn} = 0
             elseif kDiff_{Dyn} >= 0 then
-                kRes_{Dyn} =   (1 - kDiff_{Dyn})
+                kRes_{Dyn} =   1 - kDiff_{Dyn}
             elseif kDiff_{Dyn} < 0 then
-                kRes_{Dyn} = - (1 - kDiff_{Dyn})
+                kRes_{Dyn} =  1 + kDiff_{Dyn}
             endif
             ";
             return res;

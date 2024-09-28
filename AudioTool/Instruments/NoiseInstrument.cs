@@ -20,9 +20,9 @@ namespace AudioTool.Instruments
         public override string GetInstrumentScript(int instrNo, string instrName)
         {
             var part = $@"
-        ;#########################################################################    
-        ;### NOISE NOISE NOISE NOISE NOISE NOISE NOISE NOISE NOISE NOISE NOISE  ##    
-        ;#########################################################################    
+        ;##################
+        ;### TAPE NOISE ###
+        ;##################
         instr {instrNo}
             kEnv linen p4, 0.1, p3, 0.1  ; Create an envelope for amplitude control
             aNoise rand -1, 1            ; Generate white noise

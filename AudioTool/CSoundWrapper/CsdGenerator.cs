@@ -58,21 +58,6 @@ namespace AudioTool.CSoundWrapper
             return part;
         }
 
-        public static string GetNoiseInstrument(int instrNo)
-        {
-            var part = $@"
-        ;#########################################################################    
-        ;### NOISE NOISE NOISE NOISE NOISE NOISE NOISE NOISE NOISE NOISE NOISE  ##    
-        ;#########################################################################    
-        instr {instrNo}
-            kEnv linen p4, 0.1, p3, 0.1  ; Create an envelope for amplitude control
-            aNoise rand -1, 1            ; Generate white noise
-            aOut = aNoise * kEnv          ; Apply envelope to noise
-            outs aOut, aOut               ; Output to stereo channels
-        endin";
-            return part;
-        }
-
         public static string GetAll(string allInstruments, string allEvents)
         {
             var program = @$"
