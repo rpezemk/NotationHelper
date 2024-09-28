@@ -48,18 +48,16 @@ namespace MusicDataModel.MusicViews.MusicControls
             var xOffset = timeHolder.XOffset;
             var glyph = timeHolder.ToGlyph();
             var yOffset = timeHolder.YOffset - (timeHolder.NoteToVisualHeight() - 3) * Scale;
-            TimeHolderDrawing textVisual = new TimeHolderDrawing(timeHolder);
-            using (DrawingContext dc = textVisual.RenderOpen())
-            {
-                DrawNormal(glyph, xOffset, yOffset, dc, brush);
-            }
-            MyVisualHost.AddVisual(textVisual);
+            var textVisual =  DrawNormal(glyph, xOffset, yOffset, brush, timeHolder);
             return textVisual;
         }
 
-        private void DrawNormal(string glyph, double xOffset, double yOffset, DrawingContext dc, Brush brush)
+        private TimeHolderDrawing DrawNormal(string glyph, double xOffset, double yOffset, Brush brush, TimeHolder timeHolder)
         {
-            FormattedText text = new FormattedText(
+            TimeHolderDrawing textVisual = new TimeHolderDrawing(timeHolder);
+            using (DrawingContext dc = textVisual.RenderOpen())
+            {
+                FormattedText text = new FormattedText(
                glyph,
                System.Globalization.CultureInfo.InvariantCulture,
                FlowDirection.LeftToRight,
@@ -68,7 +66,10 @@ namespace MusicDataModel.MusicViews.MusicControls
                brush,
                VisualTreeHelper.GetDpi(this).PixelsPerDip
             );
-            dc.DrawText(text, new Point(xOffset, yOffset - 17));
+                MyVisualHost.AddVisual(textVisual);
+                dc.DrawText(text, new Point(xOffset, yOffset - 17));
+            }
+            return textVisual;
         }
 
 
@@ -94,13 +95,9 @@ namespace MusicDataModel.MusicViews.MusicControls
             foreach (var vis in visuals)
             {
                 if (vis.IsSelected)
-                {
                     RedrawSelected(vis);
-                }
                 else
-                {
                     RedrawUnselected(vis);
-                }
             }
         }
 
@@ -129,16 +126,5 @@ namespace MusicDataModel.MusicViews.MusicControls
             DrawGlyph(nd.TimeHolder, Brushes.White);
         }
 
-    }
-
-    public class TimeHolderDrawing : DrawingVisual
-    {
-        public bool IsSelected {  get; set; }
-        public TimeHolderDrawing(TimeHolder timeHolder)
-        {
-            TimeHolder = timeHolder;
-        }
-
-        public TimeHolder TimeHolder { get; set; }
     }
 }
