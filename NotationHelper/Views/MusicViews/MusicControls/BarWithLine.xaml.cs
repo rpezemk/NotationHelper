@@ -75,36 +75,40 @@ namespace MusicDataModel.MusicViews.MusicControls
         private void MyVisualHost_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var enu = MyVisualHost.Visuals.GetEnumerator();
-            List<Visual> visuals = new List<Visual>();
+            List<TimeHolderDrawing> visuals = new List<TimeHolderDrawing>();
             while (enu.MoveNext())
             {
                 var abc = enu.Current;
-                visuals.Add(abc);
+                if(abc is TimeHolderDrawing thd)
+                    visuals.Add(thd);
             }
             var cnt = visuals.Count();
 
             var testCnt = 0;
+            var allSelected = visuals.Select(v => v as TimeHolderDrawing).Where(v => v is not null)
+                .Where(v => v.IsSelected).ToList();
+            allSelected.ForEach(v => v.IsSelected = false);
+
+
             Point mousePosition2 = e.GetPosition(MyVisualHost);
-            var resVisuals = visuals.Where(v => v is TimeHolderDrawing)
+            var nowClicked = visuals.Where(v => v is TimeHolderDrawing)
                 .Select(vis => (vis, VisualTreeHelper.HitTest(vis, mousePosition2)))
                 .Where(res => res.Item2 != null && res.Item2.VisualHit is DrawingVisual)
-                .Select(t => t.vis);
-            foreach (var sel in SelectedDrawingList)
+                .Select(t => t.vis as TimeHolderDrawing).ToList();
+
+            nowClicked.ForEach(v => v.IsSelected = true);
+
+            foreach(var vis in visuals)
             {
-                if (sel is not TimeHolderDrawing nd)
-                    continue;
-                RedrawUnselected(nd);
-            }
-            SelectedDrawingList.Clear();
-            foreach (var vis in resVisuals)
-            {
-                if (vis is TimeHolderDrawing nd)
+                if(vis.IsSelected)
                 {
-                    RedrawSelected(nd);
-                    SelectedDrawingList.Add(nd);
+                    RedrawSelected(vis);
+                }
+                else
+                {
+                    RedrawUnselected(vis);
                 }
             }
-
         }
 
         private void RedrawSelected(TimeHolderDrawing nd)
@@ -122,6 +126,7 @@ namespace MusicDataModel.MusicViews.MusicControls
 
     public class TimeHolderDrawing : DrawingVisual
     {
+        public bool IsSelected {  get; set; }
         public TimeHolderDrawing(TimeHolder timeHolder)
         {
             TimeHolder = timeHolder;
