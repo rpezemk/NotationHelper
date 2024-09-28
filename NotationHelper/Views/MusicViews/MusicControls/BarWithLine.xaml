@@ -11,7 +11,7 @@
     <Grid >
         <Grid x:Name="GridContainer" Margin="5,0,0,0">
             <Canvas x:Name="DrawingCanvas">
-                <local:DrawingVisualHost x:Name="MyVisualHost"/>
+                <local:DrawingVisualHost x:Name="MyVisualHost" MouseDown="MyVisualHost_MouseDown"/>
             </Canvas>
         </Grid>
         <Rectangle Grid.Row="1" Fill="Gray" Width="2" HorizontalAlignment="Left"/>

@@ -76,6 +76,14 @@ namespace MusicDataModel.Helpers
             return barVM;
         }
 
+
+        public static int NoteToVisualHeight(this TimeHolder th)
+        {
+            if (th is not Note n)
+                return 0;
+            return n.NoteToVisualHeight();
+        }
+
         public static int NoteToVisualHeight(this Note note)
         {
             var namePart = note.Pitch.BaseNoteName.NoteToVisualHeight();

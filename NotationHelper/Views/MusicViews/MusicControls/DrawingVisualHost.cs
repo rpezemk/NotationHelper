@@ -7,6 +7,7 @@ namespace MusicDataModel.MusicViews.MusicViews.MusicControls
     public class DrawingVisualHost : FrameworkElement
     {
         private VisualCollection _visuals;
+        public VisualCollection Visuals => _visuals;
         public DrawingVisualHost()
         {
             _visuals = new VisualCollection(this);

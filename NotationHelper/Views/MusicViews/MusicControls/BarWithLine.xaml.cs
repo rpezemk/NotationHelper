@@ -1,16 +1,9 @@
-﻿using MusicDataModel.MusicViews.MusicViews.MusicControls;
+﻿using MusicDataModel.DataModel.Piece;
+using MusicDataModel.Helpers;
+using MusicDataModel.MVVM;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using MusicDataModel.Helpers;
-using MusicDataModel.DataModel.Piece;
-using MusicDataModel.Views.MusicViews;
-using MusicDataModel.MVVM;
-using MusicDataModel.DataModel.Elementary;
-using MusicDataModel.Helpers;
 namespace MusicDataModel.MusicViews.MusicControls
 {
     /// <summary>
@@ -18,6 +11,7 @@ namespace MusicDataModel.MusicViews.MusicControls
     /// </summary>
     public partial class BarWithLine : UserControl
     {
+        public List<TimeHolderDrawing> SelectedDrawingList { get; set; } = new List<TimeHolderDrawing>();
         public BarWithLine()
         {
             InitializeComponent();
@@ -46,45 +40,93 @@ namespace MusicDataModel.MusicViews.MusicControls
 
         private void DrawTimeGroup(TimeHolder timeGroup)
         {
-            if (timeGroup is Note note)
-                DrawNote(note);
-            else if (timeGroup is Rest rest)
-                DrawRest(rest);
+            DrawGlyph(timeGroup, Brushes.White);
         }
 
-        private void DrawNote(Note note)
+        private TimeHolderDrawing DrawGlyph(TimeHolder timeHolder, Brush brush)
         {
-            var glyph = note.ToGlyph();
-            var xOffset = note.XOffset;
-            var yOffset = note.YOffset - (note.NoteToVisualHeight() - 3) * Scale; 
-            DrawGlyph(glyph, xOffset, yOffset);
-        }
-
-        private void DrawRest(Rest rest)
-        {
-            DrawGlyph(rest.ToGlyph(), rest.XOffset, rest.YOffset);
-        }
-
-        private void DrawGlyph(string glyph, double xOffset, double yOffset)
-        {
-            DrawingVisual textVisual = new DrawingVisual();
+            var xOffset = timeHolder.XOffset;
+            var glyph = timeHolder.ToGlyph();
+            var yOffset = timeHolder.YOffset - (timeHolder.NoteToVisualHeight() - 3) * Scale;
+            TimeHolderDrawing textVisual = new TimeHolderDrawing(timeHolder);
             using (DrawingContext dc = textVisual.RenderOpen())
             {
-                FormattedText text = new FormattedText(
-                   glyph,
-                   System.Globalization.CultureInfo.InvariantCulture,
-                   FlowDirection.LeftToRight,
-                   new Typeface(FontHelper.BravuraFont, FontHelper.BravuraStyle, new FontWeight() { }, new FontStretch() { }),
-                   20, // Font size
-                   Brushes.White,
-                   VisualTreeHelper.GetDpi(this).PixelsPerDip
-                );
-                dc.DrawText(text, new Point(xOffset, yOffset - 17));
+                DrawNormal(glyph, xOffset, yOffset, dc, brush);
             }
             MyVisualHost.AddVisual(textVisual);
+            return textVisual;
+        }
+
+        private void DrawNormal(string glyph, double xOffset, double yOffset, DrawingContext dc, Brush brush)
+        {
+            FormattedText text = new FormattedText(
+               glyph,
+               System.Globalization.CultureInfo.InvariantCulture,
+               FlowDirection.LeftToRight,
+               new Typeface(FontHelper.BravuraFont, FontHelper.BravuraStyle, new FontWeight() { }, new FontStretch() { }),
+               20, // Font size
+               brush,
+               VisualTreeHelper.GetDpi(this).PixelsPerDip
+            );
+            dc.DrawText(text, new Point(xOffset, yOffset - 17));
         }
 
 
+        private void MyVisualHost_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var enu = MyVisualHost.Visuals.GetEnumerator();
+            List<Visual> visuals = new List<Visual>();
+            while (enu.MoveNext())
+            {
+                var abc = enu.Current;
+                visuals.Add(abc);
+            }
+            var cnt = visuals.Count();
 
+            var testCnt = 0;
+            Point mousePosition2 = e.GetPosition(MyVisualHost);
+            var resVisuals = visuals.Where(v => v is TimeHolderDrawing)
+                .Select(vis => (vis, VisualTreeHelper.HitTest(vis, mousePosition2)))
+                .Where(res => res.Item2 != null && res.Item2.VisualHit is DrawingVisual)
+                .Select(t => t.vis);
+            foreach (var sel in SelectedDrawingList)
+            {
+                if (sel is not TimeHolderDrawing nd)
+                    continue;
+                RedrawUnselected(nd);
+            }
+            SelectedDrawingList.Clear();
+            foreach (var vis in resVisuals)
+            {
+                if (vis is TimeHolderDrawing nd)
+                {
+                    RedrawSelected(nd);
+                    SelectedDrawingList.Add(nd);
+                }
+            }
+
+        }
+
+        private void RedrawSelected(TimeHolderDrawing nd)
+        {
+            MyVisualHost.RemoveVisual(nd);
+            DrawGlyph(nd.TimeHolder, Brushes.Red);
+        }
+        private void RedrawUnselected(TimeHolderDrawing nd)
+        {
+            MyVisualHost.RemoveVisual(nd);
+            DrawGlyph(nd.TimeHolder, Brushes.White);
+        }
+
+    }
+
+    public class TimeHolderDrawing : DrawingVisual
+    {
+        public TimeHolderDrawing(TimeHolder timeHolder)
+        {
+            TimeHolder = timeHolder;
+        }
+
+        public TimeHolder TimeHolder { get; set; }
     }
 }
