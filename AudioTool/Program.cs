@@ -1,5 +1,4 @@
-﻿using AudioTool.CsEvents;
-using AudioTool.Instruments;
+﻿using AudioTool.Instruments;
 class Program
 {
     static void Main(string[] args)
@@ -9,35 +8,33 @@ class Program
         var layeredViola = new LayerSampleInstrument("VIOLA_01", InstrumentFileHelper.ViolaLayers);
         CsEngine csEngine = new CsEngine([noise, flatViola, layeredViola]);
         csEngine.RunAsync();
-        var pitches = new List<int>() { 0, 7, 12, 16 };
+        var pitches = new List<int>() { 0, };
         Thread.Sleep(1000);
-        var duration = 4;
         Task.Run(() =>
         {
             while (true)
             {
-                foreach(var p in pitches)
+                foreach (var p in pitches)
                 {
-                    csEngine.Play(layeredViola.EmitFromInstr(new LayerSampleEvent(0, duration, p * 4, 1, 0, 4)));
-                    Thread.Sleep(duration * 1000);
+                    layeredViola.PlaySeparatedNote(p, 8);
+                    Thread.Sleep(12 * 1000);
                 }
             }
         });
 
-        //var dynamicsDelay = 10;//s
-        //var dynamics = 1;
+        var dynamicsDelay = 2;//s
+        var dynamics = 1;
         //Task.Run(() =>
         //{
         //    while (true)
         //    {
-        //        foreach (var p in pitches)
-        //        {
-        //            //csEngine.Play(flatViola.EmitFromInstr(new FlatSampleEvent(0, 4, p * 4)));
-        //            csEngine.Play(layeredViola.EmitFromInstr(new LayerSampleEvent(0, dynamicsDelay, dynamics, 0, 0)).AsModulator());
-        //            Thread.Sleep(dynamicsDelay * 1000);
-        //            csEngine.Play(layeredViola.EmitFromInstr(new LayerSampleEvent(0, dynamicsDelay, dynamics, 0, 0)).AsModulator());
-        //            Thread.Sleep(dynamicsDelay * 1000);
-        //        }
+        //        //csEngine.Play(flatViola.EmitFromInstr(new FlatSampleEvent(0, 4, p * 4)));
+        //        layeredViola.ApplyDynamics(dynamicsDelay, dynamics);
+        //        Thread.Sleep(dynamicsDelay * 1000);
+        //        dynamics = 1;
+        //        layeredViola.ApplyDynamics(dynamicsDelay, dynamics);
+        //        Thread.Sleep(dynamicsDelay * 1000);
+        //        dynamics = 0;
         //    }
         //});
 

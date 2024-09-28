@@ -11,6 +11,9 @@ namespace AudioTool.Instruments.InstrumentBase
         public int InstrNo;
         private string name;
         public string Name => name;
+
+        public CsEngine Engine { get; internal set; }
+
         public abstract string GetInstrumentScript(int instrNo, string instrName);
         public abstract List<string> GetEventsScript(int instrNo, string instrName);
         public ACsEvent EmitFromInstr(ACsEvent tEvent)

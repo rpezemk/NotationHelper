@@ -52,7 +52,7 @@ namespace AudioTool.CSoundWrapper
         {
             var part = $@"
 		        sr = 44100
-		        ksmps = 100; Hz
+		        ksmps = 441; 100Hz
 		        nchnls = 2
 		        0dbfs  = 1";
             return part;
@@ -71,44 +71,6 @@ namespace AudioTool.CSoundWrapper
             outs aOut, aOut               ; Output to stereo channels
         endin";
             return part;
-        }
-        public static string GetSampleInstrument(int instrNo, string instrName, string path)
-        {
-            var part = 
-                @$"
-                ;##########################################################
-                ;         {instrNo} {instrName}                          
-                ;##########################################################
-                instr {instrNo}
-                    aLeft, aRight diskin2 ""{path}"", 1, p4
-                    aOutL atone aLeft,  230
-                    aOutR atone aRight, 230
-                    outs 0.2*aOutL, 0.2*aOutR  ; Output to both stereo channels
-                endin";
-            return part;
-        }
-
-        public static string GetSimpleScript()
-        {
-            var path = @"C:/Users/slonj/Desktop/Samples/Bowed_MP-Viole.wav";
-            var program = @$"
-<CsoundSynthesizer>
-{GetCsOptions()}
-<CsInstruments>
-		{GetKSMPS()}
-        {GetNoiseInstrument(99)}
-        {GetSampleInstrument(3, "abc", path)}
-</CsInstruments>
-<CsScore>
-	f1 0 4096 10 1	;sine wave
-    ;i 3 0 1000 6  ; Play myFile.wav starting at 0 seconds for 10 seconds
-    ;i 4 0 10000  ;
-    i99 0 36000 0.0003 ; i99 start at 0, 10 hours long, amp .0001
-	e
-</CsScore>
-</CsoundSynthesizer>
-";
-			return program;
         }
 
         public static string GetAll(string allInstruments, string allEvents)

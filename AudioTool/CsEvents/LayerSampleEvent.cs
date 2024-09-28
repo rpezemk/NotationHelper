@@ -25,6 +25,17 @@
         }
     }
 
-
+    public class LayerDynamicsEvent : ACsEvent
+    {
+        public LayerDynamicsEvent(double duration, double destinationPeriod, double destinationDynamics)
+        {
+            Duration = duration;
+            DestinationPeriod = destinationPeriod;
+            DestinationDynamics = destinationDynamics;
+        }
+        public double Duration { get; set; }
+        public double DestinationPeriod { get ; set; }
+        public double DestinationDynamics { get ; set; }
+    }
 
 }

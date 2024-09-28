@@ -13,6 +13,10 @@ public class CsEngine
     public List<AScriptedInstrument> ScriptInstruments = new List<AScriptedInstrument>();
     public CsEngine(List<AScriptedInstrument> instruments)
     {
+        foreach(var instr in instruments)
+        {
+            instr.Engine = this;
+        }
         ScriptInstruments = instruments;
     }
 
