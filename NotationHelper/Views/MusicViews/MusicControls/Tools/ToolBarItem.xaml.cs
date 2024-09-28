@@ -1,4 +1,5 @@
 ﻿using MusicDataModel.Helpers;
+using MusicDataModel.MVVM.MainVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,14 +29,16 @@ namespace MusicDataModel.MusicViews.Tools
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            TestGlyph(MyTextBlock);
+            if (DataContext is not ToolbarItem_VM vm)
+                return;
+            ShowGlyph(MyTextBlock, vm);
         }
 
-        private static void TestGlyph(TextBlock textBlock)
+        private static void ShowGlyph(TextBlock textBlock, ToolbarItem_VM vm, FontFamily fontFamily = null)
         {
-            textBlock.FontFamily = FontHelper.BravuraFont;
-            textBlock.Text = ConstGlyphs.G_Clef;// Notehead_Half;
-            
+            if(fontFamily != null)
+                textBlock.FontFamily = fontFamily;
+            textBlock.Text = vm.Description;//ConstGlyphs.G_Clef;// Notehead_Half;
             textBlock.FontSize = 14;
         }
     }

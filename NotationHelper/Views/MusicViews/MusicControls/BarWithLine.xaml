@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MusicDataModel.MusicViews.MusicViews.MusicControls"
              mc:Ignorable="d" 
-             Height="20"
+             Height="25"
              d:DesignWidth="800"
              Loaded="UserControl_Loaded">
     <Grid >
@@ -14,6 +14,6 @@
                 <local:DrawingVisualHost x:Name="MyVisualHost"/>
             </Canvas>
         </Grid>
-        <Rectangle Grid.Row="1" Fill="#99999999" Width="1" HorizontalAlignment="Left"/>
+        <Rectangle Grid.Row="1" Fill="Gray" Width="2" HorizontalAlignment="Left"/>
     </Grid>
 </UserControl>

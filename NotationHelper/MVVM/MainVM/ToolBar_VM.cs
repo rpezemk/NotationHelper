@@ -7,9 +7,9 @@ namespace MusicDataModel.MVVM.MainVM
     {
         public ToolBar_VM()
         {
-            for (int i = 0; i < 30; i++)
+            foreach(var tb in ProgramSettings.GetToolbarItems())
             {
-                _toolbarItems.Add(new ToolbarItem_VM());
+                _toolbarItems.Add(tb);
             }
         }
 

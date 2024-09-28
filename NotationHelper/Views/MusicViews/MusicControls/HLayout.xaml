@@ -5,25 +5,25 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MusicDataModel.MusicViews"
              mc:Ignorable="d" 
-             Height="60"
+             Height="70"
              Loaded="UserControl_Loaded"
              DataContextChanged="UserControl_DataContextChanged"
-             d:DesignHeight="60" d:DesignWidth="800">
+             d:DesignHeight="70" d:DesignWidth="800">
     <Border BorderThickness="1" BorderBrush="#33000000">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="info" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <StackPanel Grid.Column="1" Margin="0,15,0,0">
-                <Rectangle Fill="#77999999" Height="1" Margin="0, 2, 0, 2"/>
-                <Rectangle Fill="#77999999" Height="1" Margin="0, 2, 0, 2"/>
-                <Rectangle Fill="#77999999" Height="1" Margin="0, 2, 0, 2"/>
-                <Rectangle Fill="#77999999" Height="1" Margin="0, 2, 0, 2"/>
-                <Rectangle Fill="#77999999" Height="1" Margin="0, 2, 0, 2"/>
+            <TextBlock Text="info" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Consolas" Foreground="Gray"/>
+            <StackPanel Grid.Column="1" Margin="0,19,0,0">
+                <Rectangle Fill="#77999999" Height="1.5" Margin="0, 2.3, 0, 2"/>
+                <Rectangle Fill="#77999999" Height="1.5" Margin="0, 2.3, 0, 2"/>
+                <Rectangle Fill="#77999999" Height="1.5" Margin="0, 2.3, 0, 2"/>
+                <Rectangle Fill="#77999999" Height="1.5" Margin="0, 2.3, 0, 2"/>
+                <Rectangle Fill="#77999999" Height="1.5" Margin="0, 2.3, 0, 2"/>
             </StackPanel>
-            <Grid x:Name="MyMulticolumnGrid" Grid.Column="1" VerticalAlignment="Top" Height="25" Margin="0,15,0,0">
+            <Grid x:Name="MyMulticolumnGrid" Grid.Column="1" VerticalAlignment="Top" Height="30" Margin="0,19,0,0">
                 <StackPanel x:Name="MyStackPanel" Orientation="Horizontal"/>
             </Grid>
             <Canvas Grid.Column="1" x:Name="MyNoteCanvas">

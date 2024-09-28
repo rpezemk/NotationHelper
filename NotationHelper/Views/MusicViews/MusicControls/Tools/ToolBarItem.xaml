@@ -11,8 +11,7 @@
              d:DesignHeight="60" d:DesignWidth="60">
     <Button BorderThickness="1" BorderBrush="Gray" Background="{StaticResource WindowBackgroundBrush}">
         <Grid Background="{StaticResource WindowBackgroundBrush}">
-            <!--<Ellipse Width="20" Height="20" Fill="{StaticResource ForegroundTextBrush}"/>-->
-            <TextBlock x:Name="MyTextBlock"  Foreground="Red"/>
+            <TextBlock x:Name="MyTextBlock"  Foreground="LightGray" FontFamily="Consolas" FontSize="16"/>
         </Grid>
     </Button>
 </UserControl>

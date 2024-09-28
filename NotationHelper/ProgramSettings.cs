@@ -12,6 +12,7 @@ using System.Windows.Media;
 using MusicDataModel.DataModel;
 using MusicDataModel.DataModel.Elementary;
 using MusicDataModel.FlowTypes;
+using MusicDataModel.MVVM.MainVM;
 
 namespace MusicDataModel
 {
@@ -30,6 +31,19 @@ namespace MusicDataModel
             return menu;
         }
 
+        public static List<ToolbarItem_VM> GetToolbarItems() 
+        {
+            List<ToolbarItem_VM> toolBarVMS = new List<ToolbarItem_VM>();
+            toolBarVMS.Add(new ToolbarItem_VM("||4||",    () => { }));
+            toolBarVMS.Add(new ToolbarItem_VM("|2|",    () => { }));
+            toolBarVMS.Add(new ToolbarItem_VM("1",    () => { }));
+            toolBarVMS.Add(new ToolbarItem_VM("1/2",  () => { }));
+            toolBarVMS.Add(new ToolbarItem_VM("1/4",  () => { }));
+            toolBarVMS.Add(new ToolbarItem_VM("1/8",  () => { }));
+            toolBarVMS.Add(new ToolbarItem_VM("1/16", () => { }));
+            toolBarVMS.Add(new ToolbarItem_VM("1/32", () => { }));
+            return toolBarVMS;
+        }
         private static void TestMethod()
         {
             MessageBox.Show("test");

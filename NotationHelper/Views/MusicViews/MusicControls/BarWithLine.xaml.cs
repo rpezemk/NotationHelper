@@ -23,7 +23,7 @@ namespace MusicDataModel.MusicViews.MusicControls
             InitializeComponent();
         }
 
-        public double Scale = 2.4;
+        public double Scale = 3;
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -75,7 +75,7 @@ namespace MusicDataModel.MusicViews.MusicControls
                    System.Globalization.CultureInfo.InvariantCulture,
                    FlowDirection.LeftToRight,
                    new Typeface(FontHelper.BravuraFont, FontHelper.BravuraStyle, new FontWeight() { }, new FontStretch() { }),
-                   17, // Font size
+                   20, // Font size
                    Brushes.White,
                    VisualTreeHelper.GetDpi(this).PixelsPerDip
                 );
