@@ -112,12 +112,10 @@ namespace AudioTool.Total
             aRight = 0.3 * ({LayersToOutput("Right")})
             aOutL atone aLeft,  230
             aOutR atone aRight, 230 
-            aOutL_rev, aOutR_rev freeverb aOutL, aOutR, 0.9, 0.01
-            chnset aOutL_rev, ""mix""
 
-            amix chnget ""mix""
-            aL, aR freeverb amix, amix, 1, .01
-            outs 3*aL, 3*aR
+            aRvbL,aRvbR reverbsc aOutL,aOutR,0,12000
+            outs aRvbL - aOutL,aRvbR - aOutR
+            gaRvbSend = gaRvbSend + (aOutL)
 
             //outs aOutL_rev, aOutR_rev
 
@@ -149,6 +147,14 @@ namespace AudioTool.Total
 
         endin
 
+instr 5 ; reverb - always on
+kroomsize init 0.85 ; room size (range 0 to 1)
+kHFDamp init 0.5 ; high freq. damping (range 0 to 1)
+; create reverberated version of input signal (note stereo input and output)
+aRvbL,aRvbR freeverb gaRvbSend, gaRvbSend,kroomsize,kHFDamp
+outs aRvbL, aRvbR ; send audio to outputs
+clear gaRvbSend ; clear global audio variable
+endin
 
         ;
         instr {instrNo + 70}
@@ -200,7 +206,7 @@ namespace AudioTool.Total
 
         public override List<string> GetEventsScript(int instrNo, string instrName)
         {
-            return [];//$"i{instrNo.ToEnvelopeNo()} 0 10 1 ; i99 start at 0, 10 hours long, amp .0001"
+            return ["i 5 0 300 "];//$"i{instrNo.ToEnvelopeNo()} 0 10 1 ; i99 start at 0, 10 hours long, amp .0001"
         }
 
         public string LayersToOutput(string side)

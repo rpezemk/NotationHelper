@@ -26,21 +26,15 @@ class Program
         {
             (2,  0.25),
             (4,  0.25),
-            (6,  0.25),
-            (9,  0.25),
-            (11, 0.50),
-            (9, 0.50),
-            //(2,  0.25),
-            //(4,  0.25),
-            //(5,  0.25),
-            //(7,  0.25),
-            //(9,  0.50),
-            //(14, 0.50),
-            //(13, 0.50),
-            //(9,  0.50),
-            //(4,  0.50),
-            //(7,  0.50),
-            //(6,  2.00),
+            (5,  0.25),
+            (7,  0.25),
+            (9,  0.50),
+            (14, 0.50),
+            (13, 0.50),
+            (9,  0.50),
+            (4,  0.50),
+            (7,  0.50),
+            (6,  2.00),
         };
         Thread.Sleep(1000);
         var noteDuration = 2;
@@ -52,7 +46,7 @@ class Program
             {
                 foreach (var p in pitches)
                 {
-                    layeredViola.PlaySample(p.Item1 + 12, p.Item2+0.2, legato);
+                    layeredViola.PlaySample(p.Item1, p.Item2+0.2, legato);
                     //layeredViola.PlaySeparatedNote(p + 7, 8);
                     //layeredViola.PlaySeparatedNote(p + 16, 8);
                     Thread.Sleep((int)(p.Item2 * 1000));

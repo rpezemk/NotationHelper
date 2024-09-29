@@ -54,7 +54,9 @@ namespace AudioTool.CSoundWrapper
 		        sr = 44100
 		        ksmps = 441; 10Hz
 		        nchnls = 2
-		        0dbfs  = 1";
+		        0dbfs  = 1
+                gaRvbSend init 0
+";
             return part;
         }
 
