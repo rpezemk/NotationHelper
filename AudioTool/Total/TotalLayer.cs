@@ -24,7 +24,7 @@
         {
             var str = @$"
                 ;;;;  iDuration  init p3
-                ;;;;  iPitchSkip init p4
+                ;;;;  iskiptim init p4
                 ;;;;  iSampleLen init p5
                 ;;;;  iBegLen min iDuration, iSampleLen
                 ;;;;  iEndLen min iDuration, iSampleLen
@@ -32,19 +32,51 @@
                 ;;;;  kBegEnv linseg 1, iBegLen, 0
                 ;;;;  kEndEnv linseg 0, iPreEnd, 0, iEndLen, 1
                 ;;;;  kEndTrigger init 0
-                
+                ;;;;  kFillEnvelope <---- this is envelope for fill layer
+                ;;;;  FILL TRIGGERS
+                ;;;;      kWaveTrig1 
+                ;;;;      kWaveTrig2 
                 ;BEGIN SECTION
-                aLeft_{Dyn}_beginWave, aRight_{Dyn}_beginWave diskin2 ""{FilePath}"", 1, iPitchSkip
+                aLeft_{Dyn}_beginWave, aRight_{Dyn}_beginWave diskin2 ""{FilePath}"", 1, iskiptim
                 
                 ;END SECTION
                 aLeft_{Dyn}_endWave  init 0
                 aRight_{Dyn}_endWave init 0
                 if kEndTrigger == 1 then
-                    aLeft_{Dyn}_endWave, aRight_{Dyn}_endWave diskin2 ""{FilePath}"", 1, iPitchSkip
+                    aLeft_{Dyn}_endWave, aRight_{Dyn}_endWave diskin2 ""{FilePath}"", 1, iskiptim
                 endif
-                    
+    
                 aLeft_{Dyn}  = aLeft_{Dyn}_beginWave  * kBegEnv + aLeft_{Dyn}_endWave * kEndEnv
                 aRight_{Dyn} = aRight_{Dyn}_beginWave * kBegEnv + aRight_{Dyn}_endWave * kEndEnv
+                
+                ";
+            return str;
+        }
+
+        public string ToSimpleEnvelope()
+        {
+            var str = @$"
+                ;;;;  iDuration  init p3
+                ;;;;  iskiptim init p4
+                ;;;;  iSampleLen init p5
+                ;;;;  iBegLen min iDuration, iSampleLen
+                ;;;;  iEndLen min iDuration, iSampleLen
+                ;;;;  iPreEnd = max(0, iDuration - iEndLen)
+                ;;;;  kBegEnv linseg 1, iBegLen, 0
+                ;;;;  kEndEnv linseg 0, iPreEnd, 0, iEndLen, 1
+                ;;;;  kEndTrigger init 0
+                ;;;;  kFillEnvelope <---- this is envelope for fill layer
+                ;;;;  FILL TRIGGERS
+                ;;;;      kWaveTrig1 
+                ;;;;      kWaveTrig2 
+                ;BEGIN SECTION
+                aLeft_{Dyn}_beginWave, aRight_{Dyn}_beginWave diskin2 ""{FilePath}"", 1, iskiptim + (4*4)
+                
+
+    
+                aLeft_{Dyn}  = aLeft_{Dyn}_beginWave  * kFillEnv
+                aRight_{Dyn} = aRight_{Dyn}_beginWave * kFillEnv
+                
                 ";
             return str;
         }

@@ -30,9 +30,9 @@ class Program
             {
                 foreach (var p in pitches)
                 {
-                    layeredViola.PlaySeparatedNote(p, 8);
-                    layeredViola.PlaySeparatedNote(p + 7, 8);
-                    layeredViola.PlaySeparatedNote(p + 16, 8);
+                    layeredViola.PlaySeparatedNote(p+4, 8);
+                    //layeredViola.PlaySeparatedNote(p + 7, 8);
+                    //layeredViola.PlaySeparatedNote(p + 16, 8);
                     Thread.Sleep(12 * 1000);
                 }
             }
