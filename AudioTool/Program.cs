@@ -22,18 +22,36 @@ class Program
         var layeredViola = new TotalLayerSampleInstrument("VIOLA_01", InstrumentFileHelper.TotalViolaLayers);
         CsEngine csEngine = new CsEngine([noise, flatViola, layeredViola]);
         csEngine.RunAsync();
-        var pitches = new List<int>() { 0, 2, 4, 5, 7, 5, 4, 2, };
+        var pitches = new List<(int, double)>() 
+        {
+            (2,  0.25),
+            (4,  0.25),
+            (5,  0.25),
+            (7,  0.25),
+            (9,  0.50),
+            (14, 0.50),
+            (13, 0.50),
+            (9,  0.50),
+            (4,  0.50),
+            (7,  0.50),
+        };
         Thread.Sleep(1000);
+        var noteDuration = 2;
+        var pause = 0;
         Task.Run(() =>
         {
             while (true)
             {
                 foreach (var p in pitches)
                 {
-                    layeredViola.PlaySeparatedNote(p+4, 2);
+                    layeredViola.PlaySeparatedNote(p.Item1 + 12, p.Item2);
+                    Thread.Sleep(15);
+                    layeredViola.PlaySeparatedNote(p.Item1 + 12, p.Item2);
+                    Thread.Sleep(15);
+                    layeredViola.PlaySeparatedNote(p.Item1 + 12, p.Item2);
                     //layeredViola.PlaySeparatedNote(p + 7, 8);
                     //layeredViola.PlaySeparatedNote(p + 16, 8);
-                    Thread.Sleep(2 * 1000);
+                    Thread.Sleep((int)(p.Item2 * 1000));
                 }
             }
         });

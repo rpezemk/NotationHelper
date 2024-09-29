@@ -43,11 +43,11 @@
                 aLeft_{Dyn}_endWave  init 0
                 aRight_{Dyn}_endWave init 0
                 if kEndTrigger == 1 then
-                    aLeft_{Dyn}_endWave, aRight_{Dyn}_endWave diskin2 ""{FilePath}"", 1, iskiptim
+                    aLeft_{Dyn}_endWave, aRight_{Dyn}_endWave diskin2 ""{FilePath}"", 1, iskiptim + iEndSkip
                 endif
     
-                aLeft_{Dyn}  = aLeft_{Dyn}_beginWave  * kBegEnv + aLeft_{Dyn}_endWave * kEndEnv
-                aRight_{Dyn} = aRight_{Dyn}_beginWave * kBegEnv + aRight_{Dyn}_endWave * kEndEnv
+                aLeft_{Dyn}  =  aLeft_{Dyn}_beginWave  * kBegEnv + aLeft_{Dyn}_endWave * kEndEnv  ;
+                aRight_{Dyn} =  aRight_{Dyn}_beginWave * kBegEnv + aRight_{Dyn}_endWave * kEndEnv ;
                 
                 ";
             return str;
