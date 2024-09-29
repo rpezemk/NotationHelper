@@ -1,6 +1,6 @@
 ﻿using AudioTool.CsEvents;
 
-namespace AudioTool.Instruments.InstrumentBase
+namespace AudioTool.InstrumentBase
 {
     public abstract class AScriptedInstrument
     {

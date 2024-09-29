@@ -1,11 +1,63 @@
-﻿using AudioTool.Instruments;
-using Mono.Terminal;
+﻿using Mono.Terminal;
 using static Terminal.Gui.View;
 using Terminal.Gui;
+using AudioTool.Trivial;
+using AudioTool.Flat;
+using AudioTool.Layered;
+using AudioTool.Helpers;
+using AudioTool.Total;
 
 class Program
 {
     static void Main()
+    {
+        BackgroundCsThread(null, (s) => { });
+        //RunTUI();
+    }
+    static void BackgroundCsThread(string[] args, Action<string> LogAction)
+    {
+        var noise = new NoiseInstrument("NOISE");
+        var flatViola = new FlatSampleInstrument("VIOLA_01");
+        //var layeredViola = new LayerSampleInstrument("VIOLA_01", InstrumentFileHelper.ViolaLayers);
+        var layeredViola = new TotalLayerSampleInstrument("VIOLA_01", InstrumentFileHelper.TotalViolaLayers);
+        CsEngine csEngine = new CsEngine([noise, flatViola, layeredViola]);
+        csEngine.RunAsync();
+        var pitches = new List<int>() { 0, };
+        Thread.Sleep(1000);
+        Task.Run(() =>
+        {
+            while (true)
+            {
+                foreach (var p in pitches)
+                {
+                    layeredViola.PlaySeparatedNote(p, 8);
+                    layeredViola.PlaySeparatedNote(p + 7, 8);
+                    layeredViola.PlaySeparatedNote(p + 16, 8);
+                    Thread.Sleep(12 * 1000);
+                }
+            }
+        });
+
+        //var dynamicsDelay = 1;//s
+        //var dynamics = 1.0;
+        //Task.Run(() =>
+        //{
+        //    while (true)
+        //    {
+        //        dynamics = 1;
+        //        layeredViola.ApplyDynamics(dynamicsDelay, dynamics);
+        //        Thread.Sleep(dynamicsDelay * 1000);
+        //        dynamics = 0.30;
+        //        layeredViola.ApplyDynamics(dynamicsDelay, dynamics);
+        //        Thread.Sleep(dynamicsDelay * 1000);
+        //    }
+        //});
+
+
+        Thread.Sleep(3600 * 1000);
+    }
+
+    private static void RunTUI()
     {
         Application.Init();
 
@@ -28,16 +80,16 @@ class Program
         win.Add(toolbar);
 
         // Add buttons to the toolbar
-        var saveButton = new Button("Save") { X = 1, Y = 0 , Width = 10, ColorScheme = scheme };
+        var saveButton = new Button("Save") { X = 1, Y = 0, Width = 10, ColorScheme = scheme };
         var loadButton = new Button("Load") { X = Pos.Right(saveButton) + 1, Y = 0, Width = 10, ColorScheme = scheme };
-        var clearButton = new Button("Load"){ X = Pos.Right(loadButton) + 1, Y = 0, Width = 10, ColorScheme = scheme };
+        var clearButton = new Button("Load") { X = Pos.Right(loadButton) + 1, Y = 0, Width = 10, ColorScheme = scheme };
         var runBackButton = new Button("runBackButton") { X = Pos.Right(clearButton) + 1, Y = 0, Width = 10, ColorScheme = scheme };
         toolbar.Add(saveButton, loadButton, clearButton, runBackButton);
-       
+
         saveButton.Clicked += () => MessageBox.Query("Save", "Save functionality not implemented yet.", "Ok");
         loadButton.Clicked += () => MessageBox.Query("Save", "Save functionality not implemented yet.", "Ok");
         clearButton.Clicked += () => MessageBox.Query("Save", "Save functionality not implemented yet.", "Ok");
-        
+
         var leftPane = new FrameView("Text Editor") { X = 0, Y = Pos.Bottom(toolbar), Width = Dim.Percent(50), Height = Dim.Fill(), ColorScheme = scheme };
         win.Add(leftPane);
 
@@ -67,48 +119,4 @@ class Program
         Application.Run();
     }
 
-    static void BackgroundCsThread(string[] args, Action<string> LogAction)
-    {
-        var noise = new NoiseInstrument("NOISE");
-        var flatViola = new FlatSampleInstrument("VIOLA_01");
-        var layeredViola = new LayerSampleInstrument("VIOLA_01", InstrumentFileHelper.ViolaLayers);
-        CsEngine csEngine = new CsEngine([noise, flatViola, layeredViola]);
-        csEngine.RunAsync();
-        var pitches = new List<int>() { 0, };
-        Thread.Sleep(1000);
-        Task.Run(() =>
-        {
-            while (true)
-            {
-                foreach (var p in pitches)
-                {
-                    LogAction.Invoke("play1");
-                    layeredViola.PlaySeparatedNote(p, 8);
-                    LogAction.Invoke("play2");
-                    layeredViola.PlaySeparatedNote(p+7, 8);
-                    LogAction.Invoke("play3");
-                    layeredViola.PlaySeparatedNote(p+16, 8);
-                    Thread.Sleep(12 * 1000);
-                }
-            }
-        });
-
-        var dynamicsDelay = 1;//s
-        var dynamics = 1;
-        Task.Run(() =>
-        {
-            while (true)
-            {
-                dynamics = 1;
-                layeredViola.ApplyDynamics(dynamicsDelay, dynamics);
-                Thread.Sleep(dynamicsDelay * 1000);
-                dynamics = 0;
-                layeredViola.ApplyDynamics(dynamicsDelay, dynamics);
-                Thread.Sleep(dynamicsDelay * 1000);
-            }
-        });
-
-
-        Thread.Sleep(3600 * 1000);
-    }
 }

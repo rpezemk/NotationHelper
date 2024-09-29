@@ -1,10 +1,9 @@
 ﻿using AudioTool.CsEvents;
 using AudioTool.CSoundWrapper;
-using AudioTool.Instruments.Articulations;
-using AudioTool.Instruments.InstrumentBase;
+using AudioTool.InstrumentBase;
 using System.IO;
 
-namespace AudioTool.Instruments
+namespace AudioTool.Flat
 {
     public class FlatSampleInstrument : AScriptedInstrument<FlatSampleEvent>, ISinglePathInstrument
     {

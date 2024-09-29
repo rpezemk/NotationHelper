@@ -1,4 +1,4 @@
-﻿using AudioTool.Instruments.InstrumentBase;
+﻿using AudioTool.InstrumentBase;
 using System;
 using System.Collections.Generic;
 using System.IO;

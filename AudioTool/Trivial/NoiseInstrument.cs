@@ -1,6 +1,6 @@
-﻿using AudioTool.Instruments.InstrumentBase;
+﻿using AudioTool.InstrumentBase;
 
-namespace AudioTool.Instruments
+namespace AudioTool.Trivial
 {
     public class NoiseInstrument : AScriptedInstrument
     {

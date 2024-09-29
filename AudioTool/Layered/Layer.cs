@@ -1,4 +1,4 @@
-﻿namespace AudioTool.Instruments
+﻿namespace AudioTool.Layered
 {
     public class Layer
     {

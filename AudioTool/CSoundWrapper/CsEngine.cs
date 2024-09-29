@@ -1,6 +1,6 @@
 ﻿using AudioTool.CsEvents;
 using AudioTool.CSoundWrapper;
-using AudioTool.Instruments.InstrumentBase;
+using AudioTool.InstrumentBase;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 
@@ -22,6 +22,7 @@ public class CsEngine
 
     internal void Play(ACsEvent csEvent)
     {
+        var pars = csEvent.GetParams();
         eventList.Enqueue(csEvent);
     }
 

@@ -1,9 +1,9 @@
 ﻿using AudioTool.CsEvents;
-using AudioTool.Instruments.InstrumentBase;
+using AudioTool.Helpers;
+using AudioTool.InstrumentBase;
 
-namespace AudioTool.Instruments
+namespace AudioTool.Layered
 {
-
 
     public class LayerSampleInstrument : AScriptedInstrument<LayerSampleEvent>
     {
@@ -149,7 +149,7 @@ namespace AudioTool.Instruments
         {
             if (duration < SampleLen)
                 duration = SampleLen;
-            var nFills = 2 * (int)Math.Floor((duration / SampleLen)) - 1;
+            var nFills = 2 * (int)Math.Floor(duration / SampleLen) - 1;
 
             List<ScheduletEvent> events = new List<ScheduletEvent>();
             events.Add(new ScheduletEvent() { Action = () => PlayBeginning(pitch, SampleLen), Duration = SampleLen / 2 });
@@ -168,7 +168,7 @@ namespace AudioTool.Instruments
         public void ApplyDynamics(double period, double dynamics)
         {
             LayerDynamicsEvent dynamicsEvent = new LayerDynamicsEvent(0.1, period, dynamics);
-            dynamicsEvent.InstrumentNo = this.InstrNo + 10;//MODULATOR
+            dynamicsEvent.InstrumentNo = InstrNo + 10;//MODULATOR
             Engine.Play(dynamicsEvent);
         }
     }

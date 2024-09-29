@@ -1,4 +1,4 @@
-﻿namespace AudioTool.Instruments.Articulations
+﻿namespace AudioTool.Articulations
 {
     public enum ArticulationEnum
     {

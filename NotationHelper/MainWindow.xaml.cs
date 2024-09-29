@@ -30,7 +30,7 @@ namespace MusicDataModel
         private void MainWindowControl_Loaded(object sender, RoutedEventArgs e)
         {
             lockLayout = false;
-        }
+        } 
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {

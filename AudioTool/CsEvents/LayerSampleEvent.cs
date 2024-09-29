@@ -25,6 +25,7 @@
         }
     }
 
+
     public class LayerDynamicsEvent : ACsEvent
     {
         public LayerDynamicsEvent(double duration, double destinationPeriod, double destinationDynamics)
