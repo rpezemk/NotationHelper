@@ -93,8 +93,8 @@ namespace AudioTool.Total
             
             {Layers.Select(l => l.ToCalculatedDynamics(InstrumentFileHelper.ViolaLayers.Count())).JoinToBlock(18)}
 
-            aOutL = 0.1 * ({LayersToOutput("Left")})
-            aOutR = 0.1 * ({LayersToOutput("Right")})
+            aOutL = 0.3 * ({LayersToOutput("Left")})
+            aOutR = 0.3 * ({LayersToOutput("Right")})
                    
             outs aOutL, aOutR
 
@@ -119,8 +119,8 @@ namespace AudioTool.Total
             kMod chnget ""{instrNo.ToModulatorStr()}""
             {Layers.Select(l => l.ToCalculatedDynamics(InstrumentFileHelper.ViolaLayers.Count())).JoinToBlock(18)}
 
-            aOutL = 0.1 * ({LayersToOutput("Left")})
-            aOutR = 0.1 * ({LayersToOutput("Right")})
+            aOutL = 0.3 * ({LayersToOutput("Left")})
+            aOutR = 0.3 * ({LayersToOutput("Right")})
             
             outs aOutL, aOutR
 
