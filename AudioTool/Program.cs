@@ -26,29 +26,33 @@ class Program
         {
             (2,  0.25),
             (4,  0.25),
-            (5,  0.25),
-            (7,  0.25),
-            (9,  0.50),
-            (14, 0.50),
-            (13, 0.50),
-            (9,  0.50),
-            (4,  0.50),
-            (7,  0.50),
+            (6,  0.25),
+            (9,  0.25),
+            (11, 0.50),
+            (9, 0.50),
+            //(2,  0.25),
+            //(4,  0.25),
+            //(5,  0.25),
+            //(7,  0.25),
+            //(9,  0.50),
+            //(14, 0.50),
+            //(13, 0.50),
+            //(9,  0.50),
+            //(4,  0.50),
+            //(7,  0.50),
+            //(6,  2.00),
         };
         Thread.Sleep(1000);
         var noteDuration = 2;
         var pause = 0;
+        bool legato = true;
         Task.Run(() =>
         {
             while (true)
             {
                 foreach (var p in pitches)
                 {
-                    layeredViola.PlaySeparatedNote(p.Item1 + 12, p.Item2);
-                    Thread.Sleep(15);
-                    layeredViola.PlaySeparatedNote(p.Item1 + 12, p.Item2);
-                    Thread.Sleep(15);
-                    layeredViola.PlaySeparatedNote(p.Item1 + 12, p.Item2);
+                    layeredViola.PlaySample(p.Item1 + 12, p.Item2+0.2, legato);
                     //layeredViola.PlaySeparatedNote(p + 7, 8);
                     //layeredViola.PlaySeparatedNote(p + 16, 8);
                     Thread.Sleep((int)(p.Item2 * 1000));
@@ -56,20 +60,20 @@ class Program
             }
         });
 
-        //var dynamicsDelay = 1;//s
-        //var dynamics = 1.0;
-        //Task.Run(() =>
-        //{
-        //    while (true)
-        //    {
-        //        dynamics = 1;
-        //        layeredViola.ApplyDynamics(dynamicsDelay, dynamics);
-        //        Thread.Sleep(dynamicsDelay * 1000);
-        //        dynamics = 0.30;
-        //        layeredViola.ApplyDynamics(dynamicsDelay, dynamics);
-        //        Thread.Sleep(dynamicsDelay * 1000);
-        //    }
-        //});
+        var dynamicsDelay = 5;//s
+        var dynamics = 1.0;
+        Task.Run(() =>
+        {
+            while (true)
+            {
+                dynamics = 1;
+                layeredViola.ApplyDynamics(dynamicsDelay, dynamics);
+                Thread.Sleep(dynamicsDelay * 1000);
+                dynamics = 0.2;
+                layeredViola.ApplyDynamics(dynamicsDelay, dynamics);
+                Thread.Sleep(dynamicsDelay * 1000);
+            }
+        });
 
 
         Thread.Sleep(3600 * 1000);

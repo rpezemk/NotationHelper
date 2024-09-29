@@ -25,13 +25,14 @@ namespace AudioTool.Total
         ;##############################################################
         instr {instrNo}; WHOLE SAMPLE
             kTrig init 1
-            if kTrig == 99 then
+            if kTrig == 9 then
                 printks ""TOTAL SAMPLE INSTR \n"", 0
-                printks ""P1   instrNo: %f\n"", 0, p1
-                printks ""P2 startTime: %f\n"", 0, p2
-                printks ""P3  duration: %f\n"", 0, p3
-                printks ""P4 pitchSkip: %f\n"", 0, p4
-                printks ""P5 sampleLen: %f\n"", 0, p5
+                printks ""P1    instrNo: %f\n"", 0, p1
+                printks ""P2  startTime: %f\n"", 0, p2
+                printks ""P3   duration: %f\n"", 0, p3
+                printks ""P4  pitchSkip: %f\n"", 0, p4
+                printks ""P5  sampleLen: %f\n"", 0, p5
+                printks ""P6 legatoMark: %f\n"", 0, p6
                 kTrig = 0
             endif
             iDuration  init p3
@@ -43,19 +44,19 @@ namespace AudioTool.Total
             iFadeTime = iBegLen / 2
             iStableFillTime max 0, (iDuration - 2*iFadeTime)
             iFillFreq = 1/iSampleLen
-            
             iNWholeFills = floor(iDuration / iSampleLen)
             iLastFillDur = iDuration - (iNWholeFills * iSampleLen)
-            
             iEndSkip = max(0, iSampleLen - iDuration)
+            iLegatoMark init p6 
             
-            kFillCnt init 0
-
 
             ;CONTROL ENVELOPES
+            kFillCnt init 0
             kTimeEnv linseg 0, iDuration, iDuration
-            kBegEnv linseg 1, iBegLen, 0
-            kEndEnv linseg 0, iPreEnd, 0, iEndLen, 1
+            
+            kBegEnv linseg 0, 0.1, 1, iBegLen-0.2, .7, 0.1, 0
+            kEndEnv linseg 0, 0.1, 0.9, iPreEnd, .9, iEndLen-0.2, 1, 0.1, 0
+
             kEndTrigger init 0
             if kEndTrigger = 0 then
                 if kTimeEnv >= iPreEnd then
@@ -99,18 +100,26 @@ namespace AudioTool.Total
                     kFillCnt = kFillCnt + 1
                 endif
             endif
-
+            
             {Layers.Select(l => l.ToWholeSample()).JoinToBlock(18)}
 
-            kMod = 0.5; chnget ""{instrNo.ToModulatorStr()}""
+            kMod chnget ""{instrNo.ToModulatorStr()}""
             ;printks ""kMod Value: %f\n"", 0, kMod
             
             {Layers.Select(l => l.ToCalculatedDynamics(InstrumentFileHelper.ViolaLayers.Count())).JoinToBlock(18)}
 
-            aOutL = 0.3 * ({LayersToOutput("Left")})
-            aOutR = 0.3 * ({LayersToOutput("Right")})
-                   
-            outs aOutL, aOutR
+            aLeft = 0.3 * ({LayersToOutput("Left")})
+            aRight = 0.3 * ({LayersToOutput("Right")})
+            aOutL atone aLeft,  230
+            aOutR atone aRight, 230 
+            aOutL_rev, aOutR_rev freeverb aOutL, aOutR, 0.9, 0.01
+            chnset aOutL_rev, ""mix""
+
+            amix chnget ""mix""
+            aL, aR freeverb amix, amix, 1, .01
+            outs 3*aL, 3*aR
+
+            //outs aOutL_rev, aOutR_rev
 
         endin
 
@@ -118,7 +127,7 @@ namespace AudioTool.Total
 
         instr {instrNo + 60}
             kTrig init 1
-            if kTrig == 1 then
+            if kTrig == 9 then
                 printks ""P1 instrNo : %f\n"", 0, p1
                 printks ""P2 start   : %f\n"", 0, p2
                 printks ""P3 durat   : %f\n"", 0, p3
@@ -140,6 +149,31 @@ namespace AudioTool.Total
 
         endin
 
+
+        ;
+        instr {instrNo + 70}
+            kTrig init 1
+            if kTrig == 9 then
+                printks ""P1 instrNo : %f\n"", 0, p1
+                printks ""P2 start   : %f\n"", 0, p2
+                printks ""P3 durat   : %f\n"", 0, p3
+                printks ""P4 skiptim : %f\n"", 0, p4
+                kTrig = 0
+            endif
+            iDuration  init p3
+            iskiptim init p4
+            kFillEnv linseg 0, iDuration/2, 1, iDuration/2, 0
+            {Layers.Select(l => l.ToSimpleEnvelope()).JoinToBlock(18)}
+
+            kMod = 0.5;kMod chnget ""{instrNo.ToModulatorStr()}""
+            {Layers.Select(l => l.ToCalculatedDynamics(InstrumentFileHelper.ViolaLayers.Count())).JoinToBlock(18)}
+
+            aOutL = 0.3 * ({LayersToOutput("Left")})
+            aOutR = 0.3 * ({LayersToOutput("Right")})
+            
+            outs aOutL, aOutR
+
+        endin
 
 
 
@@ -175,20 +209,15 @@ namespace AudioTool.Total
             return res;
         }
 
-        public void PlaySample(int pitch, double noteDuration)
+        public void PlaySample(int pitch, double noteDuration, bool legato)
         {
-            Engine.Play(EmitFromInstr(new TotalSampleEvent(0, noteDuration, pitch * SampleSpacing + SampleOffset, SampleLen)));
+            //1 -- legato
+            //0 -- non legato
+            Engine.Play(EmitFromInstr(new TotalSampleEvent(0, noteDuration, pitch * SampleSpacing + SampleOffset, SampleLen, legato? 1: 0)));
         }
 
 
-        public void PlaySeparatedNote(int pitch, double noteDuration)
-        {
-            List<ScheduletEvent> events = new List<ScheduletEvent>();
-            Task.Run(() =>
-            {
-                PlaySample(pitch, noteDuration);
-            });
-        }
+
 
         public void ApplyDynamics(double period, double dynamics)
         {
