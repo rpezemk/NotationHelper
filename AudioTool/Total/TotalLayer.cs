@@ -70,7 +70,7 @@
                 ;;;;      kWaveTrig1 
                 ;;;;      kWaveTrig2 
                 ;BEGIN SECTION
-                aLeft_{Dyn}_beginWave, aRight_{Dyn}_beginWave diskin2 ""{FilePath}"", 1, iskiptim + (4*4)
+                aLeft_{Dyn}_beginWave, aRight_{Dyn}_beginWave diskin2 ""{FilePath}"", 1, iskiptim
                 
 
     
