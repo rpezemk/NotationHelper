@@ -24,34 +24,22 @@ namespace AudioTool.Total
         ;#####         {instrNo} {instrName}                    #######      
         ;##############################################################
         instr {instrNo}; WHOLE SAMPLE
-            kTrig init 1
-            if kTrig == 9 then
-                printks ""TOTAL SAMPLE INSTR \n"", 0
-                printks ""P1    instrNo: %f\n"", 0, p1
-                printks ""P2  startTime: %f\n"", 0, p2
-                printks ""P3   duration: %f\n"", 0, p3
-                printks ""P4  pitchSkip: %f\n"", 0, p4
-                printks ""P5  sampleLen: %f\n"", 0, p5
-                printks ""P6 legatoMark: %f\n"", 0, p6
-                kTrig = 0
-            endif
-            iDuration  init p3
-            iskiptim init p4
-            iSampleLen init p5
-            iBegLen min iDuration, iSampleLen
-            iEndLen min iDuration, iSampleLen
-            iPreEnd = max(0.0001, iDuration - iEndLen)
+            iDuration      init p3
+            iskiptim       init p4
+            iSampleLen     init p5
+            iBegLen    min iDuration, iSampleLen
+            iEndLen    min iDuration, iSampleLen
+            iPreEnd    max 0.0001, iDuration - iEndLen
             iFadeTime = iBegLen / 2
             iStableFillTime max 0, (iDuration - 2*iFadeTime)
             iFillFreq = 1/iSampleLen
-            iNWholeFills = floor(iDuration / iSampleLen)
+            iNWholeFills = floor(iDuration / iSampleLen) * 2
             iLastFillDur = iDuration - (iNWholeFills * iSampleLen)
             iEndSkip = max(0, iSampleLen - iDuration)
             iLegatoMark init p6 
             
 
             ;CONTROL ENVELOPES
-            kFillCnt init 0
             kTimeEnv linseg 0, iDuration, iDuration
             
             kBegEnv linseg 0, 0.1, 1, iBegLen-0.2, .7, 0.1, 0
@@ -64,38 +52,11 @@ namespace AudioTool.Total
                     ;printks ""kEndTrigger = 1\n"", 0
                 endif
             endif
-            
-            kFillEnvelope linseg 0, iFadeTime, 1, iStableFillTime, 1, iFadeTime, 0
-
-
-            kPhasor1 init 0
-            kPhasor2 init 0
-            kPhasor_prev1 = kPhasor1
-            kPhasor_prev2 = kPhasor2
-            kPhasor1 phasor iFillFreq
-            kPhasor2 = frac(kPhasor1 + 0.5)
-            kFastPhasor phasor 2
-            kFillWave1 = 1 - abs(2 * kPhasor1 - 1) ; 
-            kFillWave2 = 1 - abs(2 * kPhasor2 - 1) ; 
-
-            kWaveTrig1 init 0
-            kWaveTrig2 init 0
-
-            if kTimeEnv == 0 || kPhasor_prev1 - kPhasor1 > 0.5 then
-                kWaveTrig1 = 1
-            else 
-                kWaveTrig1 = 0
-            endif
-
-            if kPhasor_prev2 - kPhasor2 > 0.5 then
-                kWaveTrig2 = 1
-            else 
-                kWaveTrig2 = 0
-            endif
-            
-
-            if kWaveTrig1 == 1 || kWaveTrig2 == 1 then
-                if kFillCnt < iNWholeFills then
+            kRand randh 1, 0.5, 1  ; 
+            kTestMetro metro iFillFreq * 2 + kRand*0.2
+            kFillCnt init 0
+            if kTestMetro == 1 then
+                if kFillCnt < iNWholeFills - 1 then
                     event ""i"", p1+60, 0, iSampleLen, iskiptim
                     kFillCnt = kFillCnt + 1
                 endif
@@ -103,9 +64,11 @@ namespace AudioTool.Total
             
             {Layers.Select(l => l.ToWholeSample()).JoinToBlock(18)}
 
-            kMod chnget ""{instrNo.ToModulatorStr()}""
-            ;printks ""kMod Value: %f\n"", 0, kMod
-            
+            kModChan chnget ""{instrNo.ToModulatorStr()}""
+            iDelay = 0.01
+            kSupport1 linseg 0, iDelay, 1, iDuration - 2*iDelay, 1, iDelay, 0
+            kSupport2 linseg 0, iDuration * 0.33, 1, iDuration * 0.66, 0
+            kMod = ((kSupport1 + kSupport2)*0.1 - 0.1)  + + kModChan            
             {Layers.Select(l => l.ToCalculatedDynamics(InstrumentFileHelper.ViolaLayers.Count())).JoinToBlock(18)}
 
             aLeft = 0.3 * ({LayersToOutput("Left")})
@@ -115,17 +78,15 @@ namespace AudioTool.Total
 
             aRvbL,aRvbR reverbsc aOutL,aOutR,0,12000
             outs aRvbL - aOutL,aRvbR - aOutR
-            gaRvbSend = gaRvbSend + (aOutL)
+            gaRvbSendL = gaRvbSendL + (aOutL)
+            gaRvbSendR = gaRvbSendR + (aOutR)
 
-            //outs aOutL_rev, aOutR_rev
 
         endin
-
-
 
         instr {instrNo + 60}
             kTrig init 1
-            if kTrig == 9 then
+            if kTrig == 1 then
                 printks ""P1 instrNo : %f\n"", 0, p1
                 printks ""P2 start   : %f\n"", 0, p2
                 printks ""P3 durat   : %f\n"", 0, p3
@@ -140,47 +101,24 @@ namespace AudioTool.Total
             kMod = 0.5;kMod chnget ""{instrNo.ToModulatorStr()}""
             {Layers.Select(l => l.ToCalculatedDynamics(InstrumentFileHelper.ViolaLayers.Count())).JoinToBlock(18)}
 
-            aOutL = 0.3 * ({LayersToOutput("Left")})
-            aOutR = 0.3 * ({LayersToOutput("Right")})
+            aOutL = 0.2 * ({LayersToOutput("Left")})
+            aOutR = 0.2 * ({LayersToOutput("Right")})
             
-            outs aOutL, aOutR
-
+            gaRvbSendL = gaRvbSendL + (aOutL)
+            gaRvbSendR = gaRvbSendR + (aOutR)
         endin
 
-instr 5 ; reverb - always on
-kroomsize init 0.85 ; room size (range 0 to 1)
-kHFDamp init 0.5 ; high freq. damping (range 0 to 1)
-; create reverberated version of input signal (note stereo input and output)
-aRvbL,aRvbR freeverb gaRvbSend, gaRvbSend,kroomsize,kHFDamp
-outs aRvbL, aRvbR ; send audio to outputs
-clear gaRvbSend ; clear global audio variable
-endin
-
-        ;
-        instr {instrNo + 70}
-            kTrig init 1
-            if kTrig == 9 then
-                printks ""P1 instrNo : %f\n"", 0, p1
-                printks ""P2 start   : %f\n"", 0, p2
-                printks ""P3 durat   : %f\n"", 0, p3
-                printks ""P4 skiptim : %f\n"", 0, p4
-                kTrig = 0
-            endif
-            iDuration  init p3
-            iskiptim init p4
-            kFillEnv linseg 0, iDuration/2, 1, iDuration/2, 0
-            {Layers.Select(l => l.ToSimpleEnvelope()).JoinToBlock(18)}
-
-            kMod = 0.5;kMod chnget ""{instrNo.ToModulatorStr()}""
-            {Layers.Select(l => l.ToCalculatedDynamics(InstrumentFileHelper.ViolaLayers.Count())).JoinToBlock(18)}
-
-            aOutL = 0.3 * ({LayersToOutput("Left")})
-            aOutR = 0.3 * ({LayersToOutput("Right")})
-            
-            outs aOutL, aOutR
-
+        instr 5 ; reverb - always on
+            kroomsize init 0.85 ; room size (range 0 to 1)
+            kHFDamp init 0.5 ; high freq. damping (range 0 to 1)
+            ; create reverberated version of input signal (note stereo input and output)
+            aRvbL,aRvbR freeverb gaRvbSendL, gaRvbSendR,kroomsize,kHFDamp
+            outs aRvbL, aRvbR ; send audio to outputs
+            ;outs gaRvbSendL, gaRvbSendR ; send audio to outputs
+            ;outs gaRvbSendL, gaRvbSendR ; send audio to outputs
+            clear gaRvbSendL ; clear global audio variable
+            clear gaRvbSendR ; clear global audio variable
         endin
-
 
 
         ;DYNAMICS_MODULATOR

@@ -24,6 +24,7 @@ class Program
         csEngine.RunAsync();
         var pitches = new List<(int, double)>() 
         {
+            //(6,  1.00),
             (2,  0.25),
             (4,  0.25),
             (5,  0.25),
@@ -34,7 +35,7 @@ class Program
             (9,  0.50),
             (4,  0.50),
             (7,  0.50),
-            (6,  2.00),
+            (6,  12.00),
         };
         Thread.Sleep(1000);
         var noteDuration = 2;
@@ -50,6 +51,7 @@ class Program
                     //layeredViola.PlaySeparatedNote(p + 7, 8);
                     //layeredViola.PlaySeparatedNote(p + 16, 8);
                     Thread.Sleep((int)(p.Item2 * 1000));
+                    //Thread.Sleep(2000);
                 }
             }
         });
@@ -58,7 +60,7 @@ class Program
         var dynamics = 1.0;
         Task.Run(() =>
         {
-            while (true)
+            while (false)
             {
                 dynamics = 1;
                 layeredViola.ApplyDynamics(dynamicsDelay, dynamics);

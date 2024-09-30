@@ -73,12 +73,12 @@
                 ;;;;  kBegEnv linseg 1, iBegLen, 0
                 ;;;;  kEndEnv linseg 0, iPreEnd, 0, iEndLen, 1
                 ;;;;  kEndTrigger init 0
-                ;;;;  kFillEnvelope <---- this is envelope for fill layer
+                ;;;;  kFillEnv <---- this is envelope for fill layer
                 ;;;;  FILL TRIGGERS
                 ;;;;      kWaveTrig1 
                 ;;;;      kWaveTrig2 
                 ;BEGIN SECTION
-                aLeft_{Dyn}_beginWave, aRight_{Dyn}_beginWave diskin2 ""{FilePath}"", 1, iskiptim
+                aLeft_{Dyn}_beginWave, aRight_{Dyn}_beginWave diskin2 ""{FilePath}"", 1, iskiptim ; + (4 * 12)
                 
 
     
