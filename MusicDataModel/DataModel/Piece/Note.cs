@@ -52,7 +52,7 @@ namespace MusicDataModel.DataModel.Piece
             return this;
         }
 
-        public TimeHolder AsTimeGroup() => this;
+        
 
         public static Note C() => Emit().SetName(DataModel.Elementary.NoteName.C);
         public static Note D() => Emit().SetName(DataModel.Elementary.NoteName.D);

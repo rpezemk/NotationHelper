@@ -27,13 +27,6 @@ namespace MusicDataModel.Helpers
         public static TimeHolder Sixteen(this TimeHolder timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.Sixteen);
         public static TimeHolder ThirtyTwo(this TimeHolder timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.ThirtyTwo);
 
-        public static Note Whole(this Note timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.Whole);
-        public static Note Half(this Note timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.Half);
-        public static Note Quarter(this Note timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.Querter);
-        public static Note Eight(this Note timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.Eight);
-        public static Note Sixteen(this Note timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.Sixteen);
-        public static Note ThirtyTwo(this Note timeGroup) => timeGroup.SetBaseDuration(DataModel.Elementary.DurationEnum.ThirtyTwo);
-
         public static Note UpOct(this Note note) => note.AlterOctave(1);
         public static Note DownOct(this Note note) => note.AlterOctave(-1);
 

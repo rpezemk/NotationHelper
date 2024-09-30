@@ -2,6 +2,7 @@
 using MusicDataModel.FlowTypes;
 using MusicDataModel.Helpers;
 using MusicDataModel.MVVM.MainVM;
+using NotationHelper.MVC;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -114,6 +115,12 @@ namespace MusicDataModel
         private void MainWindowControl_SizeChanged_1(object sender, SizeChangedEventArgs e)
         {
 
+        }
+
+        private void MainWindowControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+                OperationBindings.UnSelectAll();
         }
     }
 }

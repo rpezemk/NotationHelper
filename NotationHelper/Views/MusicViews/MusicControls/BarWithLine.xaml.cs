@@ -4,6 +4,7 @@ using MusicDataModel.MVVM;
 using NotationHelper.MVC;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 namespace MusicDataModel.MusicViews.MusicControls
 {
@@ -33,9 +34,9 @@ namespace MusicDataModel.MusicViews.MusicControls
                 return;
 
             vm.CalculateMOffsets().CalculateXOffset(GridContainer.ActualWidth);
-            foreach (var rtmCell in vm.VoiceBar.Children)
+            foreach (var timeHolder in vm.VoiceBar.Children)
             {
-                DrawTimeGroup(rtmCell);
+                DrawTimeGroup(timeHolder);
             }
         }
 
@@ -46,9 +47,13 @@ namespace MusicDataModel.MusicViews.MusicControls
 
         public TimeHolderDrawing DrawGlyph(TimeHolder timeHolder, Brush brush)
         {
-            var xOffset = timeHolder.XOffset;
+            var xOffset = timeHolder.XOffset + (timeHolder is Note ? 0: 3);
+            var visHeignt = timeHolder.NoteToVisualHeight() - 3;
             var glyph = timeHolder.ToGlyph();
-            var yOffset = timeHolder.YOffset - (timeHolder.NoteToVisualHeight() - 3) * Scale;
+            var yOffset = 
+                timeHolder is Note? timeHolder.YOffset - visHeignt * Scale 
+                : timeHolder is Rest? -13 
+                : 0;
             var textVisual = DrawNormal(glyph, xOffset, yOffset, brush, timeHolder);
             return textVisual;
         }
@@ -88,7 +93,6 @@ namespace MusicDataModel.MusicViews.MusicControls
         {
             MarkForAMoment();
             List<TimeHolderDrawing> visuals = GetTimeHolders();
-
             Point mousePosition2 = e.GetPosition(MyVisualHost);
             var nowClicked = visuals.Where(v => v is TimeHolderDrawing)
                 .Select(vis => (vis, VisualTreeHelper.HitTest(vis, mousePosition2)))
@@ -97,13 +101,11 @@ namespace MusicDataModel.MusicViews.MusicControls
 
             var prevSelected = visuals.Select(v => v).Where(v => v is not null)
                 .Where(v => v.TimeHolder.IsSelected).ToList();
-            prevSelected.Where(ps => !nowClicked.Contains(ps)).ToList().ForEach(v => RedrawUnselected(v));
+            if(!ModeHelper.SelectMeasures.IsCurrentMode())
+                prevSelected.Where(ps => !nowClicked.Contains(ps)).ToList().ForEach(v => RedrawUnselected(v));
             nowClicked.Where(nc => !prevSelected.Contains(nc)).ToList().ForEach(v => RedrawSelected(v));
-
             OperationBindings.UnSelectOtherBars(this);
         }
-
-
 
         public List<TimeHolderDrawing> GetTimeHolders()
         {

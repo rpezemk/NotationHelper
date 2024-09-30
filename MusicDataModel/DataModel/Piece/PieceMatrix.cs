@@ -14,16 +14,19 @@ namespace MusicDataModel.DataModel.Piece
 
         public PieceMatrix(int partCount, int barCount)
         {
+            var random = new Random();
             for (int partNo = 0; partNo < partCount; partNo++)
             {
                 var part = new MonoPart() { PartNo = partNo };
                 for (int barNo = 0; barNo < barCount; barNo++)
                 {
+                    var test = random.Next(0, 2) == 0 ? false : true;
+                    TimeHolder randomHolder = (test? Rest.Emit().Eight(): Note.F().Sharp().Eight()).AsTimeGroup();
                     var bar = new VoiceBar() { };
                     bar.AppendChild(Note.C().Sharp().Eight().AsTimeGroup());
                     bar.AppendChild(Note.D().Flat().Sixteen().AsTimeGroup());
                     bar.AppendChild(Note.E().Sharp().Sixteen().AsTimeGroup());
-                    bar.AppendChild(Note.F().Flat().Eight().AsTimeGroup());
+                    bar.AppendChild(randomHolder);
                     bar.AppendChild(Note.G().Flat().Sixteen().AsTimeGroup());
                     bar.AppendChild(Note.A().Flat().Sixteen().AsTimeGroup());
                     bar.AppendChild(Note.B().Flat().Quarter().AsTimeGroup());

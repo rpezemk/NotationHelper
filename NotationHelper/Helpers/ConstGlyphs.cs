@@ -46,14 +46,14 @@ namespace MusicDataModel.Helpers
         {
             var sdf = rest.Duration.BaseDuration switch
             {
-                DataModel.Elementary.DurationEnum.Breve => BreveNote,
-                DataModel.Elementary.DurationEnum.Whole => WholeNote,
-                DataModel.Elementary.DurationEnum.Half => HalfNote,
-                DataModel.Elementary.DurationEnum.Querter => QuarterNote,
-                DataModel.Elementary.DurationEnum.Eight => EighthNote,
-                DataModel.Elementary.DurationEnum.Sixteen => SixteenthNote,
-                DataModel.Elementary.DurationEnum.ThirtyTwo => ThirtySecondNote,
-                DataModel.Elementary.DurationEnum.SixtyFour => SixtyFourthNote,
+                DataModel.Elementary.DurationEnum.Breve => Rest_DoubleWhole,
+                DataModel.Elementary.DurationEnum.Whole => Rest_Whole,
+                DataModel.Elementary.DurationEnum.Half => Rest_Half,
+                DataModel.Elementary.DurationEnum.Querter => Rest_Quarter,
+                DataModel.Elementary.DurationEnum.Eight => Rest_Eighth,
+                DataModel.Elementary.DurationEnum.Sixteen => Rest_Sixteenth,
+                DataModel.Elementary.DurationEnum.ThirtyTwo => Rest_ThirtyTwo,
+                DataModel.Elementary.DurationEnum.SixtyFour => Rest_SixtyFour,
                 _ => Notehead_X
             };
 
@@ -75,13 +75,14 @@ namespace MusicDataModel.Helpers
         public const string Notehead_X = "\uE0A7";
 
         // Rests
+        public const string Rest_DoubleWhole = "\uE4E3";
+        public const string Rest_Whole = "\uE4E4";
         public const string Rest_Half = "\uE4E5";
         public const string Rest_Quarter = "\uE4E6";
         public const string Rest_Eighth = "\uE4E7";
         public const string Rest_Sixteenth = "\uE4E8";
-        public const string Rest_Whole = "\uE4E4";
-        public const string Rest_DoubleWhole = "\uE4E3";
-
+        public const string Rest_ThirtyTwo = "\uE4E8";
+        public const string Rest_SixtyFour = "\uE4E8";
         // Accidentals
         public const string Accidental_Natural = "\uE260";
         public const string Accidental_Flat = "\uE261";
