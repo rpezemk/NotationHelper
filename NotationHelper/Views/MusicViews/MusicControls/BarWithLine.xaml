@@ -10,7 +10,7 @@
              Loaded="UserControl_Loaded">
     <Grid >
         <Grid x:Name="GridContainer" Margin="5,0,0,0">
-            <Canvas x:Name="DrawingCanvas">
+            <Canvas x:Name="DrawingCanvas" Background="#11000000" MouseDown="DrawingCanvas_MouseDown">
                 <local:DrawingVisualHost x:Name="MyVisualHost" MouseDown="MyVisualHost_MouseDown"/>
             </Canvas>
         </Grid>

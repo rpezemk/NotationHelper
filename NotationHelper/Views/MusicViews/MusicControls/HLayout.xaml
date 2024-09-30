@@ -17,11 +17,11 @@
             </Grid.ColumnDefinitions>
             <TextBlock Text="info" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Consolas" Foreground="Gray"/>
             <StackPanel Grid.Column="1" Margin="0,19,0,0">
-                <Rectangle Fill="#77999999" Height="1.5" Margin="0, 2.3, 0, 2"/>
-                <Rectangle Fill="#77999999" Height="1.5" Margin="0, 2.3, 0, 2"/>
-                <Rectangle Fill="#77999999" Height="1.5" Margin="0, 2.3, 0, 2"/>
-                <Rectangle Fill="#77999999" Height="1.5" Margin="0, 2.3, 0, 2"/>
-                <Rectangle Fill="#77999999" Height="1.5" Margin="0, 2.3, 0, 2"/>
+                <Rectangle Fill="#66FFFFFF" Height="1.5" Margin="0, 2.3, 0, 2"/>
+                <Rectangle Fill="#66FFFFFF" Height="1.5" Margin="0, 2.3, 0, 2"/>
+                <Rectangle Fill="#66FFFFFF" Height="1.5" Margin="0, 2.3, 0, 2"/>
+                <Rectangle Fill="#66FFFFFF" Height="1.5" Margin="0, 2.3, 0, 2"/>
+                <Rectangle Fill="#66FFFFFF" Height="1.5" Margin="0, 2.3, 0, 2"/>
             </StackPanel>
             <Grid x:Name="MyMulticolumnGrid" Grid.Column="1" VerticalAlignment="Top" Height="30" Margin="0,19,0,0">
                 <StackPanel x:Name="MyStackPanel" Orientation="Horizontal"/>

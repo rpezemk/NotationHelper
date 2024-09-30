@@ -40,7 +40,7 @@ namespace MusicDataModel.MusicViews.MusicControls
 
         private void DrawTimeGroup(TimeHolder timeGroup)
         {
-            DrawGlyph(timeGroup, Brushes.White);
+            DrawGlyph(timeGroup, Brushes.LightGray);
         }
 
         private TimeHolderDrawing DrawGlyph(TimeHolder timeHolder, Brush brush)
@@ -62,19 +62,25 @@ namespace MusicDataModel.MusicViews.MusicControls
                System.Globalization.CultureInfo.InvariantCulture,
                FlowDirection.LeftToRight,
                new Typeface(FontHelper.BravuraFont, FontHelper.BravuraStyle, new FontWeight() { }, new FontStretch() { }),
-               20, // Font size
+               25, // Font size
                brush,
                VisualTreeHelper.GetDpi(this).PixelsPerDip
             );
                 MyVisualHost.AddVisual(textVisual);
-                dc.DrawText(text, new Point(xOffset, yOffset - 17));
+                dc.DrawText(text, new Point(xOffset, yOffset - 29));
             }
             return textVisual;
         }
 
-
+        private bool noteWasClicked;
+        private void MarkForAMoment()
+        {
+            noteWasClicked = true;
+            Task.Run(() => { Thread.Sleep(50); noteWasClicked = false; });
+        }
         private void MyVisualHost_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            MarkForAMoment();
             List<TimeHolderDrawing> visuals = GetTimeHolders();
             var cnt = visuals.Count();
 
@@ -123,8 +129,17 @@ namespace MusicDataModel.MusicViews.MusicControls
         private void RedrawUnselected(TimeHolderDrawing nd)
         {
             MyVisualHost.RemoveVisual(nd);
-            DrawGlyph(nd.TimeHolder, Brushes.White);
+            DrawGlyph(nd.TimeHolder, Brushes.LightGray);
         }
 
+        private void DrawingCanvas_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (noteWasClicked == true)
+                return;
+            foreach (var th in GetTimeHolders())
+            {
+                RedrawSelected(th);
+            }
+        }
     }
 }
