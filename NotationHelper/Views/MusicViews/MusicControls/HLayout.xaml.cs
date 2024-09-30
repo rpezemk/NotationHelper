@@ -45,5 +45,18 @@ namespace MusicDataModel.MusicViews
                 return;
             MyStackPanel.SubdivideHorizontal(MyMulticolumnGrid.ActualWidth, hContentVM.SingleBar_VMs.ToList(), new BarWithLine());
         }
+
+        private void Border_MouseMove(object sender, MouseEventArgs e)
+        {
+            List<BarWithLine> bars = new List<BarWithLine>();
+            foreach(var ob in MyStackPanel.Children)
+            {
+                if (ob is not BarWithLine bar)
+                    continue;
+                bars.Add(bar);
+            }
+
+            Point mousePosition2 = e.GetPosition(MyStackPanel);
+        }
     }
 }
