@@ -1,6 +1,7 @@
 ﻿using MusicDataModel.DataModel.Piece;
 using MusicDataModel.Helpers;
 using MusicDataModel.MVVM;
+using NotationHelper.MVC;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -25,7 +26,7 @@ namespace MusicDataModel.MusicViews.MusicControls
             DrawAll();
         }
 
-        private void DrawAll()
+        public void DrawAll()
         {
             var sum = GridContainer.ActualWidth + ActualWidth + MyVisualHost.ActualHeight;
             if (sum == 0 || DataContext is not SingleBar_VM vm)
@@ -38,12 +39,12 @@ namespace MusicDataModel.MusicViews.MusicControls
             }
         }
 
-        private void DrawTimeGroup(TimeHolder timeGroup)
+        public void DrawTimeGroup(TimeHolder timeGroup)
         {
             DrawGlyph(timeGroup, Brushes.LightGray);
         }
 
-        private TimeHolderDrawing DrawGlyph(TimeHolder timeHolder, Brush brush)
+        public TimeHolderDrawing DrawGlyph(TimeHolder timeHolder, Brush brush)
         {
             var xOffset = timeHolder.XOffset;
             var glyph = timeHolder.ToGlyph();
@@ -52,7 +53,7 @@ namespace MusicDataModel.MusicViews.MusicControls
             return textVisual;
         }
 
-        private TimeHolderDrawing DrawNormal(string glyph, double xOffset, double yOffset, Brush brush, TimeHolder timeHolder)
+        public TimeHolderDrawing DrawNormal(string glyph, double xOffset, double yOffset, Brush brush, TimeHolder timeHolder)
         {
             TimeHolderDrawing textVisual = new TimeHolderDrawing(timeHolder);
             using (DrawingContext dc = textVisual.RenderOpen())
@@ -72,8 +73,8 @@ namespace MusicDataModel.MusicViews.MusicControls
             return textVisual;
         }
 
-        private bool noteWasClicked;
-        private void MarkForAMoment()
+        public bool noteWasClicked;
+        public void MarkForAMoment()
         {
             noteWasClicked = true;
             Task.Run(() => { Thread.Sleep(50); noteWasClicked = false; });
@@ -85,7 +86,7 @@ namespace MusicDataModel.MusicViews.MusicControls
             var cnt = visuals.Count();
 
             var testCnt = 0;
-            var allSelected = visuals.Select(v => v as TimeHolderDrawing).Where(v => v is not null)
+            var allSelected = visuals.Select(v => v).Where(v => v is not null)
                 .Where(v => v.IsSelected).ToList();
             allSelected.ForEach(v => v.IsSelected = false);
 
@@ -121,12 +122,12 @@ namespace MusicDataModel.MusicViews.MusicControls
             return visuals;
         }
 
-        private void RedrawSelected(TimeHolderDrawing nd)
+        public void RedrawSelected(TimeHolderDrawing nd)
         {
             MyVisualHost.RemoveVisual(nd);
             DrawGlyph(nd.TimeHolder, Brushes.Red);
         }
-        private void RedrawUnselected(TimeHolderDrawing nd)
+        public void RedrawUnselected(TimeHolderDrawing nd)
         {
             MyVisualHost.RemoveVisual(nd);
             DrawGlyph(nd.TimeHolder, Brushes.LightGray);
@@ -139,7 +140,20 @@ namespace MusicDataModel.MusicViews.MusicControls
             foreach (var th in GetTimeHolders())
             {
                 RedrawSelected(th);
+                th.IsSelected = true;
             }
+
+            foreach(var barControl in OperationBindings.BarsWithSelectedNotes)
+            {
+                var holders = barControl.GetTimeHolders();
+                foreach (var th  in holders.Where(th => th.IsSelected))
+                {
+                    th.IsSelected = false;
+                    barControl.RedrawUnselected(th);
+                }
+            }
+            OperationBindings.BarsWithSelectedNotes.Clear();
+            OperationBindings.BarsWithSelectedNotes.Add(this);
         }
     }
 }
