@@ -33,7 +33,7 @@ namespace AudioTool.Total
             iFadeTime = iBegLen / 2
             iStableFillTime max 0, (iDuration - 2*iFadeTime)
             iFillFreq = 1/iSampleLen
-            iNWholeFills = floor(iDuration / iSampleLen) * 2
+            iNWholeFills = floor(iDuration / iSampleLen) * 4
             iLastFillDur = iDuration - (iNWholeFills * iSampleLen)
             iEndSkip = max(0, iSampleLen - iDuration)
             iLegatoMark init p6 
@@ -53,7 +53,7 @@ namespace AudioTool.Total
                 endif
             endif
             kRand randh 1, 0.5, 1  ; 
-            kTestMetro metro iFillFreq * 2 + kRand*0.2
+            kTestMetro metro iFillFreq * 4 + kRand*0.2
             kFillCnt init 0
             if kTestMetro == 1 then
                 if kFillCnt < iNWholeFills - 1 then
@@ -68,7 +68,7 @@ namespace AudioTool.Total
             iDelay = 0.01
             kSupport1 linseg 0, iDelay, 1, iDuration - 2*iDelay, 1, iDelay, 0
             kSupport2 linseg 0, iDuration * 0.33, 1, iDuration * 0.66, 0
-            kMod = ((kSupport1 + kSupport2)*0.1 - 0.1)  + + kModChan            
+            kMod = ((kSupport1 + kSupport2*0.5)*0.1 - 0.1)  + + kModChan            
             {Layers.Select(l => l.ToCalculatedDynamics(InstrumentFileHelper.ViolaLayers.Count())).JoinToBlock(18)}
 
             aLeft = 0.3 * ({LayersToOutput("Left")})
