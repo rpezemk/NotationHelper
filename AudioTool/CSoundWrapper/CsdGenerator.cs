@@ -40,10 +40,11 @@ namespace AudioTool.CSoundWrapper
             var part = @"
 <CsOptions>
 		; Select audio/midi flags here according to platform
-		-odac  ;;;realtime audio out
-		; -iadc    ;;;uncomment -iadc if real audio input is needed too
+		  -odac  ;;;realtime audio out
+		; ;;-iadc    ;;;uncomment -iadc if real audio input is needed too
+          -b1024 -B8192
 		; For Non-realtime ouput leave only the line below:
-		; -o sr.wav -W ;;; for file output any platform
+		; ;-o sr.wav -W ;;; for file output any platform
 </CsOptions>";
             return part;
         }

@@ -108,17 +108,7 @@ namespace AudioTool.Total
             gaRvbSendR = gaRvbSendR + (aOutR)
         endin
 
-        instr 5 ; reverb - always on
-            kroomsize init 0.85 ; room size (range 0 to 1)
-            kHFDamp init 0.5 ; high freq. damping (range 0 to 1)
-            ; create reverberated version of input signal (note stereo input and output)
-            aRvbL,aRvbR freeverb gaRvbSendL, gaRvbSendR,kroomsize,kHFDamp
-            outs aRvbL, aRvbR ; send audio to outputs
-            ;outs gaRvbSendL, gaRvbSendR ; send audio to outputs
-            ;outs gaRvbSendL, gaRvbSendR ; send audio to outputs
-            clear gaRvbSendL ; clear global audio variable
-            clear gaRvbSendR ; clear global audio variable
-        endin
+
 
 
         ;DYNAMICS_MODULATOR
@@ -144,7 +134,7 @@ namespace AudioTool.Total
 
         public override List<string> GetEventsScript(int instrNo, string instrName)
         {
-            return ["i 5 0 300 "];//$"i{instrNo.ToEnvelopeNo()} 0 10 1 ; i99 start at 0, 10 hours long, amp .0001"
+            return [];//$"i{instrNo.ToEnvelopeNo()} 0 10 1 ; i99 start at 0, 10 hours long, amp .0001"
         }
 
         public string LayersToOutput(string side)

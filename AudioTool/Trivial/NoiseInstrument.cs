@@ -31,5 +31,41 @@ namespace AudioTool.Trivial
         endin";
             return part;
         }
+    }    
+    
+    public class ReverbInstrument : AScriptedInstrument
+    {
+        public ReverbInstrument(string name) : base(name)
+        {
+        }
+
+        public override List<string> GetEventsScript(int instrNo, string instrName)
+        {
+            List<string> res =
+                [
+                    $"i 5 0 300 "
+                ];
+            return res;
+        }
+
+        public override string GetInstrumentScript(int instrNo, string instrName)
+        {
+            var part = $@"
+        ;##################
+        ;### TAPE NOISE ###
+        ;##################
+        instr 5 ; reverb - always on
+            kroomsize init 0.85 ; room size (range 0 to 1)
+            kHFDamp init 0.5 ; high freq. damping (range 0 to 1)
+            ; create reverberated version of input signal (note stereo input and output)
+            aRvbL,aRvbR freeverb gaRvbSendL, gaRvbSendR,kroomsize,kHFDamp
+            outs aRvbL, aRvbR ; send audio to outputs
+            ;outs gaRvbSendL, gaRvbSendR ; send audio to outputs
+            ;outs gaRvbSendL, gaRvbSendR ; send audio to outputs
+            clear gaRvbSendL ; clear global audio variable
+            clear gaRvbSendR ; clear global audio variable
+        endin";
+            return part;
+        }
     }
 }

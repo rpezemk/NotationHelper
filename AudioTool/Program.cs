@@ -17,31 +17,36 @@ class Program
     static void BackgroundCsThread(string[] args, Action<string> LogAction)
     {
         var noise = new NoiseInstrument("NOISE");
+        var reverb = new ReverbInstrument("REVERB");
         var flatViola = new FlatSampleInstrument("VIOLA_01");
+        var flatViolin = new FlatSampleInstrument("VIOLIN_01");
         //var layeredViola = new LayerSampleInstrument("VIOLA_01", InstrumentFileHelper.ViolaLayers);
         var layeredViola = new TotalLayerSampleInstrument("VIOLA_01", InstrumentFileHelper.TotalViolaLayers);
-        CsEngine csEngine = new CsEngine([noise, flatViola, layeredViola]);
+        var layeredViolin = new TotalLayerSampleInstrument("VIOLIN_01", InstrumentFileHelper.TotalViolinLayers);
+        var layeredCellos = new TotalLayerSampleInstrument("VIOLIN_01", InstrumentFileHelper.TotalVioloncelliLayers);
+        var layeredBasses = new TotalLayerSampleInstrument("VIOLIN_01", InstrumentFileHelper.TotalContrabbassiLayers);
+        CsEngine csEngine = new CsEngine([noise, reverb, flatViola, layeredViola, layeredViolin, layeredCellos, layeredBasses]);
         csEngine.RunAsync();
         var pitches = new List<(int, double)>() 
         {
             //(6,  1.00),
-            (2,  0.125),
-            (4,  0.125),
-            (5,  0.125),
-            (7,  0.125),
-            (9,  0.250),
-            (14, 0.250),
-            (13, 0.250),
-            (9,  0.250),
-            (4,  0.250),
-            (7,  0.250),
-            (6,  0.250),
-            (2,  0.250),
-            (12, 0.750),
-            (11, 0.125),
-            (9, 0.125),
-            (11, 0.250),
-            (7, 0.250),
+            (2,  0.125*2),
+            (4,  0.125*2),
+            (5,  0.125*2),
+            (7,  0.125*2),
+            (9,  0.250*2),
+            (14, 0.250*2),
+            (13, 0.250*2),
+            (9,  0.250*2),
+            (4,  0.250*2),
+            (7,  0.250*2),
+            (6,  0.250*2),
+            (2,  0.250*2),
+            (12, 0.750*2),
+            (11, 0.125*2),
+            (9,  0.125*2),
+            (11, 0.250*2),
+            (7,  0.250*2),
         };
         Thread.Sleep(1000);
         var noteDuration = 2;
@@ -53,7 +58,7 @@ class Program
             {
                 foreach (var p in pitches)
                 {
-                    layeredViola.PlaySample(p.Item1, p.Item2+0.2, legato);
+                    layeredBasses.PlaySample(p.Item1, p.Item2+0.2, legato);
                     //layeredViola.PlaySeparatedNote(p + 7, 8);
                     //layeredViola.PlaySeparatedNote(p + 16, 8);
                     Thread.Sleep((int)(p.Item2 * 1000));
