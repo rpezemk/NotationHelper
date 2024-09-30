@@ -4,7 +4,6 @@ namespace MusicDataModel.MusicViews.MusicControls
 {
     public class TimeHolderDrawing : DrawingVisual
     {
-        public bool IsSelected {  get; set; }
         public TimeHolderDrawing(TimeHolder timeHolder)
         {
             TimeHolder = timeHolder;

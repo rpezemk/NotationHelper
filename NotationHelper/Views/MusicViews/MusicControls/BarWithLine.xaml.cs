@@ -12,7 +12,7 @@ namespace MusicDataModel.MusicViews.MusicControls
     /// </summary>
     public partial class BarWithLine : UserControl
     {
-        
+
         public BarWithLine()
         {
             InitializeComponent();
@@ -49,28 +49,33 @@ namespace MusicDataModel.MusicViews.MusicControls
             var xOffset = timeHolder.XOffset;
             var glyph = timeHolder.ToGlyph();
             var yOffset = timeHolder.YOffset - (timeHolder.NoteToVisualHeight() - 3) * Scale;
-            var textVisual =  DrawNormal(glyph, xOffset, yOffset, brush, timeHolder);
+            var textVisual = DrawNormal(glyph, xOffset, yOffset, brush, timeHolder);
             return textVisual;
         }
 
         public TimeHolderDrawing DrawNormal(string glyph, double xOffset, double yOffset, Brush brush, TimeHolder timeHolder)
         {
             TimeHolderDrawing textVisual = new TimeHolderDrawing(timeHolder);
-            using (DrawingContext dc = textVisual.RenderOpen())
-            {
-                FormattedText text = new FormattedText(
-               glyph,
-               System.Globalization.CultureInfo.InvariantCulture,
-               FlowDirection.LeftToRight,
-               new Typeface(FontHelper.BravuraFont, FontHelper.BravuraStyle, new FontWeight() { }, new FontStretch() { }),
-               25, // Font size
-               brush,
-               VisualTreeHelper.GetDpi(this).PixelsPerDip
-            );
-                MyVisualHost.AddVisual(textVisual);
-                dc.DrawText(text, new Point(xOffset, yOffset - 29));
-            }
+            DrawingContext dc = textVisual.RenderOpen();
+            FormattedText text = GetFormattedText(glyph, brush);
+            dc.DrawText(text, new Point(xOffset, yOffset - 29));
+            dc.Close();
+            MyVisualHost.AddVisual(textVisual);
             return textVisual;
+        }
+
+        private FormattedText GetFormattedText(string glyph, Brush brush)
+        {
+            FormattedText text = new FormattedText(
+            glyph,
+            System.Globalization.CultureInfo.InvariantCulture,
+            FlowDirection.LeftToRight,
+            new Typeface(FontHelper.BravuraFont, FontHelper.BravuraStyle, new FontWeight() { }, new FontStretch() { }),
+            25, // Font size
+            brush,
+            VisualTreeHelper.GetDpi(this).PixelsPerDip
+        );
+            return text;
         }
 
         public bool noteWasClicked;
@@ -83,30 +88,22 @@ namespace MusicDataModel.MusicViews.MusicControls
         {
             MarkForAMoment();
             List<TimeHolderDrawing> visuals = GetTimeHolders();
-            var cnt = visuals.Count();
-
-            var testCnt = 0;
-            var allSelected = visuals.Select(v => v).Where(v => v is not null)
-                .Where(v => v.IsSelected).ToList();
-            allSelected.ForEach(v => v.IsSelected = false);
-
 
             Point mousePosition2 = e.GetPosition(MyVisualHost);
             var nowClicked = visuals.Where(v => v is TimeHolderDrawing)
                 .Select(vis => (vis, VisualTreeHelper.HitTest(vis, mousePosition2)))
                 .Where(res => res.Item2 != null && res.Item2.VisualHit is DrawingVisual)
-                .Select(t => t.vis as TimeHolderDrawing).ToList();
+                .Select(t => t.vis).ToList();
 
-            nowClicked.ForEach(v => v.IsSelected = true);
+            var prevSelected = visuals.Select(v => v).Where(v => v is not null)
+                .Where(v => v.TimeHolder.IsSelected).ToList();
+            prevSelected.Where(ps => !nowClicked.Contains(ps)).ToList().ForEach(v => RedrawUnselected(v));
+            nowClicked.Where(nc => !prevSelected.Contains(nc)).ToList().ForEach(v => RedrawSelected(v));
 
-            foreach (var vis in visuals)
-            {
-                if (vis.IsSelected)
-                    RedrawSelected(vis);
-                else
-                    RedrawUnselected(vis);
-            }
+            OperationBindings.UnSelectOtherBars(this);
         }
+
+
 
         public List<TimeHolderDrawing> GetTimeHolders()
         {
@@ -125,11 +122,13 @@ namespace MusicDataModel.MusicViews.MusicControls
         public void RedrawSelected(TimeHolderDrawing nd)
         {
             MyVisualHost.RemoveVisual(nd);
+            nd.TimeHolder.IsSelected = true;
             DrawGlyph(nd.TimeHolder, Brushes.Red);
         }
         public void RedrawUnselected(TimeHolderDrawing nd)
         {
             MyVisualHost.RemoveVisual(nd);
+            nd.TimeHolder.IsSelected = false;
             DrawGlyph(nd.TimeHolder, Brushes.LightGray);
         }
 
@@ -140,20 +139,9 @@ namespace MusicDataModel.MusicViews.MusicControls
             foreach (var th in GetTimeHolders())
             {
                 RedrawSelected(th);
-                th.IsSelected = true;
             }
 
-            foreach(var barControl in OperationBindings.BarsWithSelectedNotes)
-            {
-                var holders = barControl.GetTimeHolders();
-                foreach (var th  in holders.Where(th => th.IsSelected))
-                {
-                    th.IsSelected = false;
-                    barControl.RedrawUnselected(th);
-                }
-            }
-            OperationBindings.BarsWithSelectedNotes.Clear();
-            OperationBindings.BarsWithSelectedNotes.Add(this);
+            OperationBindings.UnSelectOtherBars(this);
         }
     }
 }

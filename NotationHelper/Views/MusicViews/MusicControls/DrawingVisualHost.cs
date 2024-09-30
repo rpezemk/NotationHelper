@@ -18,6 +18,11 @@ namespace MusicDataModel.MusicViews.MusicViews.MusicControls
             _visuals.Add(visual);
         }
 
+        public void AddGlyph(DrawingVisual visual)
+        {
+            _visuals.Add(visual);
+        }
+
         public void RemoveVisual(DrawingVisual visual)
         {
             _visuals.Remove(visual);
