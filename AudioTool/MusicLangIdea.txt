@@ -1,0 +1,12 @@
+﻿
+ /--------------------\
+         C        F                    b   #
+|DEFGA D   A E G |  D C     BAB G |E G   D C A A G |F   E  DD       |    
+                      ^                B v   ^ v ^
+p<------<-------<-----f
+
+ /--------------------\
+         #        #                    b   #
+|DEFGA D C A E G |F D C     BAB G |E G B D C A A G |F   E  DD       |    
+                      ^                  v   ^ v ^
+p<------<-------<-----f
