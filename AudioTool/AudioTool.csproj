@@ -20,4 +20,8 @@
     <PackageReference Include="Terminal.Gui" Version="1.17.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MusicDataModel\MusicDataModel.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -38,8 +38,8 @@
                 endif
                 
                 ; PORTATO
-                aLeft_{Dyn}  = aLeft_{Dyn}_beginWave  * kBegEnv
-                aRight_{Dyn} = aRight_{Dyn}_beginWave * kBegEnv
+                aLeft_{Dyn}  = aLeft_{Dyn}_beginWave  * (kBegEnv * 1.5 + kAttack * 1.7)
+                aRight_{Dyn} = aRight_{Dyn}_beginWave * (kBegEnv * 1.5 + kAttack * 1.7)
                 aLeft_{Dyn}  = aLeft_{Dyn}  + aLeft_{Dyn}_endWave  * kEndEnv;
                 aRight_{Dyn} = aRight_{Dyn} + aRight_{Dyn}_endWave * kEndEnv;
                 ";

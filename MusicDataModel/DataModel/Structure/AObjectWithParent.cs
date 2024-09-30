@@ -28,9 +28,15 @@ namespace MusicDataModel.DataModel.Structure
         public void AppendChild(TChild child);
     }
 
+    public abstract class APartBar
+    {
+        public int BarNo;
+        public int PartNo;
+    }
+
     public abstract class AObjectWithChildren<TObject, TChild> : IParentOf<TChild>
         where TObject : IParentOf<TChild>
-        where TChild : IChildOf<TObject>
+        where TChild : APartBar, IChildOf<TObject>
     {
         public List<TChild> Children = new List<TChild>();
         public void AppendChild(TChild child)
@@ -41,7 +47,7 @@ namespace MusicDataModel.DataModel.Structure
         public abstract TObject ThisObj { get; }
     }
 
-    public abstract class AObjectWithParent<TParent, TObject> : IChildOf<TParent>
+    public abstract class AObjectWithParent<TParent, TObject> : APartBar, IChildOf<TParent>
         where TParent : new ()
     {
         public TParent Parent 
@@ -73,7 +79,7 @@ namespace MusicDataModel.DataModel.Structure
 
 
     public abstract class AObjectWithParentAndChildren<TParent, TObject, TChild> : AObjectWithParent<TParent, TObject>, IChildOf<TParent> 
-        where TChild : IChildOf<TObject>
+        where TChild : APartBar, IChildOf<TObject>
         where TParent : new()
     {
 
@@ -81,6 +87,8 @@ namespace MusicDataModel.DataModel.Structure
         public TObject ThisObject;
         public void AppendChild(TChild child)
         {
+            child.PartNo = this.PartNo;
+            child.BarNo = this.BarNo;
             Children.Add(child);
             child.SetParent(ThisObject);
         }

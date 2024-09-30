@@ -21,8 +21,8 @@ class Program
         var flatViola = new FlatSampleInstrument("VIOLA_01");
         var flatViolin = new FlatSampleInstrument("VIOLIN_01");
         //var layeredViola = new LayerSampleInstrument("VIOLA_01", InstrumentFileHelper.ViolaLayers);
-        var layeredViola = new TotalLayerSampleInstrument("VIOLA_01", InstrumentFileHelper.TotalViolaLayers);
         var layeredViolin = new TotalLayerSampleInstrument("VIOLIN_01", InstrumentFileHelper.TotalViolinLayers);
+        var layeredViola = new TotalLayerSampleInstrument("VIOLA_01", InstrumentFileHelper.TotalViolaLayers);
         var layeredCellos = new TotalLayerSampleInstrument("VIOLIN_01", InstrumentFileHelper.TotalVioloncelliLayers);
         var layeredBasses = new TotalLayerSampleInstrument("VIOLIN_01", InstrumentFileHelper.TotalContrabbassiLayers);
         CsEngine csEngine = new CsEngine([noise, reverb, flatViola, layeredViola, layeredViolin, layeredCellos, layeredBasses]);
@@ -58,7 +58,7 @@ class Program
             {
                 foreach (var p in pitches)
                 {
-                    layeredBasses.PlaySample(p.Item1, p.Item2+0.2, legato);
+                    layeredViolin.PlaySample(p.Item1, p.Item2+0.2, legato);
                     //layeredViola.PlaySeparatedNote(p + 7, 8);
                     //layeredViola.PlaySeparatedNote(p + 16, 8);
                     Thread.Sleep((int)(p.Item2 * 1000));

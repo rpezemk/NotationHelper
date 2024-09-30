@@ -41,7 +41,7 @@ namespace AudioTool.Total
 
             ;CONTROL ENVELOPES
             kTimeEnv linseg 0, iDuration, iDuration
-            
+            kAttack linseg 1, 0.2, 0
             kBegEnv linseg 0, 0.1, 1, iBegLen-0.2, .7, 0.1, 0
             kEndEnv linseg 0, 0.1, 0.9, iPreEnd, .9, iEndLen-0.2, 1, 0.1, 0
 
