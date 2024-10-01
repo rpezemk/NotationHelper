@@ -27,5 +27,6 @@ namespace MusicDataModel.DataModel.Piece
             Duration.Dotting = dotting;
             return this;
         }
+
     }
 }

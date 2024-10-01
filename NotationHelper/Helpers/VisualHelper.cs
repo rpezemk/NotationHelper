@@ -13,6 +13,8 @@ using MusicDataModel.DataModel.Elementary;
 using MusicDataModel.DataModel.Piece;
 using System.Windows.Media;
 using System.Windows;
+using MusicDataModel.MusicViews.MusicViews.MusicControls;
+using MusicDataModel.MusicViews.MusicControls;
 
 namespace MusicDataModel.Helpers
 {
@@ -56,19 +58,15 @@ namespace MusicDataModel.Helpers
             }
         }
 
-        public static SingleBar_VM CalculateMOffsets(this SingleBar_VM barVM)
+        public static SingleBar_VM CalculateXOffsets(this SingleBar_VM barVM, double totalVisualWidth)
         {
             double prevLen = 0;
-            foreach(var timeGroup in barVM.VoiceBar.Children)
+            foreach (var timeGroup in barVM.VoiceBar.Children)
             {
                 timeGroup.MOffset = prevLen;
                 prevLen += timeGroup.Duration.GetLen();
             }
-            return barVM;
-        }
 
-        public static SingleBar_VM CalculateXOffset(this SingleBar_VM barVM, double totalVisualWidth)
-        {
             var scaleUp = totalVisualWidth/barVM.GetLen();
             foreach(var timeGroup in barVM.VoiceBar.Children)
             {
@@ -77,7 +75,6 @@ namespace MusicDataModel.Helpers
 
             return barVM;
         }
-
 
         public static int NoteToVisualHeight(this TimeHolder th)
         {
@@ -121,18 +118,6 @@ namespace MusicDataModel.Helpers
         {
             var res = vis.Where(v => v.HitTest<T2>(point)).ToList();
             return res;
-        }
-
-        public static FormattedText GetMusicText(this string glyph, Brush brush)
-        {
-            FormattedText text = new FormattedText(
-            glyph,
-            System.Globalization.CultureInfo.InvariantCulture,
-            FlowDirection.LeftToRight,
-            new Typeface(FontHelper.BravuraFont, FontHelper.BravuraStyle, new FontWeight() { }, new FontStretch() { }),
-            25, // Font size
-            brush, 1);
-            return text;
         }
     }
 }

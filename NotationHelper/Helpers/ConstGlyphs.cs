@@ -15,16 +15,16 @@ namespace MusicDataModel.Helpers
     public static class ConstGlyphs
     {
 
-        public static string ToGlyph(this TimeHolder timeHolder)
+        public static string ToSMUFL(this TimeHolder timeHolder)
         {
             if (timeHolder is Note note)
-                return note.ToGlyph();
+                return note.ToSMUFL();
             if (timeHolder is Rest rest)
-                return rest.ToGlyph();
+                return rest.ToSMUFL();
             else return "X";
         }
 
-        public static string ToGlyph(this Note note)
+        public static string ToSMUFL(this Note note)
         {
             var sdf = note.Duration.BaseDuration switch
             {
@@ -42,7 +42,7 @@ namespace MusicDataModel.Helpers
             return sdf;
         }
 
-        public static string ToGlyph(this Rest rest)
+        public static string ToSMUFL(this Rest rest)
         {
             var sdf = rest.Duration.BaseDuration switch
             {

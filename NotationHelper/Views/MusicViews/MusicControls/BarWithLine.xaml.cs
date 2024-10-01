@@ -34,40 +34,11 @@ namespace MusicDataModel.MusicViews.MusicControls
             if (sum == 0 || DataContext is not SingleBar_VM vm)
                 return;
 
-            vm.CalculateMOffsets().CalculateXOffset(GridContainer.ActualWidth);
+            vm.CalculateXOffsets(GridContainer.ActualWidth);
             foreach (var timeHolder in vm.VoiceBar.Children)
             {
-                DrawTimeGroup(this, MyVisualHost, timeHolder, Scale);
+                MyVisualHost.DrawTimeGroup(timeHolder, Scale);
             }
-        }
-
-        public static void DrawTimeGroup(UserControl control, DrawingVisualHost host, TimeHolder timeGroup, double scale)
-        {
-            DrawGlyph(host, timeGroup, Brushes.LightGray, scale);
-        }
-
-        public static TimeHolderDrawing DrawGlyph(DrawingVisualHost host, TimeHolder timeHolder, Brush brush, double scale)
-        {
-            var xOffset = timeHolder.XOffset + (timeHolder is Note ? 0: 3);
-            var visHeignt = timeHolder.NoteToVisualHeight() - 3;
-            var glyph = timeHolder.ToGlyph();
-            var yOffset = 
-                timeHolder is Note? timeHolder.YOffset - visHeignt * scale
-                : timeHolder is Rest? -13 
-                : 0;
-            var textVisual = DrawNormal(host, glyph, xOffset, yOffset, brush, timeHolder);
-            return textVisual;
-        }
-
-        public static TimeHolderDrawing DrawNormal(DrawingVisualHost host, string str, double xOffset, double yOffset, Brush brush, TimeHolder timeHolder)
-        {
-            TimeHolderDrawing textVisual = new TimeHolderDrawing(timeHolder);
-            DrawingContext dc = textVisual.RenderOpen();
-            FormattedText musicTxt = str.GetMusicText(brush);
-            dc.DrawText(musicTxt, new Point(xOffset, yOffset - 29));
-            dc.Close();
-            host.AddVisual(textVisual);
-            return textVisual;
         }
 
         public bool noteWasClicked;
@@ -103,14 +74,14 @@ namespace MusicDataModel.MusicViews.MusicControls
         {
             MyVisualHost.RemoveVisual(nd);
             nd.TimeHolder.IsSelected = true;
-            DrawGlyph(MyVisualHost, nd.TimeHolder, Brushes.Red, Scale);
+            MyVisualHost.DrawGlyph(nd.TimeHolder, Brushes.Red, Scale);
         }
 
         public void RedrawUnselected(TimeHolderDrawing nd)
         {
             MyVisualHost.RemoveVisual(nd);
             nd.TimeHolder.IsSelected = false;
-            DrawGlyph(MyVisualHost, nd.TimeHolder, Brushes.LightGray, Scale);
+            MyVisualHost.DrawGlyph(nd.TimeHolder, Brushes.LightGray, Scale);
         }
 
         private void DrawingCanvas_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
