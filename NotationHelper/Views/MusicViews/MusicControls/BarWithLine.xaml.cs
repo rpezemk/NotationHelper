@@ -43,10 +43,10 @@ namespace MusicDataModel.MusicViews.MusicControls
 
         public static void DrawTimeGroup(UserControl control, DrawingVisualHost host, TimeHolder timeGroup, double scale)
         {
-            DrawGlyph(control, host, timeGroup, Brushes.LightGray, scale);
+            DrawGlyph(host, timeGroup, Brushes.LightGray, scale);
         }
 
-        public static TimeHolderDrawing DrawGlyph(UserControl control, DrawingVisualHost host, TimeHolder timeHolder, Brush brush, double scale)
+        public static TimeHolderDrawing DrawGlyph(DrawingVisualHost host, TimeHolder timeHolder, Brush brush, double scale)
         {
             var xOffset = timeHolder.XOffset + (timeHolder is Note ? 0: 3);
             var visHeignt = timeHolder.NoteToVisualHeight() - 3;
@@ -103,14 +103,14 @@ namespace MusicDataModel.MusicViews.MusicControls
         {
             MyVisualHost.RemoveVisual(nd);
             nd.TimeHolder.IsSelected = true;
-            DrawGlyph(this, MyVisualHost, nd.TimeHolder, Brushes.Red, Scale);
+            DrawGlyph(MyVisualHost, nd.TimeHolder, Brushes.Red, Scale);
         }
 
         public void RedrawUnselected(TimeHolderDrawing nd)
         {
             MyVisualHost.RemoveVisual(nd);
             nd.TimeHolder.IsSelected = false;
-            DrawGlyph(this, MyVisualHost, nd.TimeHolder, Brushes.LightGray, Scale);
+            DrawGlyph(MyVisualHost, nd.TimeHolder, Brushes.LightGray, Scale);
         }
 
         private void DrawingCanvas_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

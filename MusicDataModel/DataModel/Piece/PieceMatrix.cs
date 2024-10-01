@@ -1,5 +1,4 @@
-﻿using MusicDataModel.DataModel.Elementary;
-using MusicDataModel.DataModel.Structure;
+﻿using MusicDataModel.DataModel.Structure;
 using MusicDataModel.Helpers;
 
 namespace MusicDataModel.DataModel.Piece
@@ -7,9 +6,9 @@ namespace MusicDataModel.DataModel.Piece
     public class PieceMatrix : AObjectWithChildren<PieceMatrix, MonoPart>
     {
         public override PieceMatrix ThisObj => this;
-        public PieceMatrix() 
+        public PieceMatrix()
         {
-            
+
         }
 
         public PieceMatrix(int partCount, int barCount)
@@ -20,18 +19,37 @@ namespace MusicDataModel.DataModel.Piece
                 var part = new MonoPart() { PartNo = partNo };
                 for (int barNo = 0; barNo < barCount; barNo++)
                 {
-                    var test = random.Next(0, 2) == 0 ? false : true;
-                    TimeHolder randomHolder = (test? Rest.Emit().Eight(): Note.F().Sharp().Eight()).AsTimeGroup();
-                    var bar = new VoiceBar() { };
-                    bar.AppendChild(Note.C().Sharp().Eight().AsTimeGroup());
-                    bar.AppendChild(Note.D().Flat().Sixteen().AsTimeGroup());
-                    bar.AppendChild(Note.E().Sharp().Sixteen().AsTimeGroup());
-                    bar.AppendChild(randomHolder);
-                    bar.AppendChild(Note.G().Flat().Sixteen().AsTimeGroup());
-                    bar.AppendChild(Note.A().Flat().Sixteen().AsTimeGroup());
-                    bar.AppendChild(Note.B().Flat().Quarter().AsTimeGroup());
-                    bar.AppendChild(Note.C().UpOct().Flat().Quarter().AsTimeGroup());
-                    part.Children.Add(bar);
+                    var barrOdd = barNo % 2 == 0;
+                    if (barrOdd)
+                    {
+                        var test = random.Next(0, 2) == 0 ? false : true;
+                        TimeHolder randomHolder = (test ? Rest.Emit().Eight() : Note.F().Sharp().Eight()).AsTimeGroup();
+                        var bar = new VoiceBar() { };
+                        bar.AppendChild(Note.C().Sharp().Eight().AsTimeGroup());
+                        bar.AppendChild(Note.D().Flat().Sixteen().AsTimeGroup());
+                        bar.AppendChild(Note.E().Sharp().Sixteen().AsTimeGroup());
+                        bar.AppendChild(randomHolder);
+                        bar.AppendChild(Note.G().Flat().Sixteen().AsTimeGroup());
+                        bar.AppendChild(Note.A().Flat().Sixteen().AsTimeGroup());
+                        bar.AppendChild(Note.B().Flat().Quarter().AsTimeGroup());
+                        bar.AppendChild(Note.C().UpOct().Flat().Quarter().AsTimeGroup());
+                        part.Children.Add(bar);
+                    }
+                    else
+                    {
+                        var test = random.Next(0, 2) == 0 ? false : true;
+                        TimeHolder randomHolder = (test ? Rest.Emit().Eight() : Note.F().Sharp().Eight()).AsTimeGroup();
+                        var bar = new VoiceBar() { };
+                        bar.AppendChild(Note.C().UpOct().Flat().Quarter().AsTimeGroup());
+                        bar.AppendChild(Note.B().Flat().Quarter().AsTimeGroup());
+                        bar.AppendChild(Note.A().Flat().Sixteen().AsTimeGroup());
+                        bar.AppendChild(Note.G().Flat().Sixteen().AsTimeGroup());
+                        bar.AppendChild(Note.E().Sharp().Sixteen().AsTimeGroup());
+                        bar.AppendChild(Note.D().Flat().Sixteen().AsTimeGroup());
+                        bar.AppendChild(randomHolder);
+                        bar.AppendChild(Note.C().Sharp().Eight().AsTimeGroup());
+                        part.Children.Add(bar);
+                    }
                 }
                 Parts.Add(part);
             }

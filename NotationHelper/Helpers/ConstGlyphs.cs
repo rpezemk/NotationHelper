@@ -75,14 +75,16 @@ namespace MusicDataModel.Helpers
         public const string Notehead_X = "\uE0A7";
 
         // Rests
-        public const string Rest_DoubleWhole = "\uE4E3";
-        public const string Rest_Whole = "\uE4E4";
-        public const string Rest_Half = "\uE4E5";
-        public const string Rest_Quarter = "\uE4E6";
-        public const string Rest_Eighth = "\uE4E7";
-        public const string Rest_Sixteenth = "\uE4E8";
+        public const string Rest_Maxima = "\uE4E0";//8 times whole
+        public const string Rest_Longa = "\uE4E1";//4 times whole
+        public const string Rest_DoubleWhole = "\uE4E2";//2 times whole
+        public const string Rest_Whole = "\uE4E3";
+        public const string Rest_Half = "\uE4E4";
+        public const string Rest_Quarter = "\uE4E5";
+        public const string Rest_Eighth = "\uE4E6";
+        public const string Rest_Sixteenth = "\uE4E7";
         public const string Rest_ThirtyTwo = "\uE4E8";
-        public const string Rest_SixtyFour = "\uE4E8";
+        public const string Rest_SixtyFour = "\uE4E9";
         // Accidentals
         public const string Accidental_Natural = "\uE260";
         public const string Accidental_Flat = "\uE261";
@@ -201,7 +203,7 @@ namespace MusicDataModel.Helpers
         public const string Fingering_3 = "\uE552";
         public const string Fingering_4 = "\uE553";
         public const string Fingering_5 = "\uE554";
-
+        
         // Brackets
         public const string StartSquareBracket = "\uE004";
         public const string EndSquareBracket = "\uE005";
