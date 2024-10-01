@@ -1,5 +1,4 @@
 ﻿using MusicDataModel.MVVM.MusicVM;
-using NotationHelper.MVC;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,7 +9,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -41,15 +39,5 @@ namespace MusicDataModel.MusicViews.MainViews
         public static readonly DependencyProperty MyPropertyProperty =
             DependencyProperty.Register("HorizontalParts", typeof(ObservableCollection<HContent_VM>), typeof(MusicPage), new PropertyMetadata(default));
 
-        private void Grid_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape)
-                SelectedBarsCollection.UnSelectAll();
-        }
-
-        private void Grid_KeyUp(object sender, KeyEventArgs e)
-        {
-
-        }
     }
 }

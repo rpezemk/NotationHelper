@@ -31,7 +31,7 @@ namespace MusicDataModel
         private void MainWindowControl_Loaded(object sender, RoutedEventArgs e)
         {
             lockLayout = false;
-        } 
+        }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
@@ -61,7 +61,7 @@ namespace MusicDataModel
                 this.WindowState = WindowState.Maximized;
         }
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e) 
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
@@ -98,12 +98,6 @@ namespace MusicDataModel
             MyMulticolumnView.RecalculateLayout();
         }
 
-        private void MainWindowControl_LocationChanged(object sender, EventArgs e)
-        {
-            if (lockLayout)
-                return;
-            MyMulticolumnView.RecalculateLayout();
-        }
 
         private void MainWindowControl_StateChanged(object sender, EventArgs e)
         {
@@ -112,14 +106,11 @@ namespace MusicDataModel
             MyMulticolumnView.RecalculateLayout();
         }
 
+
         private void MainWindowControl_SizeChanged_1(object sender, SizeChangedEventArgs e)
         {
 
         }
 
-        private void MainWindowControl_KeyDown(object sender, KeyEventArgs e)
-        {
-            ViewRouting.AnyEvent(sender, e);
-        }
     }
 }

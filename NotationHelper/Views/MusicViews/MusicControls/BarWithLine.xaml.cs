@@ -2,7 +2,6 @@
 using MusicDataModel.Helpers;
 using MusicDataModel.MusicViews.MusicViews.MusicControls;
 using MusicDataModel.MVVM;
-using NotationHelper.MVC;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -48,13 +47,6 @@ namespace MusicDataModel.MusicViews.MusicControls
             Task.Run(() => { Thread.Sleep(50); noteWasClicked = false; });
         }
 
-        private void MyVisualHost_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            MarkForAMoment();
-            ViewRouting.BarWithLineMouseDown(this, e);
-        }
-
-
 
         public List<TimeHolderDrawing> GetTimeHolders()
         {
@@ -70,16 +62,5 @@ namespace MusicDataModel.MusicViews.MusicControls
             return visuals;
         }
 
-
-
-        private void DrawingCanvas_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if (noteWasClicked == true)
-                return;
-            GetTimeHolders().ForEach(th => th.Redraw(true, Scale));
-            if (!RoutingCommands.SelectMeasures.IsCurrentAction())
-                SelectedBarsCollection.UnSelectExceptOf(this);
-            SelectedBarsCollection.Add(this);
-        }
     }
 }

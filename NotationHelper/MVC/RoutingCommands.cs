@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
+using System.Windows;
 using System.Windows.Input;
+using NotationHelper.MVC.Basics;
 
 namespace NotationHelper.MVC
 {
@@ -7,102 +9,73 @@ namespace NotationHelper.MVC
     {
         public static List<Key> AllKeys = Enum.GetValues<Key>().ToList();
 
-        public static MergedKey Escape = new MergedKey() { Keys = [Key.Escape] };
-        public static MergedKey Shift = new MergedKey() { Keys = [Key.LeftShift, Key.RightShift] };
-        public static MergedKey Ctrl = new MergedKey() { Keys = [Key.LeftCtrl, Key.RightCtrl] };
-        public static MergedKey Alt = new MergedKey() { Keys = [Key.LeftAlt, Key.RightAlt] };
-        public static MergedKey AKey = new MergedKey() { Keys = [Key.A] };
+        public static MergedKey Escape = new MergedKey(Key.Escape);
+        public static MergedKey Shift = new MergedKey(Key.LeftShift, Key.RightShift);
+        public static MergedKey Ctrl = new MergedKey(Key.LeftCtrl, Key.RightCtrl);
+        public static MergedKey Alt = new MergedKey(Key.LeftAlt, Key.RightAlt);
+        public static MergedKey AKey = new MergedKey(Key.A);
 
         #region KEYBOARD ACTIONS
-        public static AKbdAction EscAction => new KbdAction() 
-        { 
-            ActionName = "", 
-            KeysGroups = [Escape,]
-        }
-        .AppendAction(() => SelectedBarsCollection.UnSelectAll());
-        public static AKbdAction SelectAllAction => new KbdAction() 
-        {
-            ActionName = "",
-            KeysGroups = [Ctrl, AKey]
-        };
+        public static InputCommand EscAction => new InputCommand("ESC", Escape).AppendAction(() => SelectedBarsCollection.UnSelectAll());
+        public static InputCommand SelectAllAction => new InputCommand("SELECT_ALL", Ctrl, AKey).AppendAction(() => MessageBox.Show("SELECT_ALL"));
         #endregion
 
 
         #region KEYBOARD MODES
-        public static AKbdAction SelectSpecific => new KbdAction() 
-        {
-            ActionName = "",
-            KeysGroups = [Shift]
-        };
-        public static AKbdAction SelectMeasures => new KbdAction() 
-        { 
-            ActionName = "",
-            KeysGroups = [Ctrl]
-        };
-        public static AKbdAction SelectBarColumn => new KbdAction() 
-        {
-            ActionName = "",
-            KeysGroups = [Ctrl, Shift]
-        };
-        public static AKbdAction SelectVisibleLine => new KbdAction() 
-        {
-            ActionName = "",
-            KeysGroups = [Ctrl, Alt]
-        };
+        public static InputMode SelectSpecific => new InputMode("INDIVIDUAL", Ctrl);
+        public static InputMode SelectMeasures => new InputMode("RANGE", Shift);
+        public static InputMode SelectBarColumn => new InputMode("BAR_COLUMN", Ctrl, Shift);
+        public static InputMode SelectVisibleLine => new InputMode("VISIBLE_LINE", Alt);
 
         #endregion
 
-        private static List<KbdAction> allKbdModes;
-        public static List<KbdAction> AllKbdModes
+        private static List<InputCommand> allKbdCommands;
+        public static List<InputCommand> AllKbdCommands
         {
             get
             {
-                if (allKbdModes != null)
+                if (allKbdCommands != null)
+                    return allKbdCommands;
+
+                var kbdModes = typeof(RoutingCommands)
+                    .GetProperties(BindingFlags.Public | BindingFlags.Static)
+                    .Where(prop => prop.PropertyType.IsAssignableTo(typeof(InputCommand)))
+                    .Select(prop => prop.GetValue(null))
+                    .Where(v => v is InputCommand)
+                    .Select(v => v as InputCommand).ToList();
+
+                allKbdCommands = kbdModes;
+                return allKbdCommands;
+            }
+        }
+
+        private static List<InputMode> allKbdModes;
+        public static List<InputMode> AllKbdModes
+        {
+            get
+            {
+                if (allKbdCommands != null)
                     return allKbdModes;
 
                 var kbdModes = typeof(RoutingCommands)
                     .GetProperties(BindingFlags.Public | BindingFlags.Static)
-                    .Where(prop => prop.PropertyType.IsAssignableTo(typeof(KbdAction)))
+                    .Where(prop => prop.PropertyType.IsAssignableTo(typeof(InputMode)))
                     .Select(prop => prop.GetValue(null))
-                    .Where(v => v is KbdAction)
-                    .Select(v => v as KbdAction).ToList();
+                    .Where(v => v is InputMode)
+                    .Select(v => v as InputMode).ToList();
 
                 allKbdModes = kbdModes;
                 return allKbdModes;
             }
         }
-
         public static List<Key> GetAllPressedKeys() => AllKeys.Skip(1).Where(k => Keyboard.IsKeyDown(k)).ToList();
-        public static KbdAction? GetCurrMode()
-        {
-            var pressed = GetAllPressedKeys();
-            var maybeMode = AllKbdModes.FirstOrDefault(mode => mode.IsCurrentAction());
-            return maybeMode;
-        }
+
+
+        public static void ReportInput() { }
+        public static void ReportInput<T>(T argT) { }
+        public static void ReportInput<T1, T2>(T1 argT1,T2 argT2 ) { }
     }
 
-    /// <summary>
-    /// Class for mergin 'same' keys (in ex. right & left shift/control), also single keys....
-    /// </summary>
-    public abstract class AMergedKey
-    {
-        public List<Key> Keys = new List<Key>();
-        public AMergedKey(params Key[] keys)
-        {
-            Keys.AddRange(keys);
-        }
-        public abstract bool Match(Key key);
-    }
 
-    public class MouseInput : AMergedKey
-    {
-        public override bool Match(Key key)
-        {
-            throw new NotImplementedException();
-        }
-    }
-    public class MergedKey : AMergedKey
-    {
-        public override bool Match(Key key) => Keys.Any(k => Keyboard.IsKeyDown(k));
-    }
+
 }
