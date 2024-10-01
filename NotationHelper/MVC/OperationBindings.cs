@@ -48,15 +48,11 @@ namespace NotationHelper.MVC
         {
             if (RoutingCommands.SelectMeasures.IsCurrentAction() == false)
             {
+                BarsWithSelectedNotes.Where(b => b != barWithLine)
+                    .ForEach(a => a.GetTimeHolders()
+                                    .Where(th => th.TimeHolder.IsSelected)
+                                    .ForEach(th => a.RedrawUnselected(th)));
 
-                foreach (var barControl in BarsWithSelectedNotes.Where(b => b != barWithLine))
-                {
-                    var holders = barControl.GetTimeHolders();
-                    foreach (var th in holders.Where(th => th.TimeHolder.IsSelected))
-                    {
-                        barControl.RedrawUnselected(th);
-                    }
-                }
                 BarsWithSelectedNotes.Clear();
             }
             BarsWithSelectedNotes.Add(barWithLine);
@@ -97,7 +93,8 @@ namespace NotationHelper.MVC
             nowClicked.Where(nc => !prevSelected.Contains(nc)).ToList().ForEach(v => barWithLine.RedrawSelected(v));
             UnSelectOtherBars(barWithLine);
         }
-        public static FormattedText GetFormattedText(UserControl userControl, string glyph, Brush brush)
+
+        public static FormattedText GetFormattedText(string glyph, Brush brush)
         {
             FormattedText text = new FormattedText(
             glyph,
@@ -105,8 +102,7 @@ namespace NotationHelper.MVC
             FlowDirection.LeftToRight,
             new Typeface(FontHelper.BravuraFont, FontHelper.BravuraStyle, new FontWeight() { }, new FontStretch() { }),
             25, // Font size
-            brush,
-            VisualTreeHelper.GetDpi(userControl).PixelsPerDip);
+            brush, 1);
             return text;
         }
     }

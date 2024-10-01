@@ -69,5 +69,12 @@ namespace MusicDataModel.Helpers
             }
             resGroups.Add(lastGroup);
         }
+
+        public static void ForEach<T>(this IEnumerable<T> values, Action<T> actionT)
+        {
+            if (actionT == null)
+                return;
+            foreach(var v in values) { actionT(v); }
+        }
     }
 }

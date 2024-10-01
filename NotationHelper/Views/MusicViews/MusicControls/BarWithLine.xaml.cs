@@ -55,15 +55,15 @@ namespace MusicDataModel.MusicViews.MusicControls
                 timeHolder is Note? timeHolder.YOffset - visHeignt * scale
                 : timeHolder is Rest? -13 
                 : 0;
-            var textVisual = DrawNormal(control, host, glyph, xOffset, yOffset, brush, timeHolder);
+            var textVisual = DrawNormal(host, glyph, xOffset, yOffset, brush, timeHolder);
             return textVisual;
         }
 
-        public static TimeHolderDrawing DrawNormal(UserControl control, DrawingVisualHost host, string glyph, double xOffset, double yOffset, Brush brush, TimeHolder timeHolder)
+        public static TimeHolderDrawing DrawNormal(DrawingVisualHost host, string glyph, double xOffset, double yOffset, Brush brush, TimeHolder timeHolder)
         {
             TimeHolderDrawing textVisual = new TimeHolderDrawing(timeHolder);
             DrawingContext dc = textVisual.RenderOpen();
-            FormattedText text = OperationBindings.GetFormattedText(control, glyph, brush);
+            FormattedText text = OperationBindings.GetFormattedText(glyph, brush);
             dc.DrawText(text, new Point(xOffset, yOffset - 29));
             dc.Close();
             host.AddVisual(textVisual);
