@@ -38,7 +38,7 @@ namespace NotationHelper.MVC
                 .AppendAction<MainWindow, KeyEventArgs>(
                 (win, kArgs) => 
                 {
-                    OperationBindings.UnSelectAll();
+                    ViewRouting.UnSelectAll();
                 }
                 );
 

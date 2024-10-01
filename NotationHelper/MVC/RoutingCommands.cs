@@ -19,7 +19,7 @@ namespace NotationHelper.MVC
             ActionName = "", 
             KeysGroups = [Escape,]
         }
-        .AppendAction(() => OperationBindings.UnSelectAll());
+        .AppendAction(() => ViewRouting.UnSelectAll());
         public static AKbdAction SelectAllAction => new KbdAction() 
         {
             ActionName = "",

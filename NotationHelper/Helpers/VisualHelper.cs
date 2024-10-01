@@ -11,6 +11,8 @@ using MusicDataModel.MVVM;
 using System.Runtime.CompilerServices;
 using MusicDataModel.DataModel.Elementary;
 using MusicDataModel.DataModel.Piece;
+using System.Windows.Media;
+using System.Windows;
 
 namespace MusicDataModel.Helpers
 {
@@ -104,6 +106,27 @@ namespace MusicDataModel.Helpers
                 NoteName.B => 6,
             };
             return res;
+        }
+
+        public static bool HitTest<T>(this Visual vis, Point point) where T : class
+        {
+            var hitTest = VisualTreeHelper.HitTest(vis, point);
+            if(hitTest == null || hitTest.VisualHit == null) 
+                return false;
+            var res = hitTest.VisualHit is T;
+            return res;
+        }
+
+        public static FormattedText GetMusicText(this string glyph, Brush brush)
+        {
+            FormattedText text = new FormattedText(
+            glyph,
+            System.Globalization.CultureInfo.InvariantCulture,
+            FlowDirection.LeftToRight,
+            new Typeface(FontHelper.BravuraFont, FontHelper.BravuraStyle, new FontWeight() { }, new FontStretch() { }),
+            25, // Font size
+            brush, 1);
+            return text;
         }
     }
 }

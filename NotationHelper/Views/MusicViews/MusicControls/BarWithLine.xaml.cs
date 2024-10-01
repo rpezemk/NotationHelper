@@ -59,12 +59,12 @@ namespace MusicDataModel.MusicViews.MusicControls
             return textVisual;
         }
 
-        public static TimeHolderDrawing DrawNormal(DrawingVisualHost host, string glyph, double xOffset, double yOffset, Brush brush, TimeHolder timeHolder)
+        public static TimeHolderDrawing DrawNormal(DrawingVisualHost host, string str, double xOffset, double yOffset, Brush brush, TimeHolder timeHolder)
         {
             TimeHolderDrawing textVisual = new TimeHolderDrawing(timeHolder);
             DrawingContext dc = textVisual.RenderOpen();
-            FormattedText text = OperationBindings.GetFormattedText(glyph, brush);
-            dc.DrawText(text, new Point(xOffset, yOffset - 29));
+            FormattedText musicTxt = str.GetMusicText(brush);
+            dc.DrawText(musicTxt, new Point(xOffset, yOffset - 29));
             dc.Close();
             host.AddVisual(textVisual);
             return textVisual;
@@ -80,7 +80,7 @@ namespace MusicDataModel.MusicViews.MusicControls
         private void MyVisualHost_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             MarkForAMoment();
-            OperationBindings.BarWithLineMouseDown(this, e);
+            ViewRouting.BarWithLineMouseDown(this, e);
         }
 
 
@@ -122,7 +122,7 @@ namespace MusicDataModel.MusicViews.MusicControls
                 RedrawSelected(th);
             }
 
-            OperationBindings.UnSelectOtherBars(this);
+            ViewRouting.UnSelectOtherBars(this);
         }
     }
 }

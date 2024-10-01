@@ -9,7 +9,7 @@ using System.Windows.Media;
 namespace NotationHelper.MVC
 {
 
-    public static class OperationBindings
+    public static class ViewRouting
     {
         public static List<TimeHolder> SelectedTimeHolders = new List<TimeHolder>();
         public static List<BarWithLine> BarsWithSelectedNotes = new List<BarWithLine>();
@@ -17,16 +17,11 @@ namespace NotationHelper.MVC
 
         public static void AnyEvent(params object[] objects)
         {
-            var action = AllRoutings.Instance.AllActions.Where(a => a.CanAccept(objects));
-            if(action.Any())
-            {
-                foreach(var a in action)
-                {
-                    a.RunAction(objects);
-                }
-                return;
-            }
-
+            AllRoutings.Instance
+                .AllActions
+                .Where(a => a.CanAccept(objects))
+                .ForEach(a => a.RunAction(objects));
+            
             var mode = RoutingCommands.GetCurrMode();
             if (mode == null)
                 return;
@@ -46,7 +41,7 @@ namespace NotationHelper.MVC
 
         public static void UnSelectOtherBars(BarWithLine barWithLine)
         {
-            if (RoutingCommands.SelectMeasures.IsCurrentAction() == false)
+            if (!RoutingCommands.SelectMeasures.IsCurrentAction())
             {
                 BarsWithSelectedNotes.Where(b => b != barWithLine)
                     .ForEach(a => a.GetTimeHolders()
@@ -71,39 +66,18 @@ namespace NotationHelper.MVC
             BarsWithSelectedNotes.Clear();
         }
 
-        public static void SelectAllRange()
-        {
-            if (IsControlPressed() == false)
-                return;
-        }
-
         public static void BarWithLineMouseDown(BarWithLine barWithLine, MouseButtonEventArgs e)
         {
             List<TimeHolderDrawing> visuals = barWithLine.GetTimeHolders();
-            Point mousePosition2 = e.GetPosition(barWithLine.MyVisualHost);
-            var nowClicked = visuals.Where(v => v is TimeHolderDrawing)
-                .Select(vis => (vis, VisualTreeHelper.HitTest(vis, mousePosition2)))
-                .Where(res => res.Item2 != null && res.Item2.VisualHit is DrawingVisual)
-                .Select(t => t.vis).ToList();
+            Point mousePos = e.GetPosition(barWithLine.MyVisualHost);
+            var nowClicked = visuals.Where(vis => vis.HitTest<DrawingVisual>(mousePos)).ToList();
+            var prevSelected = visuals.Where(v => v.TimeHolder.IsSelected).ToList();
 
-            var prevSelected = visuals.Select(v => v).Where(v => v is not null)
-                .Where(v => v.TimeHolder.IsSelected).ToList();
             if (!RoutingCommands.SelectMeasures.IsCurrentAction())
-                prevSelected.Where(ps => !nowClicked.Contains(ps)).ToList().ForEach(v => barWithLine.RedrawUnselected(v));
-            nowClicked.Where(nc => !prevSelected.Contains(nc)).ToList().ForEach(v => barWithLine.RedrawSelected(v));
-            UnSelectOtherBars(barWithLine);
-        }
+                prevSelected.ButNotIn(nowClicked).ForEach(v => barWithLine.RedrawUnselected(v));
 
-        public static FormattedText GetFormattedText(string glyph, Brush brush)
-        {
-            FormattedText text = new FormattedText(
-            glyph,
-            System.Globalization.CultureInfo.InvariantCulture,
-            FlowDirection.LeftToRight,
-            new Typeface(FontHelper.BravuraFont, FontHelper.BravuraStyle, new FontWeight() { }, new FontStretch() { }),
-            25, // Font size
-            brush, 1);
-            return text;
+            nowClicked.ButNotIn(prevSelected).ToList().ForEach(v => barWithLine.RedrawSelected(v));
+            UnSelectOtherBars(barWithLine);
         }
     }
 

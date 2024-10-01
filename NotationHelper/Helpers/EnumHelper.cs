@@ -76,5 +76,20 @@ namespace MusicDataModel.Helpers
                 return;
             foreach(var v in values) { actionT(v); }
         }
+
+        public static T? Is<T>(object o) where T : class
+        {
+            if (o == null)
+                return null;
+            if(o.GetType() == typeof(T))
+                return (T)o;
+            return null;
+        }
+
+        public static List<T> ButNotIn<T>(this List<T> firstSet, List<T> secondSet)
+        {
+            var res = firstSet.Where(ps => !secondSet.Contains(ps)).ToList();
+            return res;
+        }
     }
 }

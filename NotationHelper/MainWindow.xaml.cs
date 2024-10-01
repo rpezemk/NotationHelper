@@ -119,7 +119,7 @@ namespace MusicDataModel
 
         private void MainWindowControl_KeyDown(object sender, KeyEventArgs e)
         {
-            OperationBindings.AnyEvent(sender, e);
+            ViewRouting.AnyEvent(sender, e);
         }
     }
 }

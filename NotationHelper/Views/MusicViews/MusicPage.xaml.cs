@@ -44,7 +44,7 @@ namespace MusicDataModel.MusicViews.MainViews
         private void Grid_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
-                OperationBindings.UnSelectAll();
+                ViewRouting.UnSelectAll();
         }
 
         private void Grid_KeyUp(object sender, KeyEventArgs e)
