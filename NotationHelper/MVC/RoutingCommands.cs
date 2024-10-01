@@ -22,9 +22,9 @@ namespace NotationHelper.MVC
 
 
         #region KEYBOARD MODES
-        public static InputMode SelectSpecific => new InputMode("INDIVIDUAL", Ctrl);
-        public static InputMode SelectMeasures => new InputMode("RANGE", Shift);
-        public static InputMode SelectBarColumn => new InputMode("BAR_COLUMN", Ctrl, Shift);
+        public static InputMode SelectSpecific => new InputMode("INDIVIDUAL_SELECTION", Ctrl);
+        public static InputMode SelectMeasures => new InputMode("RANGE_SELECTION", Shift);
+        public static InputMode SelectBarColumn => new InputMode("BAR_COLUMN_SELECTION", Ctrl, Shift);
         public static InputMode SelectVisibleLine => new InputMode("VISIBLE_LINE", Alt);
 
         #endregion
