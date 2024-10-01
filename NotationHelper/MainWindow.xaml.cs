@@ -119,8 +119,7 @@ namespace MusicDataModel
 
         private void MainWindowControl_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
-                OperationBindings.UnSelectAll();
+            OperationBindings.AnyEvent(sender, e);
         }
     }
 }

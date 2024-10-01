@@ -101,7 +101,7 @@ namespace MusicDataModel.MusicViews.MusicControls
 
             var prevSelected = visuals.Select(v => v).Where(v => v is not null)
                 .Where(v => v.TimeHolder.IsSelected).ToList();
-            if(!ModeHelper.SelectMeasures.IsCurrentMode())
+            if(!RoutingCommands.SelectMeasures.IsCurrentMode())
                 prevSelected.Where(ps => !nowClicked.Contains(ps)).ToList().ForEach(v => RedrawUnselected(v));
             nowClicked.Where(nc => !prevSelected.Contains(nc)).ToList().ForEach(v => RedrawSelected(v));
             OperationBindings.UnSelectOtherBars(this);

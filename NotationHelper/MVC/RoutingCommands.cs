@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace NotationHelper.MVC
 {
-    public static class ModeHelper
+    public static class RoutingCommands
     {
         public static List<Key> AllKeys = Enum.GetValues<Key>().ToList();
 
@@ -11,17 +11,21 @@ namespace NotationHelper.MVC
         public static MergedKeys Shift = new MergedKeys(Key.LeftShift, Key.RightShift);
         public static MergedKeys Ctrl = new MergedKeys(Key.LeftCtrl, Key.RightCtrl);
         public static MergedKeys Alt = new MergedKeys(Key.LeftAlt, Key.RightAlt);
+        public static MergedKeys AKey = new MergedKeys(Key.A);
 
-        #region MODES
-        public static KbdMode EscMode => new KbdMode("ESC", Escape);
-        public static KbdMode SelectSpecific => new KbdMode("INDIVIDUAL", Ctrl);
-        public static KbdMode SelectMeasures => new KbdMode("RANGE", Shift);
-        public static KbdMode SelectBarColumn => new KbdMode("BAR_COLUMN", Ctrl, Shift);
-        public static KbdMode SelectVisibleLine => new KbdMode("VISIBLE_LINE", Alt);
-
+        #region KEYBOARD ACTIONS
+        public static AKbdAction EscAction => new KbdAction("ESC", Escape).AppendAction(() => OperationBindings.UnSelectAll());
+        public static AKbdAction SelectAllAction => new KbdAction("ESC", Ctrl, AKey);
         #endregion
 
 
+        #region KEYBOARD MODES
+        public static AKbdMode SelectSpecific => new KbdMode("INDIVIDUAL", Ctrl);
+        public static AKbdMode SelectMeasures => new KbdMode("RANGE", Shift);
+        public static AKbdMode SelectBarColumn => new KbdMode("BAR_COLUMN", Ctrl, Shift);
+        public static AKbdMode SelectVisibleLine => new KbdMode("VISIBLE_LINE", Alt);
+
+        #endregion
 
         private static List<KbdMode> allKbdModes;
         public static List<KbdMode> AllKbdModes
@@ -31,7 +35,7 @@ namespace NotationHelper.MVC
                 if (allKbdModes != null)
                     return allKbdModes;
 
-                var kbdModes = typeof(ModeHelper)
+                var kbdModes = typeof(RoutingCommands)
                     .GetProperties(BindingFlags.Public | BindingFlags.Static)
                     .Where(prop => prop.PropertyType.IsAssignableTo(typeof(KbdMode)))
                     .Select(prop => prop.GetValue(null))

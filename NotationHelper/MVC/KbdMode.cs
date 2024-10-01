@@ -14,7 +14,7 @@ namespace NotationHelper.MVC
 
         public bool IsCurrentMode()
         {
-            var keys = ModeHelper.GetAllPressedKeys();
+            var keys = RoutingCommands.GetAllPressedKeys();
             if (keys.Count == 0) return false;
             var res = keys.All(k => KeysGroups.Any(kgr => kgr.Match(k)));
             return res;
@@ -120,4 +120,28 @@ namespace NotationHelper.MVC
             Action.Invoke((T1)objects[0], (T2)objects[1], (T3)objects[2]);
         }
     }
+
+    public abstract class AKbdAction
+    {
+        public List<MergedKeys> KeysGroups = new List<MergedKeys>();
+        public string ActionName { get; set; }
+        public AKbdAction(string ActionName, params MergedKeys[] keys)
+        {
+            KeysGroups.AddRange(keys);
+            ActionName = ActionName;
+        }
+
+        public bool IsCurrentAction()
+        {
+            var keys = RoutingCommands.GetAllPressedKeys();
+            if (keys.Count == 0) return false;
+            var res = keys.All(k => KeysGroups.Any(kgr => kgr.Match(k)));
+            return res;
+        }
+
+        public abstract bool CanAccept(params object[] objects);
+
+        public abstract void RunAction(params object[] objects);
+    }
+
 }

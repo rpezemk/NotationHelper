@@ -10,17 +10,10 @@ namespace NotationHelper.MVC
         public static List<TimeHolder> SelectedTimeHolders = new List<TimeHolder>();
         public static List<BarWithLine> BarsWithSelectedNotes = new List<BarWithLine>();
 
-        public static List<MergedKeys> KeyboardPriorities = new List<MergedKeys>()
-        {
-            new MergedKeys(Key.Escape),
-            new MergedKeys(Key.LeftCtrl, Key.RightCtrl),
-            new MergedKeys(Key.LeftShift, Key.RightShift),
-        };
-
 
         public static void AnyEvent(params object[] objects)
         {
-            var mode = ModeHelper.GetCurrMode();
+            var mode = RoutingCommands.GetCurrMode();
             if (mode == null)
                 return;
 
@@ -39,7 +32,7 @@ namespace NotationHelper.MVC
 
         public static void UnSelectOtherBars(BarWithLine barWithLine)
         {
-            if (ModeHelper.SelectMeasures.IsCurrentMode() == false)
+            if (RoutingCommands.SelectMeasures.IsCurrentMode() == false)
             {
 
                 foreach (var barControl in BarsWithSelectedNotes.Where(b => b != barWithLine))
