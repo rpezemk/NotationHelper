@@ -117,6 +117,12 @@ namespace MusicDataModel.Helpers
             return res;
         }
 
+        public static List<T1> FilterByHitTest<T1, T2>(this IEnumerable<T1> vis, Point point) where T1 : Visual where T2 : class
+        {
+            var res = vis.Where(v => v.HitTest<T2>(point)).ToList();
+            return res;
+        }
+
         public static FormattedText GetMusicText(this string glyph, Brush brush)
         {
             FormattedText text = new FormattedText(

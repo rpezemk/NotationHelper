@@ -117,12 +117,10 @@ namespace MusicDataModel.MusicViews.MusicControls
         {
             if (noteWasClicked == true)
                 return;
-            foreach (var th in GetTimeHolders())
-            {
-                RedrawSelected(th);
-            }
-
-            ViewRouting.UnSelectOtherBars(this);
+            GetTimeHolders().ForEach(th => RedrawSelected(th));
+            if(!RoutingCommands.SelectMeasures.IsCurrentAction())
+                SelectedBarsCollection.UnSelectExceptOf(this);
+            SelectedBarsCollection.Add(this);
         }
     }
 }

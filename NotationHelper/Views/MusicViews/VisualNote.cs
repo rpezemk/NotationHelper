@@ -16,12 +16,6 @@ namespace MusicDataModel.Views.MusicViews
         {
             VisualNotes = visualNotes;
         }   
-
-        public void Recalculate(double totalWidth)
-        {
-            VisualNotes.CalculateResult(totalWidth);
-        }
-
     }
 
     public class VisualNote : IWidthable
