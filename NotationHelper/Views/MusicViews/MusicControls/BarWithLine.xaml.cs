@@ -20,7 +20,7 @@ namespace MusicDataModel.MusicViews.MusicControls
             InitializeComponent();
         }
 
-        public double Scale = 3;
+        public static double Scale = 3;
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -70,26 +70,14 @@ namespace MusicDataModel.MusicViews.MusicControls
             return visuals;
         }
 
-        public void RedrawSelected(TimeHolderDrawing nd)
-        {
-            MyVisualHost.RemoveVisual(nd);
-            nd.TimeHolder.IsSelected = true;
-            MyVisualHost.DrawGlyph(nd.TimeHolder, Brushes.Red, Scale);
-        }
 
-        public void RedrawUnselected(TimeHolderDrawing nd)
-        {
-            MyVisualHost.RemoveVisual(nd);
-            nd.TimeHolder.IsSelected = false;
-            MyVisualHost.DrawGlyph(nd.TimeHolder, Brushes.LightGray, Scale);
-        }
 
         private void DrawingCanvas_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (noteWasClicked == true)
                 return;
-            GetTimeHolders().ForEach(th => RedrawSelected(th));
-            if(!RoutingCommands.SelectMeasures.IsCurrentAction())
+            GetTimeHolders().ForEach(th => th.Redraw(true, Scale));
+            if (!RoutingCommands.SelectMeasures.IsCurrentAction())
                 SelectedBarsCollection.UnSelectExceptOf(this);
             SelectedBarsCollection.Add(this);
         }

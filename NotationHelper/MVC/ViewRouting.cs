@@ -15,7 +15,7 @@ namespace NotationHelper.MVC
         {
             BarsWithSelectedNotes.ForEach(bc => bc.GetTimeHolders()
                         .Where(th => th.TimeHolder.IsSelected)
-                        .ForEach(b => bc.RedrawUnselected(b)));
+                        .ForEach(b => b.Redraw(false, BarWithLine.Scale)));
             BarsWithSelectedNotes.Clear();
         }
 
@@ -24,8 +24,7 @@ namespace NotationHelper.MVC
             BarsWithSelectedNotes.Where(b => b != barWithLine)
                 .ForEach(a => a.GetTimeHolders()
                                 .Where(th => th.TimeHolder.IsSelected)
-                                .ForEach(th => a.RedrawUnselected(th)));
-
+                                .ForEach(th => th.Redraw(false, BarWithLine.Scale)));
             BarsWithSelectedNotes.Clear();
         }
 
@@ -62,9 +61,9 @@ namespace NotationHelper.MVC
             var prevSelected = visuals.Where(v => v.TimeHolder.IsSelected).ToList();
 
             if (!RoutingCommands.SelectMeasures.IsCurrentAction())
-                prevSelected.ButNotIn(nowClicked).ForEach(v => barWithLine.RedrawUnselected(v));
+                prevSelected.ButNotIn(nowClicked).ForEach(v => v.Redraw(false, BarWithLine.Scale));
 
-            nowClicked.ButNotIn(prevSelected).ToList().ForEach(v => barWithLine.RedrawSelected(v));
+            nowClicked.ButNotIn(prevSelected).ToList().ForEach(v => v.Redraw(true, BarWithLine.Scale));
             if (!RoutingCommands.SelectMeasures.IsCurrentAction())
                 SelectedBarsCollection.UnSelectExceptOf(barWithLine);
             SelectedBarsCollection.Add(barWithLine);
