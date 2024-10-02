@@ -17,7 +17,7 @@ namespace MusicDataModel.MusicViews.MusicControls
         public BarWithLine()
         {
             InitializeComponent();
-        }
+        } 
 
         public static double Scale = 3;
 
