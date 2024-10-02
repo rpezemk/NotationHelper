@@ -31,8 +31,8 @@ namespace MusicDataModel.DataModel.Piece
                         bar.AppendChild(randomHolder);
                         bar.AppendChild(Note.G().Flat().Sixteen().AsTimeGroup());
                         bar.AppendChild(Note.A().Flat().Sixteen().AsTimeGroup());
-                        bar.AppendChild(Note.B().Flat().Tied().Quarter().AsTimeGroup());
                         bar.AppendChild(Note.C().UpOct().Flat().Quarter().AsTimeGroup());
+                        bar.AppendChild(Note.B().Flat().Tied().Quarter().AsTimeGroup());
                         part.Children.Add(bar);
                     }
                     else

@@ -65,12 +65,14 @@ namespace MusicDataModel.Helpers
             {
                 timeGroup.MOffset = prevLen;
                 prevLen += timeGroup.Duration.GetLen();
+                
             }
 
             var scaleUp = totalVisualWidth/barVM.GetLen();
             foreach(var timeGroup in barVM.VoiceBar.Children)
             {
                 timeGroup.XOffset = scaleUp * timeGroup.MOffset;
+                timeGroup.VisualDuration = scaleUp * timeGroup.Duration.GetLen();
             }
 
             return barVM;

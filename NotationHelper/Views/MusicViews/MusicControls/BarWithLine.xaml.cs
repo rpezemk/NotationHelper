@@ -38,6 +38,15 @@ namespace MusicDataModel.MusicViews.MusicControls
             {
                 MyVisualHost.DrawTimeGroup(timeHolder, Scale);
             }
+
+            foreach (var timeHolder in vm.VoiceBar.Children.SkipLast(1))
+            {
+                if (timeHolder is Note note && note.IsTied)
+                    MyVisualHost.DrawTie(timeHolder);
+            }
+            var last = vm.VoiceBar.Children.LastOrDefault();
+            if (last is Note note2 && note2.IsTied)
+                MyVisualHost.DrawTie(last, 10);
         }
 
         public bool noteWasClicked;
@@ -62,5 +71,10 @@ namespace MusicDataModel.MusicViews.MusicControls
             return visuals;
         }
 
+
+        public void DrawTie(Note note)
+        {
+
+        }
     }
 }

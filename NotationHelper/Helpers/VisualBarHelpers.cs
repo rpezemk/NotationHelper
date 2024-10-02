@@ -5,11 +5,16 @@ using NotationHelper.MVC.Basics;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace MusicDataModel.Helpers
 {
     internal static class VisualBarHelpers
     {
+        public static void DrawTimeGroup(this DrawingVisualHost host, TimeHolder timeGroup, double scale)
+        {
+            host.DrawGlyph(timeGroup, Brushes.LightGray, scale);
+        } 
 
         public static TimeHolderDrawing DrawGlyph(this DrawingVisualHost host, TimeHolder timeHolder, Brush brush, double scale)
         {
@@ -34,11 +39,39 @@ namespace MusicDataModel.Helpers
             return textVisual;
         }
 
-        public static void DrawTimeGroup(this DrawingVisualHost host, TimeHolder timeGroup, double scale)
+        public static void DrawTie(this DrawingVisualHost host, TimeHolder timeGroup, double x2Corr = 0)
         {
-            host.DrawGlyph(timeGroup, Brushes.LightGray, scale);
+            host.DrawBow(timeGroup.XOffset, timeGroup.XOffset + timeGroup.VisualDuration + x2Corr);
         }
 
+
+        public static void DrawBow(this DrawingVisualHost host, double x1, double x2)
+        {
+            DrawingVisual drawingVisual = new DrawingVisual();
+            using (DrawingContext drawingContext = drawingVisual.RenderOpen())
+            {
+                var x1Corr = 4;
+                var x2Corr = -1;
+                var yCorr = 17;
+                var startPt = new Point(x1 + x1Corr, yCorr);
+                var c1 = new Point(x1 + (x2 - x1) * 0.20 + x1Corr, yCorr + 20);
+                var c2 = new Point(x2 - (x2 - x1) * 0.20 + x2Corr, yCorr + 20);
+                var endPt = new Point(x2 + x2Corr, yCorr);
+
+                var pathFigure = new PathFigure();
+                pathFigure.StartPoint = startPt;
+                pathFigure.Segments.Add(
+                    new BezierSegment(c1, c2, endPt, true));
+                pathFigure.IsClosed = false;
+                var path = new PathGeometry();
+                path.Figures.Add(pathFigure);
+                drawingContext.DrawGeometry(Brushes.Transparent, new Pen(Brushes.White, 1), path);
+                host.AddVisual(drawingVisual);
+            }
+
+            // Add the DrawingVisual to the Canvas
+            return;
+        }
         public static FormattedText GetMusicText(this string glyph, Brush brush)
         {
             FormattedText text = new FormattedText(
@@ -47,7 +80,6 @@ namespace MusicDataModel.Helpers
             FlowDirection.LeftToRight, GetFont(), 25, brush, 1);
             return text;
         }
-
         private static Typeface GetFont()
         {
             return new Typeface(FontHelper.BravuraFont, FontHelper.BravuraStyle, new FontWeight() { }, new FontStretch() { });

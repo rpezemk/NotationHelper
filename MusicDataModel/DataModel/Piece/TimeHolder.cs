@@ -15,6 +15,8 @@ namespace MusicDataModel.DataModel.Piece
         public double XOffset { get; set; }
         public double YOffset { get; set; }
         public bool IsSelected { get; set; }
+        public double VisualDuration { get; set; }
+
         public TimeHolder AsTimeGroup() => this;
         public TimeHolder SetBaseDuration(DurationEnum duration)
         {
