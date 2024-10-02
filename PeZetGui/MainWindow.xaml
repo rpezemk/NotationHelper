@@ -1,0 +1,15 @@
+﻿<Window x:Class="PeZetGui.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PeZetGui"
+        xmlns:tui="clr-namespace:PeZetGui.TuiControls"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        WindowState="Maximized"
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <Grid>
+        <tui:BlackPage x:Name="MyBlackPage"/>
+    </Grid>
+</Window>

@@ -1,0 +1,35 @@
+﻿<Window x:Class="WpfTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfTest"
+        mc:Ignorable="d"
+        WindowState="Maximized"
+        WindowStyle="None"
+        Background="Black"
+        Loaded="Window_Loaded"
+        Title="MainWindow" Height="450" Width="800"
+        SizeChanged="Window_SizeChanged"
+        >
+    <Grid x:Name="MyGrid">
+        <RichTextBox x:Name="mouseMaskRichTextbox" IsDocumentEnabled="True" FontSize="14" Cursor="Arrow" Background="Transparent">
+        </RichTextBox>
+        <!--<RichTextBox x:Name="richTextBox" IsDocumentEnabled="True" FontSize="14" Cursor="Arrow" Background="Transparent">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="This is a normal text. " />
+                    <Hyperlink Foreground="Black" TextDecorations="{x:Null}" PreviewMouseDown="Hyperlink_Click1">
+                        <Run Text="This is a white rectangle: &#9647;"/>
+                    </Hyperlink>
+                    <Run Text=", and this is more normal text. " />
+                    <Hyperlink PreviewMouseDown="Hyperlink_Click2" 
+                               TextDecorations="{x:Null}" 
+                               Foreground="Black">
+                        <Run Text="Click here for part 2"/>
+                    </Hyperlink>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>-->
+    </Grid>
+</Window>
