@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:PeZetGui"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <!-- Merging Resources.xaml into the application -->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="BlackResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

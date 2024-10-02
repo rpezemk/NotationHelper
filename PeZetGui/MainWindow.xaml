@@ -11,5 +11,7 @@
         Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
         <tui:BlackPage x:Name="MyBlackPage"/>
+        <Button Content="MyButtonLOL" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        
     </Grid>
 </Window>
