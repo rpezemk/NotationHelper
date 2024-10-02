@@ -15,7 +15,7 @@ namespace MusicDataModel.DataModel.Piece
         public Pitch Pitch { get; set; } = new Pitch();
         public int BarNo { get; set; }
         public int PartNo { get; set; }
-
+        public bool IsTied {  get; set; }
         public ObjectTypeEnum ObjectType => ObjectTypeEnum.Note;
         public override ObjectTypeEnum ParentType => ObjectTypeEnum.TimeGroup;
         public ObjectTypeEnum ChildType => ObjectTypeEnum.None;
@@ -52,6 +52,11 @@ namespace MusicDataModel.DataModel.Piece
             return this;
         }
 
+        public Note Tied()
+        {
+            IsTied = true;
+            return this;
+        }
         
 
         public static Note C() => Emit().SetName(DataModel.Elementary.NoteName.C);

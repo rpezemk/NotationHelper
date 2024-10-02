@@ -112,5 +112,34 @@ namespace MusicDataModel
 
         }
 
+        private void PlayBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void StopBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PageBackBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MeasureBackBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MeasureForwardBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PageForwardBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

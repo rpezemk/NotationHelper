@@ -8,6 +8,7 @@
 
         <ResourceDictionary> 
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="BlackResourceDictionary.xaml"/>
                 <ResourceDictionary Source="StyleResources/ColorDictionary.xaml"/>
                 <ResourceDictionary>
                     <FontFamily x:Key="BravuraFontFamily">pack://application:,,,/Fonts/#Bravura</FontFamily>

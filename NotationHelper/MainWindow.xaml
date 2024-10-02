@@ -32,21 +32,21 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="40"/>
             <RowDefinition/>
             <RowDefinition Height="5" />
             <RowDefinition Height="0" MaxHeight="1000"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="6">
-            <mainViews:MainMenuView DataContext="{Binding Path=Menu_VM}"/>
-            <mainViews:ToolbarView DataContext="{Binding Path=ToolBar_VM}" ToolbarItems="{Binding Path=ToolbarItems}"/>
+            <!--<mainViews:MainMenuView DataContext="{Binding Path=Menu_VM}"/>-->
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.ColumnSpan ="6" HorizontalAlignment="Right">
-            <Button Click="MinimizeButton_Click" Background="Transparent" x:Name="MinimizeButton" Width="50" FontSize="30" Content="__" HorizontalAlignment="Right"/>
-            <Button Click="MaximizeButton_Click" Background="Transparent" x:Name="MaximizeButton" Width="50" FontSize="30" Content="[  ]" HorizontalAlignment="Right"/>
-            <Button Click="CloseButton_Click"    Background="Transparent" x:Name="CloseButton"    Width="50" FontSize="30" Content="X" HorizontalAlignment="Right"/>
+            <Button Click="MinimizeButton_Click" FontSize="20" Content="_"/>
+            <Button Click="MaximizeButton_Click" FontSize="20" Content="&#x25AF;"/>
+            <Button Click="CloseButton_Click"    FontSize="20" Content="X"/>
         </StackPanel>
+        <mainViews:ToolbarView Grid.Row="1" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top" DataContext="{Binding Path=ToolBar_VM}" ToolbarItems="{Binding Path=ToolbarItems}"/>
         <!--VERTICAL SPLITTER-->
         <GridSplitter Grid.Column="1" 
                       Grid.Row="1" 
@@ -91,13 +91,12 @@
                 <TextBlock Text="markers area" Foreground="DarkSlateBlue"/>
             </Border>
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Content="  Play  " FontSize="17" Margin="3,0,3,0" Background="Black" Foreground="LightGray"/>
-                <Button Content="Play [...]" FontSize="17" Margin="3,0,3,0" Background="Black" Foreground="LightGray"/>
-                <Button Content=" STOP " FontSize="17" Margin="3,0,3,0" Background="Black" Foreground="LightGray"/>
-                <Button Content=" &lt;&lt; "  FontSize="20" Margin="3,0,3,0" Background="Black" Foreground="LightGray"/>
-                <Button Content="  &lt;  "  FontSize="20" Margin="3,0,3,0" Background="Black" Foreground="LightGray"/>
-                <Button Content="  &gt;  "  FontSize="20" Margin="3,0,3,0" Background="Black" Foreground="LightGray"/>
-                <Button Content=" &gt;&gt; "  FontSize="20" Margin="3,0,3,0" Background="Black" Foreground="LightGray"/>
+                <Button x:Name="PlayBtn"            Click="PlayBtn_Click"  Content="Play"/>
+                <Button x:Name="StopBtn"            Click="StopBtn_Click" Content="STOP" />
+                <Button x:Name="PageBackBtn"        Click="PageBackBtn_Click"  Content="&lt;&lt;"/>
+                <Button x:Name="MeasureBackBtn"     Click="MeasureBackBtn_Click" Content="&lt;"/>
+                <Button x:Name="MeasureForwardBtn"  Click="MeasureForwardBtn_Click" Content="&gt;"/>
+                <Button x:Name="PageForwardBtn"     Click="PageForwardBtn_Click" Content="&gt;&gt;"/>
             </StackPanel>
         </Grid>
     </Grid>

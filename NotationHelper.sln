@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NAudioTest", "NAudioTest\NA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicDataModel", "MusicDataModel\MusicDataModel.csproj", "{A16F2576-9713-4656-AD11-C26BA71B1EDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeZetGui", "PeZetGui\PeZetGui.csproj", "{2B34A056-A98B-429A-A0C5-628B8B7AE00B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{A16F2576-9713-4656-AD11-C26BA71B1EDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A16F2576-9713-4656-AD11-C26BA71B1EDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A16F2576-9713-4656-AD11-C26BA71B1EDA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2B34A056-A98B-429A-A0C5-628B8B7AE00B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B34A056-A98B-429A-A0C5-628B8B7AE00B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B34A056-A98B-429A-A0C5-628B8B7AE00B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B34A056-A98B-429A-A0C5-628B8B7AE00B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

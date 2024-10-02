@@ -12,12 +12,12 @@
     <ItemsControl ItemsSource="{Binding ElementName=MyToolbarView, Path=ToolbarItems}">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <StackPanel Orientation="Horizontal"/>
+                <StackPanel Orientation="Vertical"/>
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
             <DataTemplate>
-                <tools:ToolBarItem/>
+                <Button Content="{Binding Description}"/>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
     </ItemsControl>
