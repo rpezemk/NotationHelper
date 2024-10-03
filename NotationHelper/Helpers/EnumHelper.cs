@@ -91,5 +91,11 @@ namespace MusicDataModel.Helpers
             var res = firstSet.Where(ps => !secondSet.Contains(ps)).ToList();
             return res;
         }
+
+        public static bool IsSameSet<T>(this List<T> values1, List<T> values2)
+        {
+            var res = values1.All(v1 => values2.Contains(v1)) && values2.All(v2 => values1.Contains(v2));
+            return res;
+        }
     }
 }

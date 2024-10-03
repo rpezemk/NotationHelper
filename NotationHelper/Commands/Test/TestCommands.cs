@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NotationHelper.Commands
+namespace NotationHelper.Commands.Test
 {
     public static class TestCommands
     {

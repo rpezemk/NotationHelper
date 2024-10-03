@@ -17,23 +17,23 @@ namespace MusicDataModel
         }
         private void MainWindowControl_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Delete)
-            {
-                foreach(var bar in SelectedBarsCollection.BarsWithSelectedNotes)
-                {
-                    foreach(var th in bar.GetTimeHolders())
-                    {
-                        if (th.TimeHolder is Note note)
-                            CommandContainer.RemoveNote(note);
-                    };
-                }
-            }
-            //RoutingCommands.ReportInput(this, e);
+            KeyboardRouting.ReportInput();
+            //if (e.Key == Key.Delete)
+            //{
+            //    foreach (var bar in SelectedBarsCollection.BarsWithSelectedNotes)
+            //    {
+            //        foreach (var th in bar.GetTimeHolders())
+            //        {
+            //            if (th.TimeHolder is Note note)
+            //                CommandContainer.RemoveNote(note);
+            //        };
+            //    }
+            //}
         }
 
         private void MainWindowControl_KeyUp(object sender, KeyEventArgs e)
         {
-            //RoutingCommands.ReportInput(this, e);
+
         }
         #endregion
     }

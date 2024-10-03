@@ -22,9 +22,11 @@ namespace MusicDataModel
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static MainWindow Instance;
         public MainWindow()
         {
             InitializeComponent();
+            Instance = this;
         }
 
         private bool lockLayout = true;
@@ -45,7 +47,7 @@ namespace MusicDataModel
 
         private void MainWindowControl_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            MyMulticolumnView.RecalculateLayout();
+            Refresh();
         }
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
@@ -78,13 +80,12 @@ namespace MusicDataModel
 
         private void GridSplitter_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            MyMulticolumnView.RecalculateLayout();
+            Refresh();
         }
 
         private void GridSplitter_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            MyMulticolumnView.RecalculateLayout();
-
+            Refresh();
         }
 
         private void GridSplitter_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -94,8 +95,7 @@ namespace MusicDataModel
 
         private void GridSplitter_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-
-            MyMulticolumnView.RecalculateLayout();
+            Refresh();
         }
 
 
@@ -103,9 +103,13 @@ namespace MusicDataModel
         {
             if (lockLayout)
                 return;
-            MyMulticolumnView.RecalculateLayout();
+            Refresh();
         }
 
+        public void Refresh()
+        {
+            MyMulticolumnView.RecalculateLayout();
+        }
 
         private void MainWindowControl_SizeChanged_1(object sender, SizeChangedEventArgs e)
         {

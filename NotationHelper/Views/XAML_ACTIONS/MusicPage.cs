@@ -9,13 +9,11 @@ namespace MusicDataModel.MusicViews.MainViews
         #region XAML ACTIONS
         private void Grid_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
-                SelectedBarsCollection.UnSelectAll();
+            KeyboardRouting.ReportInput(this, e);
         }
 
         private void Grid_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
         #endregion
     }

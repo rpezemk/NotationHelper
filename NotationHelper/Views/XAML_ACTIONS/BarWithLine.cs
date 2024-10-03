@@ -13,7 +13,7 @@ namespace MusicDataModel.MusicViews.MusicControls
             if (noteWasClicked == true)
                 return;
 
-            RoutingCommands.ReportInput(this, e);
+            KeyboardRouting.ReportInput();
 
 
             GetTimeHolders().ForEach(th => th.Redraw(true, Scale));
@@ -27,12 +27,12 @@ namespace MusicDataModel.MusicViews.MusicControls
         {
             MarkForAMoment();
             this.BarWithLineMouseDown(e);
-            RoutingCommands.ReportInput(this, e);
+            KeyboardRouting.ReportInput();
         }
 
         private void MyVisualHost_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            RoutingCommands.ReportInput(this, e);
+            KeyboardRouting.ReportInput();
         }
 
         #endregion

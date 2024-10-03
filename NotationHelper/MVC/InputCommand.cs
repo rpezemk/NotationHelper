@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using MusicDataModel.Helpers;
 using NotationHelper.MVC.Basics;
 
 namespace NotationHelper.MVC
@@ -12,13 +13,30 @@ namespace NotationHelper.MVC
             Keys.AddRange(mergedKeys);
         }
         public string Name { get; set; }
+        public bool Match(List<MergedKey> checkedMergedKeys)
+        {
+            if(checkedMergedKeys.Count == 0) return false;
+            if(checkedMergedKeys.Count != Keys.Count) return false;
+            var sameSet = checkedMergedKeys.IsSameSet(Keys);
+            if(!sameSet) return false;
 
-        public List<AStrangeAction> Actions { get; set; } = new List<AStrangeAction>();
-        public List<AKey> Keys { get; set; } = new List<AKey>();
+            var res = checkedMergedKeys.Last() == Keys[0];
+            return res;
+        }
+        public List<AStrangeAction> StrangeActions { get; set; } = new List<AStrangeAction>();
+        public List<MergedKey> Keys { get; set; } = new List<MergedKey>();
         public string V { get; }
-        public InputCommand AppendAction(Action action) { Actions.Add(new StrangeAction(action)); return this; }
-        public InputCommand AppendAction<T>(Action<T> action) { Actions.Add(new StrangeAction<T>(action)); return this; }
-        public InputCommand AppendAction<T1, T2>(Action<T1, T2> action) { Actions.Add(new StrangeAction<T1, T2>(action)); return this; }
+        public InputCommand AppendAction(Action action) { StrangeActions.Add(new StrangeAction(action)); return this; }
+        public InputCommand AppendAction<T>(Action<T> action) { StrangeActions.Add(new StrangeAction<T>(action)); return this; }
+        public InputCommand AppendAction<T1, T2>(Action<T1, T2> action) { StrangeActions.Add(new StrangeAction<T1, T2>(action)); return this; }
+
+        public void Execute(params object[] objects)
+        {
+            foreach(var act in StrangeActions)
+            {
+                act.TryRun(objects);
+            }
+        }
     }
 
 
@@ -31,7 +49,17 @@ namespace NotationHelper.MVC
         }
         public string Name { get; set; }
         public List<AStrangeAction> Actions { get; set; } = new List<AStrangeAction>();
-        public List<AKey> Keys { get; set; } = new List<AKey>();
+        public List<MergedKey> Keys { get; set; } = new List<MergedKey>();
+        public bool Match(List<MergedKey> checkedMergedKeys)
+        {
+            if (checkedMergedKeys.Count == 0) return false;
+            if (checkedMergedKeys.Count != Keys.Count) return false;
+            var sameSet = checkedMergedKeys.IsSameSet(Keys);
+            if (!sameSet) return false;
+
+            var res = checkedMergedKeys.Last() == Keys[0];
+            return res;
+        }
 
     }
 
