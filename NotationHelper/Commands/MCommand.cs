@@ -48,8 +48,7 @@ namespace NotationHelper.Commands
         public DeleteTimeHolderCommand(TimeHolder value) : base(value) { }
         protected override void Execute(TimeHolder value)
         {
-            var idx = value.Parent.Children.IndexOf(value);
-            value.Parent.Children[idx] = new Rest() {  };
+            value.Parent.ReplaceChild(value, new Rest());
         }
         public override DeleteTimeHolderCommand Emit(TimeHolder o)
         {
