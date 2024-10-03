@@ -87,7 +87,7 @@ namespace MusicDataModel.Helpers
 
         public static void BarWithLineMouseDown(this BarWithLine barWithLine, MouseButtonEventArgs e)
         {
-            List<TimeHolderDrawing> visuals = barWithLine.GetTimeHolders();
+            List<TimeHolderDrawing> visuals = barWithLine.GetTimeHolderDrawings();
             Point mousePos = e.GetPosition(barWithLine.MyVisualHost);
             var nowClicked = visuals.FilterByHitTest<TimeHolderDrawing, DrawingVisual>(mousePos);
             var prevSelected = visuals.Where(v => v.TimeHolder.IsSelected).ToList();

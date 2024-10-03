@@ -1,6 +1,8 @@
 ﻿using MusicDataModel.DataModel.Piece;
 using MusicDataModel.FlowTypes;
 using MusicDataModel.Helpers;
+using MusicDataModel.MusicViews;
+using MusicDataModel.MusicViews.MusicControls;
 using MusicDataModel.MVVM.MainVM;
 using NotationHelper.MVC;
 using System.IO;
@@ -30,6 +32,17 @@ namespace MusicDataModel
         }
 
         private bool lockLayout = true;
+
+        public static List<BarWithLine> GetBarWithLines()
+        {
+            var res = Instance.MyMulticolumnView.MultiColumnGrid.Children.OfType<StackPanel>()
+                .SelectMany(sp => sp.Children.OfType<HLayout>())
+                .SelectMany(hl => hl.MyStackPanel.Children.OfType<BarWithLine>()).ToList();
+
+
+            return res;
+        }
+
         private void MainWindowControl_Loaded(object sender, RoutedEventArgs e)
         {
             lockLayout = false;

@@ -2,7 +2,6 @@
 using NotationHelper.Commands;
 using NotationHelper.Helpers;
 using NotationHelper.MVC.Basics;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 
@@ -20,17 +19,13 @@ namespace NotationHelper.MVC
 
         #region KEYBOARD COMMANDS
         public static InputCommand EscAction => new InputCommand("ESC", Escape).AppendAction(() => SelectedBarsCollection.UnSelectAll());
-        public static InputCommand SelectAllAction => new InputCommand("SELECT_ALL", Ctrl, AKey).AppendAction(() => MessageBox.Show("SELECT_ALL"));
         public static InputCommand DeleteAllAction => new InputCommand("DELETE_SELECTED", Delete)
-            .AppendAction(() => 
-            {
-                var selectedBars = SelectedBarsCollection.BarsWithSelectedNotes;
-                var visualTimeHolders = selectedBars.SelectMany(b => b.GetTimeHolders());
-                var command = new DeleteManyTimeHoldersCommand(visualTimeHolders.Select(t => t.TimeHolder).Where(th => th.IsSelected).ToList());
-                command.Execute();
-                MainWindow.Instance.Refresh();
-            }
-            );
+            .Append(new DeleteManyTimeHoldersCommand(), () => SelectedBarsCollection.GetSelectedTimeHolders())
+            .AfterAll(() => MainWindow.Instance.Refresh());
+        //public static InputCommand SelectAllAction => new InputCommand("SELECT_ALL", Ctrl, AKey)
+        //    .Append(new SelectAllVisibleTimeHoldersCommand(), () => MainWindow.GetBarWithLines())
+        //    .AfterAll(() => MainWindow.Instance.Refresh());
+
         #endregion
 
         #region KEYBOARD MODES

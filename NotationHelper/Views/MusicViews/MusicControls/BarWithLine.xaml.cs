@@ -57,7 +57,7 @@ namespace MusicDataModel.MusicViews.MusicControls
         }
 
 
-        public List<TimeHolderDrawing> GetTimeHolders()
+        public List<TimeHolderDrawing> GetTimeHolderDrawings()
         {
             var enu = MyVisualHost.Visuals.GetEnumerator();
             List<TimeHolderDrawing> visuals = new List<TimeHolderDrawing>();

@@ -48,4 +48,8 @@
     <ProjectReference Include="..\MusicDataModel\MusicDataModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\Test\" />
+  </ItemGroup>
+
 </Project>

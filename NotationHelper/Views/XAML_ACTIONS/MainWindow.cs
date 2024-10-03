@@ -17,7 +17,7 @@ namespace MusicDataModel
         }
         private void MainWindowControl_KeyDown(object sender, KeyEventArgs e)
         {
-            KeyboardRouting.ReportInput();
+            CommandResolver.ReportInput();
             //if (e.Key == Key.Delete)
             //{
             //    foreach (var bar in SelectedBarsCollection.BarsWithSelectedNotes)

@@ -7,7 +7,7 @@ using NotationHelper.MVC.Basics;
 
 namespace NotationHelper.MVC
 {
-    public static class KeyboardRouting
+    public static class CommandResolver
     {
         public static ObservableCollection<MergedKey> PressedKeys = new ObservableCollection<MergedKey>();
 

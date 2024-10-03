@@ -1,5 +1,8 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
+using MusicDataModel;
 using MusicDataModel.Helpers;
+using NotationHelper.Commands.Base;
 using NotationHelper.MVC.Basics;
 
 namespace NotationHelper.MVC
@@ -25,7 +28,23 @@ namespace NotationHelper.MVC
         }
         public List<AStrangeAction> StrangeActions { get; set; } = new List<AStrangeAction>();
         public List<MergedKey> Keys { get; set; } = new List<MergedKey>();
-        public string V { get; }
+
+        public object TObj;
+        
+        public InputCommand Append<T, T2>(T cmd, Func<T2> func) where T : AEditCommand<T2>, new()
+        {
+            StrangeActions.Add(new StrangeAction(
+                () => 
+                {
+                    var whatIsThis = func.Invoke();
+                    cmd.Accept(whatIsThis);
+                    cmd.Execute();
+                }));
+            return this;
+        }
+
+        public InputCommand AfterAll(Action action) { StrangeActions.Add(new StrangeAction(action)); return this; }
+
         public InputCommand AppendAction(Action action) { StrangeActions.Add(new StrangeAction(action)); return this; }
         public InputCommand AppendAction<T>(Action<T> action) { StrangeActions.Add(new StrangeAction<T>(action)); return this; }
         public InputCommand AppendAction<T1, T2>(Action<T1, T2> action) { StrangeActions.Add(new StrangeAction<T1, T2>(action)); return this; }

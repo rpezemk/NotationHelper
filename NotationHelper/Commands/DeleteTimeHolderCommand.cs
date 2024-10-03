@@ -1,49 +1,50 @@
 ﻿using MusicDataModel.DataModel.Piece;
+using MusicDataModel.MusicViews.MusicControls;
 using NotationHelper.Commands.Base;
+using NotationHelper.MVC;
 
 namespace NotationHelper.Commands
 {
-    public class DeleteTimeHolderCommand : AEditCommand<TimeHolder, DeleteTimeHolderCommand>
+    public class DeleteTimeHolderCommand : AEditCommand<TimeHolder>
     {
-        public DeleteTimeHolderCommand(TimeHolder value) : base(value) { }
-        protected override void Execute(TimeHolder value)
+        public DeleteTimeHolderCommand() : base() { }
+        public override void Execute()
         {
-            value.Parent.ReplaceChild(value, new Rest() { Duration = value.Duration });
-        }
-        public override DeleteTimeHolderCommand Emit(TimeHolder o)
-        {
-            return new DeleteTimeHolderCommand(o);
+            if (Value == null)
+                return;
+            Value.Parent.ReplaceChild(Value, new Rest() { Duration = Value.Duration });
         }
     }
 
 
-    public class DeleteManyTimeHoldersCommand : AEditCommand<List<TimeHolder>, DeleteManyTimeHoldersCommand>
+    public class DeleteManyTimeHoldersCommand : AEditCommand<List<TimeHolder>>
     {
-        public DeleteManyTimeHoldersCommand(List<TimeHolder> value) : base(value) { }
-        protected override void Execute(List<TimeHolder> values)
+        public override void Execute()
         {
-            foreach(var value in values)
+            if (Value == null)
+                return;
+            foreach (var value in Value)
             {
                 value.Parent.ReplaceChild(value, new Rest() { Duration = value.Duration });
             }
         }
-        public override DeleteManyTimeHoldersCommand Emit(List<TimeHolder> o)
-        {
-            return new DeleteManyTimeHoldersCommand(o);
-        }
     }
 
-    public class DeleteTimeHolderCommand2 : AEditCommand<TimeHolder, DeleteTimeHolderCommand2>
+    public class SelectAllVisibleTimeHoldersCommand : AEditCommand<List<BarWithLine>>
     {
-        public DeleteTimeHolderCommand2(TimeHolder value) : base(value) { }
-        protected override void Execute(TimeHolder value)
+        public override void Execute()
         {
-            value.Parent.ReplaceChild(value, new Rest() { Duration = value.Duration });
-        }
-        public override DeleteTimeHolderCommand2 Emit(TimeHolder o)
-        {
-            return new DeleteTimeHolderCommand2(o);
+            if (Value == null)
+                return;
+
+            foreach(var bar in Value)
+            {
+                var drawings = bar.GetTimeHolderDrawings();
+                foreach (var draw in drawings)
+                {
+                    draw.Redraw(true, BarWithLine.Scale);
+                }
+            }
         }
     }
-
 }
