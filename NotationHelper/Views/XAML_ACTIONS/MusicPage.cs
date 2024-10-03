@@ -1,4 +1,4 @@
-﻿using NotationHelper.MVC.Basics;
+﻿using NotationHelper.MVC;
 using System.Windows.Controls;
 using System.Windows.Input;
 

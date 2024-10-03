@@ -13,7 +13,7 @@ namespace MusicDataModel.DataModel.Range
 
         public MatrixRange(PieceMatrix pieceMatrix, int startBar, int count)
         {
-            foreach (var barGroup in pieceMatrix.Parts)
+            foreach (var barGroup in pieceMatrix.Children)
             {
                 var partBars = barGroup.Children.GetRange(startBar, count);
                 MonoPart part = new MonoPart() { Children = partBars };

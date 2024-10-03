@@ -1,4 +1,6 @@
-﻿using NotationHelper.MVC;
+﻿using MusicDataModel.DataModel.Piece;
+using NotationHelper.Commands;
+using NotationHelper.MVC;
 using System.Windows;
 using System.Windows.Input;
 
@@ -15,12 +17,23 @@ namespace MusicDataModel
         }
         private void MainWindowControl_KeyDown(object sender, KeyEventArgs e)
         {
-            RoutingCommands.ReportInput(this, e);
+            if (e.Key == Key.Delete)
+            {
+                foreach(var bar in SelectedBarsCollection.BarsWithSelectedNotes)
+                {
+                    foreach(var th in bar.GetTimeHolders())
+                    {
+                        if (th.TimeHolder is Note note)
+                            CommandContainer.RemoveNote(note);
+                    };
+                }
+            }
+            //RoutingCommands.ReportInput(this, e);
         }
 
         private void MainWindowControl_KeyUp(object sender, KeyEventArgs e)
         {
-            RoutingCommands.ReportInput(this, e);
+            //RoutingCommands.ReportInput(this, e);
         }
         #endregion
     }

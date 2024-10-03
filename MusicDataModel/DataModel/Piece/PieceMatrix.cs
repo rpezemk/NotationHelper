@@ -33,7 +33,7 @@ namespace MusicDataModel.DataModel.Piece
                         bar.AppendChild(Note.A().Flat().Sixteen().AsTimeGroup());
                         bar.AppendChild(Note.C().UpOct().Flat().Quarter().AsTimeGroup());
                         bar.AppendChild(Note.B().Flat().Tied().Quarter().AsTimeGroup());
-                        part.Children.Add(bar);
+                        part.AppendChild(bar);
                     }
                     else
                     {
@@ -48,22 +48,18 @@ namespace MusicDataModel.DataModel.Piece
                         bar.AppendChild(Note.D().Flat().Sixteen().AsTimeGroup());
                         bar.AppendChild(randomHolder);
                         bar.AppendChild(Note.C().Sharp().Eight().AsTimeGroup());
-                        part.Children.Add(bar);
+                        part.AppendChild(bar);
                     }
                 }
-                Parts.Add(part);
+                this.AppendChild(part);
             }
         }
-
-
-        public List<MonoPart> Parts { get; set; } = new List<MonoPart>();
-
 
         public List<TimeHolder> GetRangeByBarNo(int startBar, int barCount)
         {
             var resNotes = new List<TimeHolder>();
 
-            foreach (var hgroup in Parts)
+            foreach (var hgroup in Children)
             {
                 var bars = hgroup.Children.Skip(startBar).Take(barCount);
                 var Timegroups = bars.SelectMany(b => b.Children);

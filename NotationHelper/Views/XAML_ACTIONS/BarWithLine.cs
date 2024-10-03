@@ -1,6 +1,5 @@
 ﻿using MusicDataModel.Helpers;
 using NotationHelper.MVC;
-using NotationHelper.MVC.Basics;
 using System.Windows.Controls;
 using System.Windows.Input;
 namespace MusicDataModel.MusicViews.MusicControls

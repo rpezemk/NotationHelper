@@ -26,7 +26,7 @@ namespace MusicDataModel.DataModel.Structure
 
 
     public abstract class AObjectWithChildren<TObject, TChild> : IParentOf<TChild>
-        where TObject : IParentOf<TChild>
+        where TObject : class, IParentOf<TChild>
         where TChild : IChildOf<TObject>
     {
         public List<TChild> Children = new List<TChild>();
@@ -35,7 +35,10 @@ namespace MusicDataModel.DataModel.Structure
             Children.Add(child);
             child.SetParent(ThisObj);
         }
+        public AObjectWithChildren()
+        {
 
+        }
         public void ReplaceChild(TChild child, TChild newChild)
         {
             var idx = Children.IndexOf(child);
@@ -51,7 +54,12 @@ namespace MusicDataModel.DataModel.Structure
 
     public abstract class AObjectWithParent<TParent, TObject> : IChildOf<TParent>
         where TParent : IParentOf<TObject>, new ()
+        where TObject: class
     {
+        public AObjectWithParent()
+        {
+            ThisObject = this as TObject;
+        }
         public TParent Parent { get; set; }
 
         public abstract ObjectTypeEnum ParentType { get; }
@@ -60,21 +68,24 @@ namespace MusicDataModel.DataModel.Structure
 
         public void SetParent(TParent obj)
         {
-            parent = obj;
+            Parent = obj;
         }
-        private TParent parent;
     }
 
 
 
     public abstract class AObjectWithParentAndChildren<TParent, TObject, TChild> : AObjectWithParent<TParent, TObject>, IChildOf<TParent>, IParentOf<TChild>
         where TChild : IChildOf<TObject>
-        where TObject: IParentOf<TChild>
+        where TObject: class, IParentOf<TChild>
         where TParent : IParentOf<TObject>, new()
     {
 
         public List<TChild> Children = new List<TChild>();
         public TObject ThisObject;
+        public AObjectWithParentAndChildren()
+        {
+            ThisObject = this as TObject;
+        }
         public void AppendChild(TChild child)
         {
             Children.Add(child);

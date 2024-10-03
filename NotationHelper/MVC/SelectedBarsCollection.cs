@@ -1,7 +1,7 @@
 ﻿using MusicDataModel.Helpers;
 using MusicDataModel.MusicViews.MusicControls;
 
-namespace NotationHelper.MVC.Basics
+namespace NotationHelper.MVC
 {
     public static class SelectedBarsCollection
     {
