@@ -1,7 +1,7 @@
 ﻿using MusicDataModel.Helpers;
-using NotationHelper.MVC;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
+using System.Windows.Media;
 namespace MusicDataModel.MusicViews.MusicControls
 {
 
@@ -10,28 +10,33 @@ namespace MusicDataModel.MusicViews.MusicControls
         #region XAML ACTIONS
         private void DrawingCanvas_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (noteWasClicked == true)
-                return;
+            List<TimeHolderDrawing> visuals = this.GetTimeHolderDrawings();
+            Point mousePos = e.GetPosition(this.MyVisualHost);
+            var nowClicked = visuals.FilterByHitTest<TimeHolderDrawing, DrawingVisual>(mousePos);
+            var prevSelected = visuals.Where(v => v.TimeHolder.IsSelected).ToList();
 
-            CommandResolver.ReportInput();
+            if (nowClicked != null && nowClicked.Count > 0)
+            {
+                var c = true;
+                if (c)
+                    prevSelected.ButNotIn(nowClicked).ForEach(v => v.Redraw(false, BarWithLine.Scale));
 
-
-            GetTimeHolderDrawings().ForEach(th => th.Redraw(true, Scale));
-            var c = true; 
-            if (c)
-                MainWindow.GetBarWithLines().Where(b => b != this)
-                .ForEach(a => a.GetTimeHolderDrawings()
-                                .Where(th => th.TimeHolder.IsSelected)
-                                .ForEach(th => th.Redraw(false, BarWithLine.Scale)));
+                nowClicked.ButNotIn(prevSelected).ToList().ForEach(v => v.Redraw(true, BarWithLine.Scale));
+                if (c)
+                    MainWindow.GetTimeHolderDrawings().Where(b => b.BarWithLine != this)
+                                    .Where(th => th.TimeHolder.IsSelected)
+                                    .ForEach(th => th.Redraw(false, BarWithLine.Scale));
+            }
+            else
+            {
+                GetTimeHolderDrawings().ForEach(th => th.Redraw(true, Scale));
+                var c = true;
+                if (c)
+                    MainWindow.GetTimeHolderDrawings().Where(b => b.BarWithLine != this)
+                                    .Where(th => th.TimeHolder.IsSelected)
+                                    .ForEach(th => th.Redraw(false, BarWithLine.Scale));
+            }
         }
-
-        private void MyVisualHost_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            MarkForAMoment();
-            this.BarWithLineMouseDown(e);
-            CommandResolver.ReportInput();
-        }
-
 
         #endregion
     }

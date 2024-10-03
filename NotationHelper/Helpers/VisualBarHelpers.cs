@@ -85,23 +85,5 @@ namespace MusicDataModel.Helpers
             return new Typeface(FontHelper.BravuraFont, FontHelper.BravuraStyle, new FontWeight() { }, new FontStretch() { });
         }
 
-        public static void BarWithLineMouseDown(this BarWithLine barWithLine, MouseButtonEventArgs e)
-        {
-            List<TimeHolderDrawing> visuals = barWithLine.GetTimeHolderDrawings();
-            Point mousePos = e.GetPosition(barWithLine.MyVisualHost);
-            var nowClicked = visuals.FilterByHitTest<TimeHolderDrawing, DrawingVisual>(mousePos);
-            var prevSelected = visuals.Where(v => v.TimeHolder.IsSelected).ToList();
-
-            var c = true;// !RoutingCommands.SelectMeasures.IsCurrentAction();
-            if (c)
-                prevSelected.ButNotIn(nowClicked).ForEach(v => v.Redraw(false, BarWithLine.Scale));
-
-            nowClicked.ButNotIn(prevSelected).ToList().ForEach(v => v.Redraw(true, BarWithLine.Scale));
-            if (c)
-                MainWindow.GetBarWithLines().Where(b => b != barWithLine)
-                .ForEach(a => a.GetTimeHolderDrawings()
-                                .Where(th => th.TimeHolder.IsSelected)
-                                .ForEach(th => th.Redraw(false, BarWithLine.Scale)));
-        }
     }
 }
