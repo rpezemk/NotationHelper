@@ -22,7 +22,7 @@ namespace NotationHelper.MVC
             var sameSet = checkedMergedKeys.IsSameSet(Keys);
             if(!sameSet) return false;
 
-            var res = checkedMergedKeys.Last() == Keys[0];
+            var res = checkedMergedKeys.Last() == Keys.Last();
             return res;
         }
         public List<AStrangeAction> StrangeActions { get; set; } = new List<AStrangeAction>();

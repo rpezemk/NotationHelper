@@ -36,7 +36,7 @@ namespace MusicDataModel.MusicViews.MusicControls
             vm.CalculateXOffsets(GridContainer.ActualWidth);
             foreach (var timeHolder in vm.VoiceBar.Children)
             {
-                this.DrawTimeGroup(timeHolder, Scale);
+                this.DrawGlyph(timeHolder, Brushes.White, Scale);
             }
              
             foreach (var timeHolder in vm.VoiceBar.Children.SkipLast(1))

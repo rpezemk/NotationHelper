@@ -11,11 +11,6 @@ namespace MusicDataModel.Helpers
 {
     internal static class VisualBarHelpers
     {
-        public static void DrawTimeGroup(this BarWithLine host, TimeHolder timeGroup, double scale)
-        {
-            host.DrawGlyph(timeGroup, Brushes.LightGray, scale);
-        } 
-
         public static TimeHolderDrawing DrawGlyph(this BarWithLine host, TimeHolder timeHolder, Brush brush, double scale)
         {
             var xOffset = timeHolder.XOffset + (timeHolder is Note ? 0 : 3);

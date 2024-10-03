@@ -15,7 +15,7 @@ namespace NotationHelper.MVC
         public static MergedKey Shift = new MergedKey(Key.LeftShift, Key.RightShift);
         public static MergedKey Ctrl = new MergedKey(Key.LeftCtrl, Key.RightCtrl);
         public static MergedKey Alt = new MergedKey(Key.LeftAlt, Key.RightAlt);
-        public static MergedKey AKey = new MergedKey(Key.A);
+        public static MergedKey A_Button = new MergedKey(Key.A);
         public static MergedKey Delete = new MergedKey(Key.Delete);
 
         public static MouseKey LeftButton = new MouseKey(MouseButton.Left);
@@ -26,16 +26,16 @@ namespace NotationHelper.MVC
         #region KEYBOARD COMMANDS
 
         public static InputCommand SelectSingleNote => new InputCommand("SELECT_SINGLE", LeftButton)
-            .AppendAction<List<TimeHolderDrawing>>((nowClicked) =>
+            .AppendAction<List<TimeHolderDrawing>>((timeHolderDrawings) =>
             {
                 var c = true;
                 var prevSelected = MainWindow.GetTimeHolderDrawings().Where(v => v.TimeHolder.IsSelected).ToList();
 
-                prevSelected.ButNotIn(nowClicked).ForEach(v => v.Redraw(false, BarWithLine.Scale));
+                prevSelected.ButNotIn(timeHolderDrawings).ForEach(v => v.Redraw(false, BarWithLine.Scale));
 
-                nowClicked.ButNotIn(prevSelected).ToList().ForEach(v => v.Redraw(true, BarWithLine.Scale));
+                timeHolderDrawings.ButNotIn(prevSelected).ToList().ForEach(v => v.Redraw(true, BarWithLine.Scale));
 
-                MainWindow.GetTimeHolderDrawings().Where(b => b.BarWithLine != nowClicked.FirstOrDefault().BarWithLine)
+                MainWindow.GetTimeHolderDrawings().Where(b => b.BarWithLine != timeHolderDrawings.FirstOrDefault().BarWithLine)
                                 .Where(th => th.TimeHolder.IsSelected)
                                 .ForEach(th => th.Redraw(false, BarWithLine.Scale));
 
@@ -51,6 +51,24 @@ namespace NotationHelper.MVC
                                     .Where(th => th.TimeHolder.IsSelected)
                                     .ForEach(th => th.Redraw(false, BarWithLine.Scale));
             });
+
+        public static InputCommand SelectAll => new InputCommand("SELECT_ALL", Ctrl, A_Button)
+            .AppendAction(() => 
+            {
+                MainWindow.GetTimeHolderDrawings()
+                                    .ForEach(th => th.Redraw(true, BarWithLine.Scale));
+            });
+
+
+        public static InputCommand SelectSpecificRange => new InputCommand("SELECT_SPECIFIC_RANGE", Shift, LeftButton)
+            .AppendAction<List<TimeHolderDrawing>>((b) =>
+            {
+                MainWindow.GetTimeHolderDrawings()
+                                    .ForEach(th => th.Redraw(true, BarWithLine.Scale));
+            });
+
+
+
 
 
         public static InputCommand EscAction => new InputCommand("ESC", Escape)
