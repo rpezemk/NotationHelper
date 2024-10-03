@@ -7,16 +7,15 @@ using NotationHelper.MVC.Basics;
 
 namespace NotationHelper.MVC
 {
-
     public class InputCommand
     {
-        public InputCommand(string name, params MergedKey[] mergedKeys)
+        public InputCommand(string name, params AKey[] mergedKeys)
         {
             Name = name;
             Keys.AddRange(mergedKeys);
         }
         public string Name { get; set; }
-        public bool Match(List<MergedKey> checkedMergedKeys)
+        public bool MatchKeys(List<AKey> checkedMergedKeys)
         {
             if(checkedMergedKeys.Count == 0) return false;
             if(checkedMergedKeys.Count != Keys.Count) return false;
@@ -27,7 +26,7 @@ namespace NotationHelper.MVC
             return res;
         }
         public List<AStrangeAction> StrangeActions { get; set; } = new List<AStrangeAction>();
-        public List<MergedKey> Keys { get; set; } = new List<MergedKey>();
+        public List<AKey> Keys { get; set; } = new List<AKey>();
 
         public object TObj;
         
@@ -56,6 +55,15 @@ namespace NotationHelper.MVC
                 act.TryRun(objects);
             }
         }
+
+        internal bool MatchArguments(object[] objects)
+        {
+            var find = StrangeActions.FirstOrDefault();
+            if (find == null)
+                return false;
+            var res = find.CanRun(objects);
+            return res;
+        }
     }
 
 
@@ -68,8 +76,8 @@ namespace NotationHelper.MVC
         }
         public string Name { get; set; }
         public List<AStrangeAction> Actions { get; set; } = new List<AStrangeAction>();
-        public List<MergedKey> Keys { get; set; } = new List<MergedKey>();
-        public bool Match(List<MergedKey> checkedMergedKeys)
+        public List<AKey> Keys { get; set; } = new List<AKey>();
+        public bool Match(List<AKey> checkedMergedKeys)
         {
             if (checkedMergedKeys.Count == 0) return false;
             if (checkedMergedKeys.Count != Keys.Count) return false;
@@ -85,6 +93,7 @@ namespace NotationHelper.MVC
     public abstract class AStrangeAction 
     {
         public abstract void TryRun(params object[] objects);
+        public abstract bool CanRun(params object[] objects);
     }
 
     public class StrangeAction : AStrangeAction
@@ -100,6 +109,12 @@ namespace NotationHelper.MVC
         {
             if (objects == null || objects.Length == 0)
                 Action.Invoke();
+        }
+
+        public override bool CanRun(params object[] objects)
+        {
+            return (objects == null || objects.Length == 0);
+            throw new NotImplementedException();
         }
     }
     public class StrangeAction<T> : AStrangeAction
@@ -120,6 +135,15 @@ namespace NotationHelper.MVC
 
             Action.Invoke((T)objects[0]);
         }
+
+        public override bool CanRun(params object[] objects)
+        {
+            if (objects == null || objects.Length != 1)
+                return false;
+            if (objects[0] == null || objects[0].GetType() != typeof(T))
+                return false;
+            return true;
+        }
     }
     public class StrangeAction<T1,T2> : AStrangeAction
     {
@@ -136,6 +160,15 @@ namespace NotationHelper.MVC
                 return;
 
             Action.Invoke((T1)objects[0], (T2)objects[1]);
+        }
+
+        public override bool CanRun(params object[] objects)
+        {
+            if (objects == null || objects.Length != 2)
+                return false;
+            if (objects[0] == null || objects[0].GetType() != typeof(T1) || objects[1].GetType() != typeof(T2))
+                return false;
+            return true;
         }
     }
 }

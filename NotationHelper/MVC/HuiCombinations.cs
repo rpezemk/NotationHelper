@@ -1,11 +1,9 @@
 ﻿using MusicDataModel;
-using MusicDataModel.DataModel.Piece;
 using MusicDataModel.Helpers;
 using MusicDataModel.MusicViews.MusicControls;
 using NotationHelper.Commands;
 using NotationHelper.Helpers;
 using NotationHelper.MVC.Basics;
-using System.Windows;
 using System.Windows.Input;
 
 namespace NotationHelper.MVC
@@ -20,7 +18,41 @@ namespace NotationHelper.MVC
         public static MergedKey AKey = new MergedKey(Key.A);
         public static MergedKey Delete = new MergedKey(Key.Delete);
 
+        public static MouseKey LeftButton = new MouseKey(MouseButton.Left);
+        public static MouseKey RightButton = new MouseKey(MouseButton.Right);
+
+
+
         #region KEYBOARD COMMANDS
+
+        public static InputCommand SelectSingleNote => new InputCommand("SELECT_SINGLE", LeftButton)
+            .AppendAction<List<TimeHolderDrawing>>((nowClicked) =>
+            {
+                var c = true;
+                var prevSelected = MainWindow.GetTimeHolderDrawings().Where(v => v.TimeHolder.IsSelected).ToList();
+
+                prevSelected.ButNotIn(nowClicked).ForEach(v => v.Redraw(false, BarWithLine.Scale));
+
+                nowClicked.ButNotIn(prevSelected).ToList().ForEach(v => v.Redraw(true, BarWithLine.Scale));
+
+                MainWindow.GetTimeHolderDrawings().Where(b => b.BarWithLine != nowClicked.FirstOrDefault().BarWithLine)
+                                .Where(th => th.TimeHolder.IsSelected)
+                                .ForEach(th => th.Redraw(false, BarWithLine.Scale));
+
+            });        
+        
+        public static InputCommand SelectMeasure => new InputCommand("SELECT_MEASURE", LeftButton)
+            .AppendAction<BarWithLine>((barWithLine) =>
+            {
+                barWithLine.GetTimeHolderDrawings().ForEach(th => th.Redraw(true, BarWithLine.Scale));
+                var c = true;
+                if (c)
+                    MainWindow.GetTimeHolderDrawings().Where(b => b.BarWithLine != barWithLine)
+                                    .Where(th => th.TimeHolder.IsSelected)
+                                    .ForEach(th => th.Redraw(false, BarWithLine.Scale));
+            });
+
+
         public static InputCommand EscAction => new InputCommand("ESC", Escape)
             .AppendAction(
             () => MainWindow
@@ -29,14 +61,12 @@ namespace NotationHelper.MVC
                   .ForEach(b => b.Redraw(false, BarWithLine.Scale)));
 
         public static InputCommand DeleteAllAction => new InputCommand("DELETE_SELECTED", Delete)
-            .Append(new DeleteTimeHoldersCommand(), 
+            .Append(new DeleteTimeHoldersCommand(),
             () => MainWindow
                   .GetBarWithLines()
                   .SelectMany(b => b.GetTimeHolderDrawings())
                   .Where(th => th.TimeHolder.IsSelected).ToList())
             .AfterAll(() => MainWindow.Instance.Refresh());
-
-
         #endregion
 
         #region KEYBOARD MODES
@@ -54,5 +84,7 @@ namespace NotationHelper.MVC
 
         private static List<MergedKey> allMergedKeys;
         public static List<MergedKey> AllMergedKeys => TypeHelper.PassOrFill(ref allMergedKeys, typeof(HuiCombinations));
+        private static List<MouseKey> allMouseKeys;
+        public static List<MouseKey> AllMouseKeys => TypeHelper.PassOrFill(ref allMouseKeys, typeof(HuiCombinations));
     }
 }

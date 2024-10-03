@@ -4,19 +4,27 @@ using System.Windows.Input;
 
 namespace NotationHelper.MVC.Basics
 {
-    
-    public class MergedKey
+    public class AKey
+    {
+        
+    }
+
+
+    public class MergedKey : AKey
     {
         public List<Key> Keys = new List<Key>();
         public MergedKey(params Key[] keys)
         {
             Keys.AddRange(keys);
         }
+    }
 
-        public bool IsMatch(Key inputKey)
+    public class MouseKey : AKey 
+    {
+        public MouseButton Button;
+        public MouseKey(MouseButton mouseButton) 
         {
-            var res = Keys.Contains(inputKey);
-            return res;
+            Button = mouseButton;
         }
     }
 

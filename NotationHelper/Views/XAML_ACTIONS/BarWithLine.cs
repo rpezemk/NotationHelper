@@ -1,4 +1,5 @@
 ﻿using MusicDataModel.Helpers;
+using NotationHelper.MVC;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -17,24 +18,11 @@ namespace MusicDataModel.MusicViews.MusicControls
 
             if (nowClicked != null && nowClicked.Count > 0)
             {
-                var c = true;
-                if (c)
-                    prevSelected.ButNotIn(nowClicked).ForEach(v => v.Redraw(false, BarWithLine.Scale));
-
-                nowClicked.ButNotIn(prevSelected).ToList().ForEach(v => v.Redraw(true, BarWithLine.Scale));
-                if (c)
-                    MainWindow.GetTimeHolderDrawings().Where(b => b.BarWithLine != this)
-                                    .Where(th => th.TimeHolder.IsSelected)
-                                    .ForEach(th => th.Redraw(false, BarWithLine.Scale));
+                CommandResolver.ResolveKeyboardInput(nowClicked);
             }
             else
             {
-                GetTimeHolderDrawings().ForEach(th => th.Redraw(true, Scale));
-                var c = true;
-                if (c)
-                    MainWindow.GetTimeHolderDrawings().Where(b => b.BarWithLine != this)
-                                    .Where(th => th.TimeHolder.IsSelected)
-                                    .ForEach(th => th.Redraw(false, BarWithLine.Scale));
+                CommandResolver.ResolveKeyboardInput(this);
             }
         }
 

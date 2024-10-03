@@ -11,20 +11,29 @@ namespace NotationHelper.MVC
     {
         public static ObservableCollection<MergedKey> PressedKeys = new ObservableCollection<MergedKey>();
 
-        public static List<Key> AllKeys = Enum.GetValues<Key>().ToList();
+        public static List<Key> AllKbdKeys = Enum.GetValues<Key>().ToList();
+        public static List<MouseButton> AllMouseKeys = Enum.GetValues<MouseButton>().ToList();
 
 
-        public static List<Key> GetAllPressedKeys() => AllKeys.Skip(1).Where(k => Keyboard.IsKeyDown(k)).ToList();
+        public static List<AKey> GetAllPressedKeys()
+        {
+            var aKeys = AllKbdKeys.Skip(1).Where(k => Keyboard.IsKeyDown(k)).ToList().SelectMany(a => HuiCombinations.AllMergedKeys.Where(mk => mk.Keys.Contains(a))).Cast<AKey>().ToList();
+            var mouseButtonsPressed = new List<MouseButton>();
+            if(Mouse.LeftButton == MouseButtonState.Pressed)
+                aKeys.Add(HuiCombinations.LeftButton);
+            if (Mouse.RightButton == MouseButtonState.Pressed)
+                mouseButtonsPressed.Add(MouseButton.Right);
+
+            return aKeys;
+        }
         public static List<Key> PrevPressed = new List<Key>();
 
         public static void ResolveKeyboardInput(params object[] objects)
         {
             var allCommands = HuiCombinations.AllInputCommands;
             var allPressed = GetAllPressedKeys();
-            var allMerged = HuiCombinations.AllMergedKeys;
-            var allPressedAsMerged = allPressed.SelectMany(k => allMerged.Where(mk => mk.Keys.Contains(k)))?.ToList();
-            
-            var command = allCommands.FirstOrDefault(c => c.Match(allPressedAsMerged));
+
+            var command = allCommands.FirstOrDefault(c => c.MatchKeys(allPressed) && c.MatchArguments(objects));
             if(command != null)
             {
                 command.Execute(objects);
@@ -32,7 +41,7 @@ namespace NotationHelper.MVC
             }
 
             var allModes = HuiCombinations.AllModes;
-            var mode = allModes.FirstOrDefault(c => c.Match(allPressedAsMerged));
+            var mode = allModes.FirstOrDefault(c => c.Match(allPressed));
             if (mode != null)
             {
                 return;
