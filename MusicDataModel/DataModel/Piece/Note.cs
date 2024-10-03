@@ -13,7 +13,7 @@ namespace MusicDataModel.DataModel.Piece
         public int X { get; set; }
         public int Y { get; set; }
         public Pitch Pitch { get; set; } = new Pitch();
-        public int BarNo { get; set; }
+        public int BarNo { get; set; } 
         public int PartNo { get; set; }
         public bool IsTied {  get; set; }
         public ObjectTypeEnum ObjectType => ObjectTypeEnum.Note;

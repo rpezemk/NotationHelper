@@ -11,12 +11,12 @@ namespace MusicDataModel.Helpers
 {
     internal static class VisualBarHelpers
     {
-        public static void DrawTimeGroup(this DrawingVisualHost host, TimeHolder timeGroup, double scale)
+        public static void DrawTimeGroup(this BarWithLine host, TimeHolder timeGroup, double scale)
         {
             host.DrawGlyph(timeGroup, Brushes.LightGray, scale);
         } 
 
-        public static TimeHolderDrawing DrawGlyph(this DrawingVisualHost host, TimeHolder timeHolder, Brush brush, double scale)
+        public static TimeHolderDrawing DrawGlyph(this BarWithLine host, TimeHolder timeHolder, Brush brush, double scale)
         {
             var xOffset = timeHolder.XOffset + (timeHolder is Note ? 0 : 3);
             var visHeignt = timeHolder.NoteToVisualHeight() - 3;
@@ -29,23 +29,23 @@ namespace MusicDataModel.Helpers
             return textVisual;
         }
 
-        public static TimeHolderDrawing DrawMusicText(this DrawingVisualHost host, FormattedText musicTxt, double xOffset, double yOffset, Brush brush, TimeHolder timeHolder)
+        public static TimeHolderDrawing DrawMusicText(this BarWithLine barWithLine, FormattedText musicTxt, double xOffset, double yOffset, Brush brush, TimeHolder timeHolder)
         {
-            TimeHolderDrawing textVisual = new TimeHolderDrawing(timeHolder, host);
+            TimeHolderDrawing textVisual = new TimeHolderDrawing(timeHolder, barWithLine);
             DrawingContext dc = textVisual.RenderOpen();
             dc.DrawText(musicTxt, new Point(xOffset, yOffset - 29));
             dc.Close();
-            host.AddVisual(textVisual);
+            barWithLine.MyVisualHost.AddVisual(textVisual);
             return textVisual;
         }
 
-        public static void DrawTie(this DrawingVisualHost host, TimeHolder timeGroup, double x2Corr = 0)
+        public static void DrawTie(this BarWithLine host, TimeHolder timeGroup, double x2Corr = 0)
         {
             host.DrawBow(timeGroup.XOffset, timeGroup.XOffset + timeGroup.VisualDuration + x2Corr);
         }
 
 
-        public static void DrawBow(this DrawingVisualHost host, double x1, double x2)
+        public static void DrawBow(this BarWithLine host, double x1, double x2)
         {
             DrawingVisual drawingVisual = new DrawingVisual();
             using (DrawingContext drawingContext = drawingVisual.RenderOpen())
@@ -66,7 +66,7 @@ namespace MusicDataModel.Helpers
                 var path = new PathGeometry();
                 path.Figures.Add(pathFigure);
                 drawingContext.DrawGeometry(Brushes.Transparent, new Pen(Brushes.White, 1), path);
-                host.AddVisual(drawingVisual);
+                host.MyVisualHost.AddVisual(drawingVisual);
             }
 
             // Add the DrawingVisual to the Canvas
@@ -98,8 +98,10 @@ namespace MusicDataModel.Helpers
 
             nowClicked.ButNotIn(prevSelected).ToList().ForEach(v => v.Redraw(true, BarWithLine.Scale));
             if (c)
-                SelectedBarsCollection.UnSelectExceptOf(barWithLine);
-            SelectedBarsCollection.Add(barWithLine);
+                MainWindow.GetBarWithLines().Where(b => b != barWithLine)
+                .ForEach(a => a.GetTimeHolderDrawings()
+                                .Where(th => th.TimeHolder.IsSelected)
+                                .ForEach(th => th.Redraw(false, BarWithLine.Scale)));
         }
     }
 }

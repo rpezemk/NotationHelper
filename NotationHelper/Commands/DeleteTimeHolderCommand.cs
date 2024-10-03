@@ -17,7 +17,7 @@ namespace NotationHelper.Commands
     }
 
 
-    public class DeleteManyTimeHoldersCommand : AEditCommand<List<TimeHolder>>
+    public class DeleteTimeHoldersCommand : AEditCommand<List<TimeHolderDrawing>>
     {
         public override void Execute()
         {
@@ -25,7 +25,8 @@ namespace NotationHelper.Commands
                 return;
             foreach (var value in Value)
             {
-                value.Parent.ReplaceChild(value, new Rest() { Duration = value.Duration });
+                value.TimeHolder.Parent.ReplaceChild(value.TimeHolder, new Rest() { Duration = value.TimeHolder.Duration });
+                
             }
         }
     }

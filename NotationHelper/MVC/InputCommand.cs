@@ -31,12 +31,12 @@ namespace NotationHelper.MVC
 
         public object TObj;
         
-        public InputCommand Append<T, T2>(T cmd, Func<T2> func) where T : AEditCommand<T2>, new()
+        public InputCommand Append<T, T2>(T cmd, Func<T2> getSetFunc) where T : AEditCommand<T2>, new()
         {
             StrangeActions.Add(new StrangeAction(
                 () => 
                 {
-                    var whatIsThis = func.Invoke();
+                    var whatIsThis = getSetFunc.Invoke();
                     cmd.Accept(whatIsThis);
                     cmd.Execute();
                 }));

@@ -36,17 +36,17 @@ namespace MusicDataModel.MusicViews.MusicControls
             vm.CalculateXOffsets(GridContainer.ActualWidth);
             foreach (var timeHolder in vm.VoiceBar.Children)
             {
-                MyVisualHost.DrawTimeGroup(timeHolder, Scale);
+                this.DrawTimeGroup(timeHolder, Scale);
             }
-
+             
             foreach (var timeHolder in vm.VoiceBar.Children.SkipLast(1))
             {
                 if (timeHolder is Note note && note.IsTied)
-                    MyVisualHost.DrawTie(timeHolder);
+                    this.DrawTie(timeHolder);
             }
             var last = vm.VoiceBar.Children.LastOrDefault();
             if (last is Note note2 && note2.IsTied)
-                MyVisualHost.DrawTie(last, 10);
+                this.DrawTie(last, 10);
         }
 
         public bool noteWasClicked;

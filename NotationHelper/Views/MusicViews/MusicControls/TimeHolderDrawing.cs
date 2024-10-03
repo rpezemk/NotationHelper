@@ -6,21 +6,22 @@ namespace MusicDataModel.MusicViews.MusicControls
 {
     public class TimeHolderDrawing : DrawingVisual
     {
-        public TimeHolderDrawing(TimeHolder timeHolder, DrawingVisualHost host)
+        public TimeHolderDrawing(TimeHolder timeHolder, BarWithLine barWithLine)
         {
             TimeHolder = timeHolder;
-            Host = host;
+            Host = barWithLine.MyVisualHost;
+            BarWithLine = barWithLine;
         }
         public DrawingVisualHost Host { get; set; }
         public TimeHolder TimeHolder { get; set; }
-
+        public BarWithLine BarWithLine { get; set; }
         public void RemoveSelf()
         {
             Host.RemoveVisual(this);
         }
         public void Draw(Brush brush, double scale)
         {
-            Host.DrawGlyph(this.TimeHolder, brush, scale);
+            BarWithLine.DrawGlyph(this.TimeHolder, brush, scale);
         }
 
         public void Redraw(bool selected, double scale)

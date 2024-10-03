@@ -43,6 +43,12 @@ namespace MusicDataModel
             return res;
         }
 
+        public static List<TimeHolderDrawing> GetTimeHolderDrawings()
+        {
+            var res = GetBarWithLines().SelectMany(b => b.GetTimeHolderDrawings()).ToList();
+            return res;
+        }
+
         private void MainWindowControl_Loaded(object sender, RoutedEventArgs e)
         {
             lockLayout = false;

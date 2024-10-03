@@ -1,4 +1,7 @@
 ﻿using MusicDataModel;
+using MusicDataModel.DataModel.Piece;
+using MusicDataModel.Helpers;
+using MusicDataModel.MusicViews.MusicControls;
 using NotationHelper.Commands;
 using NotationHelper.Helpers;
 using NotationHelper.MVC.Basics;
@@ -18,13 +21,21 @@ namespace NotationHelper.MVC
         public static MergedKey Delete = new MergedKey(Key.Delete);
 
         #region KEYBOARD COMMANDS
-        public static InputCommand EscAction => new InputCommand("ESC", Escape).AppendAction(() => SelectedBarsCollection.UnSelectAll());
+        public static InputCommand EscAction => new InputCommand("ESC", Escape)
+            .AppendAction(
+            () => MainWindow
+                  .GetTimeHolderDrawings()
+                  .Where(th => th.TimeHolder.IsSelected)
+                  .ForEach(b => b.Redraw(false, BarWithLine.Scale)));
+
         public static InputCommand DeleteAllAction => new InputCommand("DELETE_SELECTED", Delete)
-            .Append(new DeleteManyTimeHoldersCommand(), () => SelectedBarsCollection.GetSelectedTimeHolders())
+            .Append(new DeleteTimeHoldersCommand(), 
+            () => MainWindow
+                  .GetBarWithLines()
+                  .SelectMany(b => b.GetTimeHolderDrawings())
+                  .Where(th => th.TimeHolder.IsSelected).ToList())
             .AfterAll(() => MainWindow.Instance.Refresh());
-        //public static InputCommand SelectAllAction => new InputCommand("SELECT_ALL", Ctrl, AKey)
-        //    .Append(new SelectAllVisibleTimeHoldersCommand(), () => MainWindow.GetBarWithLines())
-        //    .AfterAll(() => MainWindow.Instance.Refresh());
+
 
         #endregion
 

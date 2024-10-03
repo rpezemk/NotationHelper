@@ -17,10 +17,12 @@ namespace MusicDataModel.MusicViews.MusicControls
 
 
             GetTimeHolderDrawings().ForEach(th => th.Redraw(true, Scale));
-            var c = true; //!RoutingCommands.SelectMeasures.IsCurrentAction()
+            var c = true; 
             if (c)
-                SelectedBarsCollection.UnSelectExceptOf(this);
-            SelectedBarsCollection.Add(this);
+                MainWindow.GetBarWithLines().Where(b => b != this)
+                .ForEach(a => a.GetTimeHolderDrawings()
+                                .Where(th => th.TimeHolder.IsSelected)
+                                .ForEach(th => th.Redraw(false, BarWithLine.Scale)));
         }
 
         private void MyVisualHost_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -30,10 +32,6 @@ namespace MusicDataModel.MusicViews.MusicControls
             CommandResolver.ReportInput();
         }
 
-        private void MyVisualHost_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            CommandResolver.ReportInput();
-        }
 
         #endregion
     }
