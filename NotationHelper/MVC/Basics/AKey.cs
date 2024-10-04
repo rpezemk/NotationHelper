@@ -1,6 +1,4 @@
-﻿using MusicDataModel.Helpers;
-using System.Reflection;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace NotationHelper.MVC.Basics
 {
@@ -8,8 +6,6 @@ namespace NotationHelper.MVC.Basics
     {
         
     }
-
-
     public class MergedKey : AKey
     {
         public List<Key> Keys = new List<Key>();
@@ -19,13 +15,12 @@ namespace NotationHelper.MVC.Basics
         }
     }
 
-    public class MouseKey : AKey 
+    public class MouseKey : AKey
     {
         public MouseButton Button;
-        public MouseKey(MouseButton mouseButton) 
+        public MouseKey(MouseButton mouseButton)
         {
             Button = mouseButton;
         }
     }
-
 }
