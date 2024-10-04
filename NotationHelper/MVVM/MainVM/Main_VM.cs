@@ -18,6 +18,8 @@ namespace MusicDataModel.MVVM.MainVM
             MatrixRange matrixRange = new MatrixRange(matrix, 0, 6);
             //MatrixRange matrixRange = new MatrixRange(new PieceMatrix(1, 1), 0, 1);
             musicContent = new VisualMusicContent_VM(matrixRange);
+            MainWindow.Instance.PieceMatrix = matrix;
+            MainWindow.Instance.MatrixRange = matrixRange;
         }
 
         private Menu_VM menu_VM = new Menu_VM();

@@ -1,4 +1,5 @@
 ﻿using MusicDataModel.DataModel.Piece;
+using MusicDataModel.DataModel.Range;
 using MusicDataModel.FlowTypes;
 using MusicDataModel.Helpers;
 using MusicDataModel.MusicViews;
@@ -27,11 +28,14 @@ namespace MusicDataModel
         public static MainWindow Instance;
         public MainWindow()
         {
-            InitializeComponent();
             Instance = this;
+            InitializeComponent();
         }
 
         private bool lockLayout = true;
+
+        public PieceMatrix PieceMatrix { get; internal set; }
+        public MatrixRange MatrixRange { get; internal set; }
 
         public static List<BarWithLine> GetBarWithLines()
         {

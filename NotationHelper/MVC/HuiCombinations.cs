@@ -55,16 +55,15 @@ namespace NotationHelper.MVC
         public static InputCommand SelectAll => new InputCommand("SELECT_ALL", Ctrl, A_Button)
             .AppendAction(() => 
             {
-                MainWindow.GetTimeHolderDrawings()
-                                    .ForEach(th => th.Redraw(true, BarWithLine.Scale));
+                MainWindow.Instance.PieceMatrix.Children.SelectMany(pt => pt.Children).SelectMany(vb => vb.Children).ToList().ForEach(th => th.IsSelected = true);
+                MainWindow.GetTimeHolderDrawings().ForEach(th => th.Redraw(th.TimeHolder.IsSelected, BarWithLine.Scale));
             });
 
 
         public static InputCommand SelectSpecificRange => new InputCommand("SELECT_SPECIFIC_RANGE", Shift, LeftButton)
             .AppendAction<List<TimeHolderDrawing>>((b) =>
             {
-                MainWindow.GetTimeHolderDrawings()
-                                    .ForEach(th => th.Redraw(true, BarWithLine.Scale));
+                MainWindow.GetTimeHolderDrawings().ForEach(th => th.Redraw(true, BarWithLine.Scale));
             });
 
 
@@ -73,10 +72,11 @@ namespace NotationHelper.MVC
 
         public static InputCommand EscAction => new InputCommand("ESC", Escape)
             .AppendAction(
-            () => MainWindow
-                  .GetTimeHolderDrawings()
-                  .Where(th => th.TimeHolder.IsSelected)
-                  .ForEach(b => b.Redraw(false, BarWithLine.Scale)));
+            () =>
+            {
+                MainWindow.Instance.PieceMatrix.Children.SelectMany(pt => pt.Children).SelectMany(vb => vb.Children).ToList().ForEach(th => th.IsSelected = false);
+                MainWindow.GetTimeHolderDrawings().ForEach(th => th.Redraw(th.TimeHolder.IsSelected, BarWithLine.Scale));
+            });
 
         public static InputCommand DeleteAllAction => new InputCommand("DELETE_SELECTED", Delete)
             .Append(new DeleteTimeHoldersCommand(),
