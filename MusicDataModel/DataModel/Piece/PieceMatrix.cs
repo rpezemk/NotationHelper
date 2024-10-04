@@ -26,13 +26,13 @@ namespace MusicDataModel.DataModel.Piece
                         TimeHolder randomHolder = (test ? Rest.Emit().Eight() : Note.F().Sharp().Eight()).AsTimeGroup();
                         var bar = new VoiceBar() { };
                         bar.AppendChild(Note.C().Sharp().Eight().AsTimeGroup());
-                        bar.AppendChild(Note.D().Flat().Sixteen().AsTimeGroup());
-                        bar.AppendChild(Note.E().Sharp().Sixteen().AsTimeGroup());
+                        bar.AppendChild(Note.D().Flat().Tied().Sixteen().AsTimeGroup());
+                        bar.AppendChild(Note.D().Sharp().Sixteen().AsTimeGroup());
                         bar.AppendChild(randomHolder);
-                        bar.AppendChild(Note.G().Flat().Sixteen().AsTimeGroup());
+                        bar.AppendChild(Note.G().Flat().Tied().Sixteen().AsTimeGroup());
                         bar.AppendChild(Note.A().Flat().Sixteen().AsTimeGroup());
                         bar.AppendChild(Note.C().UpOct().Flat().Quarter().AsTimeGroup());
-                        bar.AppendChild(Note.B().Flat().Tied().Quarter().AsTimeGroup());
+                        bar.AppendChild(Note.C().Flat().Tied().Quarter().AsTimeGroup());
                         part.AppendChild(bar);
                     }
                     else
