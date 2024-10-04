@@ -39,14 +39,11 @@ namespace MusicDataModel.MusicViews.MusicControls
                 this.DrawGlyph(timeHolder, Brushes.White, Scale);
             }
              
-            foreach (var timeHolder in vm.VoiceBar.Children.SkipLast(1))
+            foreach (var timeHolder in vm.VoiceBar.Children)
             {
                 if (timeHolder is Note note && note.IsTied)
                     this.DrawTie(timeHolder);
             }
-            var last = vm.VoiceBar.Children.LastOrDefault();
-            if (last is Note note2 && note2.IsTied)
-                this.DrawTie(last, 10);
         }
 
         public bool noteWasClicked;
