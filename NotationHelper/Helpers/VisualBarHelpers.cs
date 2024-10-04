@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace MusicDataModel.Helpers
 {
@@ -34,33 +35,44 @@ namespace MusicDataModel.Helpers
             return textVisual;
         }
 
-        public static void DrawTie(this BarWithLine host, TimeHolder timeGroup, double x2Corr = 0)
+        public static void DrawTie(this BarWithLine host, TimeHolder timeHolder, double x2Corr = 0)
         {
-            host.DrawBow(timeGroup.XOffset, timeGroup.XOffset + timeGroup.VisualDuration + x2Corr);
+            var visHeignt = timeHolder.NoteToVisualHeight() - 3;
+            var yOffset =
+                timeHolder is Note ? timeHolder.YOffset - visHeignt * BarWithLine.Scale + 27
+                : timeHolder is Rest ? -13
+                : 0;
+            host.DrawBow(timeHolder.XOffset, timeHolder.XOffset + timeHolder.VisualDuration + x2Corr, yOffset);
         }
 
 
-        public static void DrawBow(this BarWithLine host, double x1, double x2)
+        public static void DrawBow(this BarWithLine host, double x1, double x2, double y1)
         {
             DrawingVisual drawingVisual = new DrawingVisual();
             using (DrawingContext drawingContext = drawingVisual.RenderOpen())
             {
                 var x1Corr = 4;
                 var x2Corr = -1;
-                var yCorr = 17;
-                var startPt = new Point(x1 + x1Corr, yCorr);
-                var c1 = new Point(x1 + (x2 - x1) * 0.20 + x1Corr, yCorr + 20);
-                var c2 = new Point(x2 - (x2 - x1) * 0.20 + x2Corr, yCorr + 20);
-                var endPt = new Point(x2 + x2Corr, yCorr);
+                var bowDepth = Math.Min(20, (x2-x1)/2);
+                var startPt = new Point(x1 + x1Corr, y1);
+                var c1 = new Point(x1 + (x2 - x1) * 0.20 + x1Corr, y1 + bowDepth);
+                var c2 = new Point(x2 - (x2 - x1) * 0.20 + x2Corr, y1 + bowDepth);
+
+                var c3 = new Point(x2 - (x2 - x1) * 0.12 + x2Corr, y1 + bowDepth + 3);
+                var c4 = new Point(x1 + (x2 - x1) * 0.12 + x1Corr, y1 + bowDepth + 3); 
+                
+                var endPt = new Point(x2 + x2Corr, y1);
 
                 var pathFigure = new PathFigure();
                 pathFigure.StartPoint = startPt;
-                pathFigure.Segments.Add(
-                    new BezierSegment(c1, c2, endPt, true));
-                pathFigure.IsClosed = false;
+                pathFigure.Segments.Add(new BezierSegment(c1, c2, endPt, true));
+                pathFigure.Segments.Add(new BezierSegment(c3, c4, startPt, true));
+
+
+                pathFigure.IsClosed = true;
                 var path = new PathGeometry();
                 path.Figures.Add(pathFigure);
-                drawingContext.DrawGeometry(Brushes.Transparent, new Pen(Brushes.White, 1), path);
+                drawingContext.DrawGeometry(Brushes.White, new Pen(Brushes.Transparent, 1), path);
                 host.MyVisualHost.AddVisual(drawingVisual);
             }
 
