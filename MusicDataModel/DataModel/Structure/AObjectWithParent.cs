@@ -7,29 +7,35 @@ using System.Threading.Tasks;
 
 namespace MusicDataModel.DataModel.Structure
 {
-    public interface IChildOf
+    public interface IChild
     {
         public ObjectTypeEnum ParentType { get; }
+        public IParentOf<IChild> GetParentObj();
         
     }
 
-    public interface IChildOf<TParent> : IChildOf
+    public interface IChild<TParent> : IChild
     {
         public void SetParent(TParent obj);
+
+        public bool TryGetNext(out IChild<TParent> next);
+        public TParent GetParentT();
     }
     
     public interface IParentOf<TChild>
     {
         public void AppendChild(TChild child);
         public void ReplaceChild(TChild oldChild, TChild newChild);
+        public List<TChild> Children { get; }
     }
 
 
     public abstract class AObjectWithChildren<TObject, TChild> : IParentOf<TChild>
         where TObject : class, IParentOf<TChild>
-        where TChild : IChildOf<TObject>
+        where TChild : IChild<TObject>
     {
-        public List<TChild> Children = new List<TChild>();
+        private List<TChild> children = new List<TChild>();
+        public List<TChild> Children => children;
         public void AppendChild(TChild child)
         {
             Children.Add(child);
@@ -52,7 +58,7 @@ namespace MusicDataModel.DataModel.Structure
         public abstract TObject ThisObj { get; }
     }
 
-    public abstract class AObjectWithParent<TParent, TObject> : IChildOf<TParent>
+    public abstract class AObjectWithParent<TParent, TObject> : IChild<TParent>
         where TParent : IParentOf<TObject>, new ()
         where TObject: class
     {
@@ -70,17 +76,52 @@ namespace MusicDataModel.DataModel.Structure
         {
             Parent = obj;
         }
+
+        public bool TryGetNext(out IChild<TParent> next)
+        {
+            next = null;
+            var idx = Parent.Children.IndexOf(this as TObject);
+            if(idx < Parent.Children.Count - 1)
+            {
+                next = Parent.Children[idx + 1] as IChild<TParent>;
+                return true;
+            }
+            else if (Parent is IChild otherParentChild)
+            {
+                var granpa = otherParentChild.GetParentObj();
+                var idx2 = granpa.Children.IndexOf(otherParentChild);
+                if(idx2 < granpa.Children.Count-1)
+                {
+                    var parentSybling = granpa.Children[idx2 + 1];
+                }
+                return true;
+            }
+            
+
+            return false;
+        }
+
+        public TParent GetParentT()
+        {
+            return Parent;
+        }
+
+        public IParentOf<IChild> GetParentObj()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 
 
-    public abstract class AObjectWithParentAndChildren<TParent, TObject, TChild> : AObjectWithParent<TParent, TObject>, IChildOf<TParent>, IParentOf<TChild>
-        where TChild : IChildOf<TObject>
+    public abstract class AObjectWithParentAndChildren<TParent, TObject, TChild> : AObjectWithParent<TParent, TObject>, IChild<TParent>, IParentOf<TChild>
+        where TChild : IChild<TObject>
         where TObject: class, IParentOf<TChild>
         where TParent : IParentOf<TObject>, new()
     {
 
-        public List<TChild> Children = new List<TChild>();
+        public List<TChild> children = new List<TChild>();
+        public List<TChild> Children => children;
         public TObject ThisObject;
         public AObjectWithParentAndChildren()
         {

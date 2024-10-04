@@ -16,7 +16,9 @@ namespace MusicDataModel.DataModel.Range
             foreach (var barGroup in pieceMatrix.Children)
             {
                 var partBars = barGroup.Children.GetRange(startBar, count);
-                MonoPart part = new MonoPart() { Children = partBars };
+                MonoPart part = new MonoPart();
+                foreach(var partBar in partBars)
+                    part.AppendChild(partBar);
                 Parts.Add(part);
             }
         }
