@@ -26,8 +26,8 @@ namespace MusicDataModel.DataModel.Piece
                         TimeHolder randomHolder = (test ? Rest.Emit().Eight() : Note.F().Sharp().Eight()).AsTimeGroup();
                         var bar = new VoiceBar() { };
                         bar.AppendChild(Note.C().Sharp().Eight().AsTimeGroup());
-                        bar.AppendChild(Note.D().Flat().Tied().Sixteen().AsTimeGroup());
-                        bar.AppendChild(Note.D().Sharp().Sixteen().AsTimeGroup());
+                        bar.AppendChild(Note.D().Tied().Sixteen().AsTimeGroup());
+                        bar.AppendChild(Note.D().Sixteen().AsTimeGroup());
                         bar.AppendChild(randomHolder);
                         bar.AppendChild(Note.G().Flat().Tied().Sixteen().AsTimeGroup());
                         bar.AppendChild(Note.A().Flat().Sixteen().AsTimeGroup());
@@ -50,6 +50,20 @@ namespace MusicDataModel.DataModel.Piece
                         bar.AppendChild(Note.C().Sharp().Eight().AsTimeGroup());
                         part.AppendChild(bar);
                     }
+                }
+                var firstTh = part.GetFirstTimeHolder();
+                var curr = firstTh;
+                while(curr != null)
+                {
+                    var next = curr.GetNextTimeHolder();
+                    if (curr is Note n1 && next is Note n2)
+                    {
+                        if(n1.IsTied && n1.Pitch.ResultPitch != n2.Pitch.ResultPitch)
+                        {
+                            n1.IsTied = false;
+                        }
+                    }
+                    curr = next;
                 }
                 this.AppendChild(part);
             }

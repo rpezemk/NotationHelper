@@ -41,7 +41,7 @@ namespace MusicDataModel.MusicViews.MusicControls
              
             foreach (var timeHolder in vm.VoiceBar.Children)
             {
-                if (timeHolder is Note note && note.IsTied)
+                if (timeHolder is Note note && note.IsTied && note.GetNextTimeHolder() is Note n2 && n2.Pitch.ResultPitch == note.Pitch.ResultPitch)
                     this.DrawTie(timeHolder);
             }
         }
