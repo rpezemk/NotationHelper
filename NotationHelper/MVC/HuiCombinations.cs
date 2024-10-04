@@ -87,18 +87,8 @@ namespace NotationHelper.MVC
             .AfterAll(() => MainWindow.Instance.Refresh());
         #endregion
 
-        #region KEYBOARD MODES
-        public static InputMode SelectSpecific => new InputMode("INDIVIDUAL_SELECTION", Ctrl);
-        public static InputMode SelectMeasures => new InputMode("RANGE_SELECTION", Shift);
-        public static InputMode SelectBarColumn => new InputMode("BAR_COLUMN_SELECTION", Ctrl, Shift);
-        public static InputMode SelectVisibleLine => new InputMode("VISIBLE_LINE", Alt);
-        #endregion
-
         private static List<InputCommand> allInputCommands;
         public static List<InputCommand> AllInputCommands => TypeHelper.PassOrFill(ref allInputCommands, typeof(HuiCombinations));
-
-        private static List<InputMode> allModes;
-        public static List<InputMode> AllModes => TypeHelper.PassOrFill(ref allModes, typeof(HuiCombinations));
 
         private static List<MergedKey> allMergedKeys;
         public static List<MergedKey> AllMergedKeys => TypeHelper.PassOrFill(ref allMergedKeys, typeof(HuiCombinations));
