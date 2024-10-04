@@ -15,7 +15,7 @@ namespace NotationHelper.MVC
             Keys.AddRange(mergedKeys);
         }
         public string Name { get; set; }
-        public bool MatchKeys(List<AKey> checkedMergedKeys)
+        public bool MatchOrderedKeys(List<AKey> checkedMergedKeys)
         {
             if(checkedMergedKeys.Count == 0) return false;
             if(checkedMergedKeys.Count != Keys.Count) return false;
@@ -64,30 +64,6 @@ namespace NotationHelper.MVC
             var res = find.CanRun(objects);
             return res;
         }
-    }
-
-
-    public class InputMode
-    {
-        public InputMode(string name, params MergedKey[] mergedKeys)
-        {
-            Name = name;
-            Keys.AddRange(mergedKeys);
-        }
-        public string Name { get; set; }
-        public List<AStrangeAction> Actions { get; set; } = new List<AStrangeAction>();
-        public List<AKey> Keys { get; set; } = new List<AKey>();
-        public bool Match(List<AKey> checkedMergedKeys)
-        {
-            if (checkedMergedKeys.Count == 0) return false;
-            if (checkedMergedKeys.Count != Keys.Count) return false;
-            var sameSet = checkedMergedKeys.IsSameSet(Keys);
-            if (!sameSet) return false;
-
-            var res = checkedMergedKeys.Last() == Keys[0];
-            return res;
-        }
-
     }
 
     public abstract class AStrangeAction 
