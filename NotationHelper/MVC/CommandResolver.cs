@@ -33,19 +33,9 @@ namespace NotationHelper.MVC
             var allCommands = HuiCombinations.AllInputCommands;
             var allPressed = GetAllPressedKeys();
 
-            var command = allCommands.FirstOrDefault(c => c.MatchKeys(allPressed) && c.MatchArguments(objects));
-            if(command != null)
-            {
-                command.Execute(objects);
+            if (allCommands.FirstOrDefault(c => c.MatchKeys(allPressed) && c.MatchArguments(objects)) is not InputCommand inputCommand)
                 return;
-            }
-
-            var allModes = HuiCombinations.AllModes;
-            var mode = allModes.FirstOrDefault(c => c.Match(allPressed));
-            if (mode != null)
-            {
-                return;
-            }
+            inputCommand.Execute(objects);
         }
 
 
