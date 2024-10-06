@@ -23,7 +23,6 @@ namespace AudioTool
             for (int partNo = 0; partNo < noOfParts; partNo++)
             {
                 MidiPart midiPart = new MidiPart();
-                midiPart.PartNo = partNo;
                 for (int barNo = 0; barNo < noOfBars; barNo++)
                 {
                     MidiBar midiBar = new MidiBar();
