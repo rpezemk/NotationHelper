@@ -59,6 +59,7 @@ public class CsEngine
             csound = Wrapped.csoundCreate(IntPtr.Zero);
             Wrapped.csoundSetOption(csound, "-odac -b512 -B4096");
             var script = CsdGenerator.GetScriptedInstruments(ScriptInstruments);
+            Console.WriteLine(script);
             if (Wrapped.csoundCompileCsdText(csound, script) == 0)
             {
                 Wrapped.csoundStart(csound);

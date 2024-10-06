@@ -36,13 +36,14 @@ namespace AudioTool.CSoundWrapper
 
 
         public static string GetCsOptions()
-        {
+        {   //-+rtmidi=portmidi -Ma -odac -b 256 -B1024
             var part = @"
-<CsOptions>
+<CsOptions> 
+        -+rtmidi=portmidi -Ma -odac -b 256 -B1024
 		; Select audio/midi flags here according to platform
-		  -odac  ;;;realtime audio out
+		;  -odac  ;;;realtime audio out
 		; ;;-iadc    ;;;uncomment -iadc if real audio input is needed too
-          -b1024 -B8192
+        ;  -b1024 -B8192
 		; For Non-realtime ouput leave only the line below:
 		; ;-o sr.wav -W ;;; for file output any platform
 </CsOptions>";
@@ -73,9 +74,6 @@ namespace AudioTool.CSoundWrapper
 </CsInstruments>
 <CsScore>
 	f1 0 4096 10 1	;sine wave
-    ;i 3 0 1000 6  ; Play myFile.wav starting at 0 seconds for 10 seconds
-    ;i 4 0 10000  ;
-    ;i99 0 36000 0.0003 ; i99 start at 0, 10 hours long, amp .0001
 {allEvents}
 	e
 </CsScore>

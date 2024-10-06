@@ -8,6 +8,7 @@ using AudioTool.Helpers;
 using AudioTool.Total;
 using Spectre.Console;
 using Terminal.Gui;
+using AudioTool.Synth;
 
 class Program
 {
@@ -62,7 +63,13 @@ class Program
         var layeredViola = new TotalLayerSampleInstrument("VIOLA_01", InstrumentFileHelper.TotalViolaLayers);
         var layeredCellos = new TotalLayerSampleInstrument("VIOLIN_01", InstrumentFileHelper.TotalVioloncelliLayers);
         var layeredBasses = new TotalLayerSampleInstrument("VIOLIN_01", InstrumentFileHelper.TotalContrabbassiLayers);
-        CsEngine csEngine = new CsEngine([noise, reverb, flatViola, layeredViola, layeredViolin, layeredCellos, layeredBasses]);
+
+
+        var monosynth = new MonosynthInstr("MONOSYNTH_01");
+
+
+        //CsEngine csEngine = new CsEngine([noise, reverb, flatViola, layeredViola, layeredViolin, layeredCellos, layeredBasses, monosynth]);
+        CsEngine csEngine = new CsEngine([noise, monosynth]);
         csEngine.RunAsync();
         var pitches = new List<(int, double)>() 
         {
@@ -95,9 +102,7 @@ class Program
             {
                 foreach (var p in pitches)
                 {
-                    layeredViolin.PlaySample(p.Item1, p.Item2+0.2, legato);
-                    //layeredViola.PlaySeparatedNote(p + 7, 8);
-                    //layeredViola.PlaySeparatedNote(p + 16, 8);
+                    //layeredViolin.PlaySample(p.Item1, p.Item2+0.2, legato);
                     Thread.Sleep((int)(p.Item2 * 1000));
                     //Thread.Sleep(2000);
                 }
