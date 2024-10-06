@@ -14,9 +14,7 @@ class Program
     static void Main()
     {
         //BackgroundCsThread(null, (s) => { });
-        AnsiConsole.Markup("[underline red]Hello[/] World!");
-
-        AnsiConsole.Markup("[green]This is all green[/]");
+        BackgroundCsThread(null, s => Console.WriteLine(s));
     }
 
 
