@@ -8,8 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="bin\Debug\net8.0\csound64.dll" />
-    <None Include="bin\debug\net8.0\example.csd" />
+    <Compile Remove="bin\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <None Remove="bin\**" />
   </ItemGroup>
 
   <ItemGroup>
